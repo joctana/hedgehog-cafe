@@ -1,8 +1,12 @@
-import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
-import type { DecorItem } from '../data/hedgehogs'
+import { useCallback, useEffect, useState } from 'react'
+import type { ActivityKind } from '../data/careActivities'
+import type { DecorItem, HedgehogProfile } from '../data/hedgehogs'
 import type { AnimState, CareAction } from '../hooks/useHedgehogCare'
 import { usePetStroke } from '../hooks/usePetStroke'
-import type { HedgehogProfile } from '../data/hedgehogs'
+import type { SoundKind } from '../hooks/useSounds'
+import { CleanActivity } from './activities/CleanActivity'
+import { FeedActivity } from './activities/FeedActivity'
+import { SleepActivity } from './activities/SleepActivity'
 import { CareTray } from './CareTray'
 import { DecorPicker } from './DecorPicker'
 import { HappinessMeter } from './HappinessMeter'
@@ -21,13 +25,7 @@ interface CareSceneProps {
   onCare: (action: CareAction) => void
   onDecor: (decor: DecorItem) => void
   onDismissCelebration: () => void
-  playSound: (kind: 'tap' | 'happy' | 'eat' | 'sleep' | 'celebrate') => void
-}
-
-interface Ghost {
-  emoji: string
-  x: number
-  y: number
+  playSound: (kind: SoundKind) => void
 }
 
 interface Particle {
@@ -52,12 +50,9 @@ export function CareScene({
   onDismissCelebration,
   playSound,
 }: CareSceneProps) {
-  const stageRef = useRef<HTMLDivElement>(null)
-  const [ghost, setGhost] = useState<Ghost | null>(null)
-  const [activeTool, setActiveTool] = useState<CareAction | null>(null)
-  const [hint, setHint] = useState('Feed, pet, or tuck in!')
+  const [activity, setActivity] = useState<ActivityKind | null>(null)
+  const [hint, setHint] = useState('Feed, clean, or tuck in!')
   const [particles, setParticles] = useState<Particle[]>([])
-  const dragAction = useRef<CareAction | null>(null)
 
   const spawnParticles = useCallback(() => {
     const next: Particle[] = Array.from({ length: 6 }, (_, i) => ({
@@ -88,21 +83,16 @@ export function CareScene({
     onStrokeComplete: handleStrokeComplete,
   })
 
-  const finishCare = useCallback(
+  const finishSimpleCare = useCallback(
     (action: CareAction) => {
       onCare(action)
-      if (action === 'feed' || action === 'drink') playSound('eat')
-      else if (action === 'nap') playSound('sleep')
-      else playSound('happy')
-
-      const hints: Record<CareAction, string> = {
-        feed: 'Yum yum!',
-        drink: 'Sip sip!',
-        pet: 'So soft!',
-        brush: 'Spiky and shiny!',
-        nap: 'Night night...',
+      if (action === 'drink') {
+        playSound('eat')
+        setHint('Sip sip!')
+      } else if (action === 'pet') {
+        playSound('happy')
+        setHint('So soft!')
       }
-      setHint(hints[action])
     },
     [onCare, playSound],
   )
@@ -113,42 +103,18 @@ export function CareScene({
       playSound('tap')
       return
     }
-    finishCare(action)
+    finishSimpleCare(action)
   }
 
-  const onDragStart = (action: CareAction, emoji: string, event: ReactPointerEvent<HTMLButtonElement>) => {
-    dragAction.current = action
-    setActiveTool(action)
-    setGhost({ emoji, x: event.clientX, y: event.clientY })
+  const openActivity = (kind: ActivityKind) => {
     playSound('tap')
-    event.currentTarget.setPointerCapture(event.pointerId)
+    setActivity(kind)
+  }
 
-    const onMove = (moveEvent: PointerEvent) => {
-      setGhost({ emoji, x: moveEvent.clientX, y: moveEvent.clientY })
-    }
-
-    const onUp = (upEvent: PointerEvent) => {
-      const stage = stageRef.current
-      const actionId = dragAction.current
-      dragAction.current = null
-      setActiveTool(null)
-      setGhost(null)
-      window.removeEventListener('pointermove', onMove)
-      window.removeEventListener('pointerup', onUp)
-
-      if (!stage || !actionId) return
-      const rect = stage.getBoundingClientRect()
-      const inside =
-        upEvent.clientX >= rect.left &&
-        upEvent.clientX <= rect.right &&
-        upEvent.clientY >= rect.top &&
-        upEvent.clientY <= rect.bottom
-
-      if (inside) finishCare(actionId)
-    }
-
-    window.addEventListener('pointermove', onMove)
-    window.addEventListener('pointerup', onUp)
+  const completeActivity = (action: CareAction, doneHint: string) => {
+    onCare(action)
+    setHint(doneHint)
+    setActivity(null)
   }
 
   return (
@@ -167,7 +133,7 @@ export function CareScene({
         <div style={{ width: 96 }} aria-hidden="true" />
       </header>
 
-      <div className="care-stage" ref={stageRef}>
+      <div className="care-stage">
         <p className="care-hint">{hint}</p>
         <div className="floating-hearts" aria-hidden="true">
           {particles.map((particle) =>
@@ -201,17 +167,37 @@ export function CareScene({
       <div>
         <CareTray
           doneActions={doneActions}
-          activeTool={activeTool}
           onTap={onTapTool}
-          onDragStart={onDragStart}
+          onOpenActivity={openActivity}
         />
         <DecorPicker unlocked={unlockedDecor} active={activeDecor} onSelect={onDecor} />
       </div>
 
-      {ghost && (
-        <div className="drag-ghost" style={{ left: ghost.x, top: ghost.y }} aria-hidden="true">
-          {ghost.emoji}
-        </div>
+      {activity === 'feed' && (
+        <FeedActivity
+          profile={profile}
+          playSound={playSound}
+          onCancel={() => setActivity(null)}
+          onComplete={() => completeActivity('feed', 'Tummy full!')}
+        />
+      )}
+
+      {activity === 'clean' && (
+        <CleanActivity
+          profile={profile}
+          playSound={playSound}
+          onCancel={() => setActivity(null)}
+          onComplete={() => completeActivity('clean', 'Sparkly clean!')}
+        />
+      )}
+
+      {activity === 'sleep' && (
+        <SleepActivity
+          profile={profile}
+          playSound={playSound}
+          onCancel={() => setActivity(null)}
+          onComplete={() => completeActivity('sleep', 'Sweet dreams!')}
+        />
       )}
 
       {celebrating && (

@@ -290,6 +290,7 @@ button:focus-visible {
   height: 100%;
   position: relative;
   z-index: 2;
+  overflow: hidden;
 }
 
 .care-header {

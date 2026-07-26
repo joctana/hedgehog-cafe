@@ -7,8 +7,15 @@ import {
   type HedgehogId,
 } from '../data/hedgehogs'
 
-export type CareAction = 'feed' | 'drink' | 'pet' | 'brush' | 'nap'
-export type AnimState = 'idle' | 'eat' | 'drink' | 'pet' | 'brush' | 'sleep' | 'happy'
+export type CareAction = 'feed' | 'drink' | 'pet' | 'clean' | 'sleep'
+export type AnimState =
+  | 'idle'
+  | 'eat'
+  | 'drink'
+  | 'pet'
+  | 'clean'
+  | 'sleep'
+  | 'happy'
 
 interface HedgehogState {
   happiness: number
@@ -60,7 +67,7 @@ export function useHedgehogCare() {
 
   const triggerAnim = useCallback((next: AnimState) => {
     setAnim(next)
-    window.setTimeout(() => setAnim('idle'), next === 'sleep' ? 1600 : 900)
+    window.setTimeout(() => setAnim('idle'), next === 'sleep' ? 1800 : 900)
   }, [])
 
   const applyCare = useCallback(
@@ -112,8 +119,8 @@ export function useHedgehogCare() {
         feed: 'eat',
         drink: 'drink',
         pet: 'pet',
-        brush: 'brush',
-        nap: 'sleep',
+        clean: 'clean',
+        sleep: 'sleep',
       }
       triggerAnim(animMap[action])
       return true
