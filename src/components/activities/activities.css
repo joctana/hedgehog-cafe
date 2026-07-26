@@ -1,0 +1,274 @@
+.activity-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  padding:
+    calc(16px + var(--safe-top))
+    calc(16px + var(--safe-right))
+    calc(16px + var(--safe-bottom))
+    calc(16px + var(--safe-left));
+  background:
+    radial-gradient(ellipse 90% 60% at 15% 10%, rgba(255, 246, 234, 0.9), transparent 55%),
+    linear-gradient(180deg, #f7ebe0 0%, #e8c9a8 48%, #d2a67a 100%);
+  animation: fadeIn 220ms ease both;
+}
+
+.activity-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  z-index: 2;
+}
+
+.activity-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 700;
+}
+
+.bite-meter {
+  display: flex;
+  gap: 4px;
+  min-width: 88px;
+  justify-content: flex-end;
+}
+
+.bite-meter span {
+  opacity: 0.28;
+  font-size: 1.1rem;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.bite-meter span.filled {
+  opacity: 1;
+  transform: scale(1.12);
+}
+
+.activity-hint {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  justify-self: center;
+  margin: 10px 0 0;
+  z-index: 2;
+}
+
+.activity-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+
+.activity-stage .hedgehog-wrap {
+  width: min(68vw, 340px);
+  max-height: 42vh;
+}
+
+.mouth-target {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: 28%;
+  height: 18%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 3px dashed rgba(196, 120, 90, 0.45);
+  background: rgba(255, 246, 234, 0.18);
+  pointer-events: none;
+  z-index: 2;
+  animation: pulseTarget 1.4s ease-in-out infinite;
+}
+
+.food-tray {
+  display: flex;
+  justify-content: center;
+  gap: clamp(10px, 2.5vw, 18px);
+  flex-wrap: wrap;
+  padding: 8px 0 4px;
+  z-index: 2;
+}
+
+.food-tool {
+  width: clamp(76px, 15vw, 100px);
+  height: clamp(76px, 15vw, 100px);
+}
+
+.dirty-stage {
+  width: min(80vw, 420px);
+  justify-self: center;
+}
+
+.dirt-spot {
+  position: absolute;
+  width: 34px;
+  height: 28px;
+  margin-left: -17px;
+  margin-top: -14px;
+  border-radius: 50% 40% 55% 45%;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(120, 82, 48, 0.55), rgba(78, 52, 30, 0.75));
+  box-shadow: 0 2px 0 rgba(58, 36, 24, 0.15);
+  pointer-events: none;
+  z-index: 3;
+  animation: dirtWobble 1.8s ease-in-out infinite;
+}
+
+.soap-bubble {
+  position: absolute;
+  font-size: 1.5rem;
+  margin-left: -12px;
+  margin-top: -12px;
+  pointer-events: none;
+  z-index: 4;
+  animation: bubbleUp 900ms ease-out forwards;
+}
+
+.sleep-activity {
+  transition: background 500ms ease;
+}
+
+.sleep-activity.night {
+  background:
+    radial-gradient(ellipse 70% 50% at 80% 15%, rgba(255, 230, 170, 0.18), transparent 45%),
+    linear-gradient(180deg, #2a3350 0%, #3d2a3f 45%, #5a3a3a 100%);
+}
+
+.sleep-activity.night .activity-title,
+.sleep-activity.night .activity-hint {
+  color: #fff6ea;
+}
+
+.sleep-activity.night .activity-hint {
+  background: rgba(42, 51, 80, 0.65);
+}
+
+.sleep-activity.night .back-btn {
+  background: rgba(255, 246, 234, 0.92);
+}
+
+.night-sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms ease;
+  z-index: 1;
+}
+
+.sleep-activity.night .night-sky {
+  opacity: 1;
+}
+
+.moon {
+  position: absolute;
+  top: 12%;
+  right: 12%;
+  font-size: clamp(2rem, 6vw, 3rem);
+  animation: moonGlow 2.4s ease-in-out infinite;
+}
+
+.star {
+  position: absolute;
+  color: #ffe9a8;
+  font-size: 1.1rem;
+  opacity: 0.85;
+  animation: twinkle 1.8s ease-in-out infinite;
+}
+
+.star.s1 { top: 18%; left: 18%; animation-delay: 0ms; }
+.star.s2 { top: 28%; left: 40%; animation-delay: 300ms; font-size: 0.9rem; }
+.star.s3 { top: 16%; left: 62%; animation-delay: 600ms; }
+
+.sleep-stage {
+  width: min(80vw, 420px);
+  justify-self: center;
+  overflow: hidden;
+  border-radius: 28px;
+}
+
+.blanket {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 4%;
+  height: 62%;
+  border-radius: 28px 28px 22px 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 246, 234, 0.95), #c4785a 18%, #9a5438 100%);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.18);
+  touch-action: none;
+  z-index: 5;
+  cursor: grab;
+  transition: box-shadow 200ms ease;
+}
+
+.blanket.tucked {
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.blanket-handle {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 246, 234, 0.92);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+@keyframes pulseTarget {
+  0%,
+  100% { opacity: 0.55; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+@keyframes dirtWobble {
+  0%,
+  100% { transform: rotate(-4deg) scale(1); }
+  50% { transform: rotate(4deg) scale(1.05); }
+}
+
+@keyframes bubbleUp {
+  0% { opacity: 0; transform: translateY(8px) scale(0.5); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-36px) scale(1.2); }
+}
+
+@keyframes moonGlow {
+  0%,
+  100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.05); }
+}
+
+@keyframes twinkle {
+  0%,
+  100% { opacity: 0.35; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@media (orientation: landscape) and (max-height: 700px) {
+  .activity-stage .hedgehog-wrap {
+    max-height: 36vh;
+  }
+
+  .food-tool {
+    width: 72px;
+    height: 72px;
+  }
+
+  .blanket-handle {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+}

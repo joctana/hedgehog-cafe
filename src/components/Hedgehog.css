@@ -44,9 +44,14 @@
   animation: wiggle 500ms ease;
 }
 
+.hedgehog-wrap.clean .spines,
 .hedgehog-wrap.brush .spines {
   animation: fluff 600ms ease;
   transform-origin: 100px 90px;
+}
+
+.hedgehog-wrap.clean .hedgehog-svg {
+  animation: wiggle 500ms ease;
 }
 
 .hedgehog-wrap.sleep .hedgehog-svg {

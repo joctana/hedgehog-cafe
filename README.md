@@ -48,11 +48,11 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 
 1. On the café screen, tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
 2. Use the big care tools:
-   - **Apple** — drag onto the hedgehog to feed
+   - **Feed** — open snack time, then drag apple/berries/treats to their mouth
    - **Water** — tap to give a drink
    - **Hand** — stroke across the hedgehog to pet
-   - **Brush** — drag onto the hedgehog to brush
-   - **Bed** — tap for a cozy nap
+   - **Clean** — bath time! drag the sponge over dirt spots until sparkly
+   - **Sleep** — bedtime! pull the blanket up as the room turns night
 3. Stars fill as they get happier. Unlock tiny decorations (bow, hat, pillow).
 4. When all five stars light up, enjoy a little celebration!
 

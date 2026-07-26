@@ -1,29 +1,29 @@
-import type { PointerEvent as ReactPointerEvent } from 'react'
 import type { CareAction } from '../hooks/useHedgehogCare'
+import type { ActivityKind } from '../data/careActivities'
 
 export interface CareTool {
   id: CareAction
   emoji: string
   label: string
-  mode: 'tap' | 'drag'
+  mode: 'tap' | 'activity'
+  activity?: ActivityKind
 }
 
 export const CARE_TOOLS: CareTool[] = [
-  { id: 'feed', emoji: '🍎', label: 'Feed', mode: 'drag' },
+  { id: 'feed', emoji: '🍎', label: 'Feed', mode: 'activity', activity: 'feed' },
   { id: 'drink', emoji: '💧', label: 'Drink', mode: 'tap' },
   { id: 'pet', emoji: '✋', label: 'Pet', mode: 'tap' },
-  { id: 'brush', emoji: '🧹', label: 'Brush', mode: 'drag' },
-  { id: 'nap', emoji: '🛏️', label: 'Nap', mode: 'tap' },
+  { id: 'clean', emoji: '🧽', label: 'Clean', mode: 'activity', activity: 'clean' },
+  { id: 'sleep', emoji: '🌙', label: 'Sleep', mode: 'activity', activity: 'sleep' },
 ]
 
 interface CareTrayProps {
   doneActions: CareAction[]
-  activeTool: CareAction | null
   onTap: (action: CareAction) => void
-  onDragStart: (action: CareAction, emoji: string, event: ReactPointerEvent<HTMLButtonElement>) => void
+  onOpenActivity: (activity: ActivityKind) => void
 }
 
-export function CareTray({ doneActions, activeTool, onTap, onDragStart }: CareTrayProps) {
+export function CareTray({ doneActions, onTap, onOpenActivity }: CareTrayProps) {
   return (
     <div className="care-tray" role="toolbar" aria-label="Care tools">
       {CARE_TOOLS.map((tool) => {
@@ -32,19 +32,11 @@ export function CareTray({ doneActions, activeTool, onTap, onDragStart }: CareTr
           <button
             key={tool.id}
             type="button"
-            className={[
-              'care-tool',
-              used ? 'used' : '',
-              activeTool === tool.id ? 'dragging' : '',
-            ]
-              .filter(Boolean)
-              .join(' ')}
+            className={['care-tool', used ? 'used' : ''].filter(Boolean).join(' ')}
             aria-label={tool.label}
             onClick={() => {
-              if (tool.mode === 'tap') onTap(tool.id)
-            }}
-            onPointerDown={(event) => {
-              if (tool.mode === 'drag') onDragStart(tool.id, tool.emoji, event)
+              if (tool.mode === 'activity' && tool.activity) onOpenActivity(tool.activity)
+              else onTap(tool.id)
             }}
           >
             <span aria-hidden="true">{tool.emoji}</span>

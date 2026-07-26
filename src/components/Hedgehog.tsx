@@ -17,6 +17,7 @@ interface HedgehogProps {
     onPointerCancel: () => void
   }
   stroking?: boolean
+  sleepyEyes?: boolean
 }
 
 export function Hedgehog({
@@ -28,13 +29,16 @@ export function Hedgehog({
   onClick,
   petHandlers,
   stroking = false,
+  sleepyEyes = false,
 }: HedgehogProps) {
+  const eyesClosed = sleepyEyes || anim === 'sleep'
   const className = [
     'hedgehog-wrap',
     size,
     anim,
     interactive ? 'interactive' : '',
     stroking ? 'stroking' : '',
+    eyesClosed ? 'eyes-closed' : '',
   ]
     .filter(Boolean)
     .join(' ')
@@ -55,10 +59,19 @@ export function Hedgehog({
         </g>
         <ellipse cx="100" cy="108" rx="54" ry="42" fill={profile.body} />
         <ellipse cx="100" cy="118" rx="34" ry="28" fill={profile.belly} />
-        <circle cx="82" cy="108" r="5.5" fill={profile.nose} />
-        <circle cx="118" cy="108" r="5.5" fill={profile.nose} />
-        <circle cx="83.5" cy="106.5" r="1.6" fill="#fff" />
-        <circle cx="119.5" cy="106.5" r="1.6" fill="#fff" />
+        {eyesClosed ? (
+          <>
+            <path d="M76 108c4 4 8 4 12 0" fill="none" stroke={profile.nose} strokeWidth="3" strokeLinecap="round" />
+            <path d="M112 108c4 4 8 4 12 0" fill="none" stroke={profile.nose} strokeWidth="3" strokeLinecap="round" />
+          </>
+        ) : (
+          <>
+            <circle cx="82" cy="108" r="5.5" fill={profile.nose} />
+            <circle cx="118" cy="108" r="5.5" fill={profile.nose} />
+            <circle cx="83.5" cy="106.5" r="1.6" fill="#fff" />
+            <circle cx="119.5" cy="106.5" r="1.6" fill="#fff" />
+          </>
+        )}
         <ellipse cx="100" cy="122" rx="7" ry="5" fill={profile.nose} />
         <path d="M90 132c6 6 14 6 20 0" fill="none" stroke={profile.nose} strokeWidth="2.5" strokeLinecap="round" className="smile" />
         <ellipse cx="58" cy="118" rx="10" ry="8" fill={profile.belly} className="paw left" />
