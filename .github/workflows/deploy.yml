@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -24,10 +24,13 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
       - run: npm ci
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
+          # Deploy the Vite production build, not the raw repo source.
           path: dist
 
   deploy:
