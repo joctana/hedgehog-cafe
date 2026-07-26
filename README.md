@@ -31,11 +31,18 @@ npm run preview
 
 The production files land in `dist/`. Deploy that folder to any static host (GitHub Pages, Netlify, Cloudflare Pages, etc.).
 
-### GitHub Pages
+### GitHub Pages (auto-deploy on merge)
 
-1. Push this repo to GitHub.
-2. Enable GitHub Pages from the `dist` folder (or use a Pages action that runs `npm run build`).
-3. Open the Pages URL on the iPad and Add to Home Screen.
+Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which builds the app and publishes it to GitHub Pages.
+
+**One-time setup** (repo admin):
+
+1. Open the repo on GitHub → **Settings** → **Pages**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+3. Merge this PR (or any PR) into `main`.
+4. After the workflow finishes, the game is live at  
+   `https://joctana.github.io/hedgehog-cafe/`
+5. Open that URL on the iPad and Add to Home Screen.
 
 ## How to play
 

@@ -1,5 +1,6 @@
 name: Deploy to GitHub Pages
 
+# Deploys automatically whenever changes land on main (including merged PRs).
 on:
   push:
     branches: [main]
