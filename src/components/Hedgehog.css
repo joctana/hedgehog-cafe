@@ -1,0 +1,162 @@
+.hedgehog-wrap {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  touch-action: none;
+  transform-origin: center bottom;
+}
+
+.hedgehog-wrap.sm {
+  width: clamp(110px, 18vw, 160px);
+}
+
+.hedgehog-wrap.lg {
+  width: min(72vw, 380px);
+}
+
+.hedgehog-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.hedgehog-wrap.idle .hedgehog-svg,
+.hedgehog-wrap.happy .hedgehog-svg {
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+.hedgehog-wrap.interactive:hover .hedgehog-svg,
+.hedgehog-wrap.interactive:focus-visible .hedgehog-svg {
+  animation: bounceSoft 600ms ease;
+}
+
+.hedgehog-wrap.eat .hedgehog-svg,
+.hedgehog-wrap.drink .hedgehog-svg {
+  animation: nibble 500ms ease;
+}
+
+.hedgehog-wrap.pet .hedgehog-svg,
+.hedgehog-wrap.stroking .hedgehog-svg {
+  animation: wiggle 500ms ease;
+}
+
+.hedgehog-wrap.brush .spines {
+  animation: fluff 600ms ease;
+  transform-origin: 100px 90px;
+}
+
+.hedgehog-wrap.sleep .hedgehog-svg {
+  animation: sleepy 1.4s ease;
+}
+
+.hedgehog-wrap.happy .hedgehog-svg {
+  animation: dance 700ms ease;
+}
+
+.zzz {
+  animation: zzzFloat 1.2s ease-in-out infinite;
+}
+
+.smile {
+  transition: d 200ms ease;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.03, 0.98) translateY(-2px);
+  }
+}
+
+@keyframes bounceSoft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes nibble {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  30% {
+    transform: translateY(4px) rotate(-3deg);
+  }
+  60% {
+    transform: translateY(2px) rotate(3deg);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-6deg);
+  }
+  75% {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes fluff {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08, 0.95);
+  }
+}
+
+@keyframes sleepy {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(8px) scale(1.02, 0.96);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes dance {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-14px) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(0) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-10px) rotate(4deg);
+  }
+}
+
+@keyframes zzzFloat {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-6px);
+  }
+}
