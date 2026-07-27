@@ -1,6 +1,16 @@
 import { useCallback, useRef } from 'react'
 
-export type SoundKind = 'tap' | 'happy' | 'eat' | 'sleep' | 'celebrate' | 'wash' | 'bubble'
+export type SoundKind =
+  | 'tap'
+  | 'happy'
+  | 'eat'
+  | 'sleep'
+  | 'celebrate'
+  | 'wash'
+  | 'bubble'
+  | 'blast'
+  | 'hit'
+  | 'transform'
 
 function playTone(
   ctx: AudioContext,
@@ -67,6 +77,19 @@ export function useSounds(muted: boolean) {
             playTone(ctx, 523, 0.12, 'sine', 0.07)
             playTone(ctx, 659, 0.14, 'sine', 0.06)
             playTone(ctx, 784, 0.18, 'sine', 0.06)
+            break
+          case 'blast':
+            playTone(ctx, 180, 0.12, 'sawtooth', 0.05)
+            playTone(ctx, 90, 0.18, 'square', 0.04)
+            break
+          case 'hit':
+            playTone(ctx, 240, 0.08, 'triangle', 0.06)
+            playTone(ctx, 140, 0.12, 'square', 0.04)
+            break
+          case 'transform':
+            playTone(ctx, 400, 0.1, 'square', 0.05)
+            playTone(ctx, 600, 0.12, 'sawtooth', 0.04)
+            playTone(ctx, 800, 0.14, 'sine', 0.05)
             break
         }
       } catch {

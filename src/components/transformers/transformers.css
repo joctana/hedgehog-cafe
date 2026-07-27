@@ -1,0 +1,308 @@
+.tf-battle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  color: #eef3ff;
+  background: linear-gradient(180deg, #0b1a33 0%, #1a335c 42%, #2a4160 100%);
+  padding:
+    calc(16px + var(--safe-top))
+    calc(16px + var(--safe-right))
+    calc(16px + var(--safe-bottom))
+    calc(16px + var(--safe-left));
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: 8px;
+}
+
+.tf-battle.flash {
+  filter: brightness(1.25);
+}
+
+.tf-sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 220, 120, 0.16), transparent 28%),
+    radial-gradient(circle at 80% 30%, rgba(120, 180, 255, 0.18), transparent 32%);
+}
+
+.tf-ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 28%;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.25)),
+    repeating-linear-gradient(
+      90deg,
+      #3a4558 0,
+      #3a4558 18px,
+      #2f3848 18px,
+      #2f3848 36px
+    );
+  border-top: 4px solid rgba(255, 220, 120, 0.25);
+}
+
+.tf-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tf-title-block {
+  text-align: center;
+}
+
+.tf-title-block h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+  letter-spacing: 0.02em;
+  color: #f6d76b;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+.tf-title-block p {
+  margin: 2px 0 0;
+  font-weight: 800;
+  color: #c9d7f2;
+}
+
+.tf-hint {
+  position: relative;
+  z-index: 2;
+  justify-self: center;
+  margin: 0;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(10, 20, 40, 0.55);
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.tf-hp {
+  position: relative;
+  z-index: 2;
+  width: min(520px, 92%);
+  justify-self: center;
+  display: grid;
+  gap: 6px;
+  font-weight: 800;
+}
+
+.tf-hp-track {
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.tf-hp-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ff5d5d, #ffb347);
+  transition: width 180ms ease;
+}
+
+.tf-arena {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(12px, 5vw, 48px);
+  min-height: 0;
+  padding-bottom: 8px;
+}
+
+.tf-controls {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
+.tf-blast {
+  min-width: min(90vw, 320px);
+  min-height: 72px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #ffb347, #e25b2c);
+  color: #fff8ef;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  box-shadow: 0 10px 0 #9a3412, 0 16px 28px rgba(0, 0, 0, 0.35);
+  transition: transform 120ms ease;
+}
+
+.tf-blast:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 6px 0 #9a3412, 0 10px 18px rgba(0, 0, 0, 0.3);
+}
+
+.tf-blast:disabled {
+  opacity: 0.7;
+}
+
+.tf-blast.win {
+  background: linear-gradient(180deg, #ffe08a, #f0c040);
+  color: #2a1a08;
+  box-shadow: 0 10px 0 #b8860b, 0 16px 28px rgba(0, 0, 0, 0.35);
+}
+
+.tf-secondary {
+  min-height: 56px;
+  padding: 0 22px;
+  border-radius: 18px;
+  background: rgba(255, 246, 234, 0.92);
+  color: #2a1a08;
+  font-weight: 800;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+.tf-victory-badge {
+  width: min(40vw, 180px);
+  height: min(40vw, 180px);
+  display: grid;
+  place-items: center;
+  font-size: clamp(4rem, 12vw, 6rem);
+  animation: tfPop 700ms ease both;
+}
+
+.tf-robot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: inherit;
+  width: min(38vw, 220px);
+}
+
+.tf-robot.lg {
+  width: min(42vw, 260px);
+}
+
+.tf-robot:disabled {
+  cursor: default;
+}
+
+.tf-robot.clickable {
+  cursor: pointer;
+}
+
+.tf-robot-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.35));
+}
+
+.tf-robot.mirror .tf-robot-svg {
+  transform: scaleX(-1);
+}
+
+.tf-robot-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.95rem, 2.4vw, 1.2rem);
+  color: #f4f7ff;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+  background: rgba(10, 20, 40, 0.45);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.tf-robot.idle .tf-robot-svg {
+  animation: tfIdle 2.2s ease-in-out infinite;
+}
+
+.tf-robot.attack .tf-robot-svg {
+  animation: tfAttack 350ms ease;
+}
+
+.tf-robot.hit .tf-robot-svg {
+  animation: tfHit 280ms ease;
+}
+
+.tf-robot.ko .tf-robot-svg {
+  animation: tfKo 700ms ease forwards;
+}
+
+.tf-robot.win .tf-robot-svg {
+  animation: tfWin 700ms ease infinite;
+}
+
+.tf-robot.attack .arm.right {
+  transform-origin: 131px 90px;
+  animation: tfPunch 350ms ease;
+}
+
+@keyframes tfIdle {
+  0%,
+  100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes tfAttack {
+  0%,
+  100% { transform: translateX(0); }
+  40% { transform: translateX(18px); }
+}
+
+@keyframes tfHit {
+  0%,
+  100% { transform: translateX(0) rotate(0deg); }
+  30% { transform: translateX(10px) rotate(4deg); }
+  60% { transform: translateX(-8px) rotate(-4deg); }
+}
+
+@keyframes tfKo {
+  to {
+    transform: translateY(30px) rotate(18deg) scale(0.85);
+    opacity: 0.15;
+  }
+}
+
+@keyframes tfWin {
+  0%,
+  100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(-3deg); }
+}
+
+@keyframes tfPunch {
+  0%,
+  100% { transform: rotate(0deg); }
+  50% { transform: rotate(-25deg); }
+}
+
+@keyframes tfPop {
+  from { transform: scale(0.4); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@media (orientation: landscape) and (max-height: 700px) {
+  .tf-robot.lg {
+    width: min(34vw, 200px);
+  }
+
+  .tf-blast {
+    min-height: 64px;
+  }
+
+  .tf-title-block h1 {
+    font-size: 1.5rem;
+  }
+}

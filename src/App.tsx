@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react'
 import { CafeScene } from './components/CafeScene'
 import { CareScene } from './components/CareScene'
+import { ModeSelect } from './components/ModeSelect'
+import { TransformersBattle } from './components/transformers/TransformersBattle'
 import { useHedgehogCare } from './hooks/useHedgehogCare'
 import { useSounds } from './hooks/useSounds'
 
 const TIP_KEY = 'hedgehog-cafe-tip-dismissed'
 
+type AppMode = 'home' | 'cafe' | 'transformers'
+
 export default function App() {
   const care = useHedgehogCare()
+  const [mode, setMode] = useState<AppMode>('home')
   const [muted, setMuted] = useState(false)
   const [showTip, setShowTip] = useState(false)
   const { play } = useSounds(muted)
@@ -22,8 +27,13 @@ export default function App() {
     setShowTip(false)
   }
 
+  const goHome = () => {
+    care.goHome()
+    setMode('home')
+  }
+
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''}`}>
       <div className="top-bar">
         <button
           type="button"
@@ -35,15 +45,34 @@ export default function App() {
         </button>
       </div>
 
-      {!care.selected ? (
+      {mode === 'home' && (
+        <ModeSelect
+          onPickCafe={() => {
+            play('tap')
+            setMode('cafe')
+          }}
+          onPickTransformers={() => {
+            play('transform')
+            setMode('transformers')
+          }}
+        />
+      )}
+
+      {mode === 'cafe' && !care.selected && (
         <CafeScene
           states={care.states}
           onSelect={(id) => {
             play('tap')
             care.selectHedgehog(id)
           }}
+          onBack={() => {
+            play('tap')
+            goHome()
+          }}
         />
-      ) : (
+      )}
+
+      {mode === 'cafe' && care.selected && (
         <CareScene
           profile={care.selected}
           happiness={care.selectedState?.happiness ?? 0}
@@ -70,7 +99,17 @@ export default function App() {
         />
       )}
 
-      {showTip && !care.selected && (
+      {mode === 'transformers' && (
+        <TransformersBattle
+          onBack={() => {
+            play('tap')
+            goHome()
+          }}
+          playSound={play}
+        />
+      )}
+
+      {showTip && mode === 'home' && (
         <div className="parent-tip" role="status">
           <span>
             Parent tip: on iPad Safari, tap Share → <strong>Add to Home Screen</strong> for a
