@@ -1,8 +1,13 @@
 # Hedgehog Café
 
-A cute, touch-first hedgehog café care game for little hands — made to play on an iPad.
+A cute, touch-first play app for little hands — made for iPad.
 
-Tap a hedgehog friend, then feed, pet, brush, give a drink, or tuck them in for a nap. There are no fail states, timers, ads, or accounts — just cozy care and happy sparkles.
+Pick a game on the home screen:
+
+- **Hedgehog Café** — feed, clean, and tuck in hedgehog friends
+- **Transformers** — help Optimus Prime blast Decepticons in a simple battle mini-game
+
+There are no fail states, timers, ads, or accounts.
 
 ## Play on iPad
 
@@ -46,15 +51,23 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 
 ## How to play
 
-1. On the café screen, tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
+### Home
+Choose **Hedgehog Café** or **Transformers**.
+
+### Hedgehog Café
+1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
 2. Use the big care tools:
-   - **Feed** — open snack time, then drag apple/berries/treats to their mouth
+   - **Feed** — snack time; drag foods to their mouth
    - **Water** — tap to give a drink
    - **Hand** — stroke across the hedgehog to pet
-   - **Clean** — bath time! drag the sponge over dirt spots until sparkly
-   - **Sleep** — bedtime! pull the blanket up as the room turns night
+   - **Clean** — bath time; sponge away dirt spots
+   - **Sleep** — pull the blanket up for bedtime
 3. Stars fill as they get happier. Unlock tiny decorations (bow, hat, pillow).
-4. When all five stars light up, enjoy a little celebration!
+
+### Transformers
+1. Optimus Prime faces Starscream, Soundwave, then Megatron.
+2. Tap **BLAST!** or tap the Decepticon to hit them.
+3. Drain their energy bar to win each fight — then celebrate Autobot victory!
 
 ## Tech
 
