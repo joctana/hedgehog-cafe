@@ -70,7 +70,7 @@ export default function App() {
         />
       )}
 
-      {showTip && (
+      {showTip && !care.selected && (
         <div className="parent-tip" role="status">
           <span>
             Parent tip: on iPad Safari, tap Share → <strong>Add to Home Screen</strong> for a

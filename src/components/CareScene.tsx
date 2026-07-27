@@ -164,7 +164,7 @@ export function CareScene({
         />
       </div>
 
-      <div>
+      <div className="care-dock">
         <CareTray
           doneActions={doneActions}
           onTap={onTapTool}
