@@ -1,6 +1,6 @@
 export type RobotId = 'optimus' | 'starscream' | 'megatron' | 'soundwave'
 
-export type AttackMove = 'punch' | 'laser' | 'energon'
+export type AttackMove = 'punch' | 'laser' | 'energon' | 'ram'
 
 export interface RobotProfile {
   id: RobotId
@@ -67,4 +67,5 @@ export const MOVES: Record<
   punch: { label: 'Punch', emoji: '👊', damage: 1, energonCost: 0 },
   laser: { label: 'Laser', emoji: '🔫', damage: 1, energonCost: 0 },
   energon: { label: 'Energon', emoji: '⚡', damage: 2, energonCost: 3 },
+  ram: { label: 'Ram', emoji: '🚛', damage: 2, energonCost: 0 },
 }

@@ -1,7 +1,7 @@
 import './transformers.css'
 
-export type OptimusForm = 'truck' | 'transforming' | 'robot'
-export type OptimusPose = 'idle' | 'attack' | 'win' | 'driveIn' | 'driveOut'
+export type OptimusForm = 'truck' | 'toRobot' | 'toTruck' | 'robot'
+export type OptimusPose = 'idle' | 'attack' | 'win' | 'driveIn' | 'driveOut' | 'ram'
 
 interface OptimusPrimeProps {
   form: OptimusForm
@@ -10,6 +10,10 @@ interface OptimusPrimeProps {
 }
 
 export function OptimusPrime({ form, pose = 'idle', onClick }: OptimusPrimeProps) {
+  const isTransforming = form === 'toRobot' || form === 'toTruck'
+  const showTruck = form === 'truck' || isTransforming
+  const showRobot = form === 'robot' || isTransforming
+
   const className = [
     'tf-optimus',
     form,
@@ -20,30 +24,28 @@ export function OptimusPrime({ form, pose = 'idle', onClick }: OptimusPrimeProps
     .join(' ')
 
   const Tag = onClick ? 'button' : 'div'
+  const label =
+    form === 'truck' || form === 'toTruck' ? 'Optimus (Truck)' : 'Optimus Prime'
 
   return (
     <Tag
       type={onClick ? 'button' : undefined}
       className={className}
       onClick={onClick}
-      aria-label="Optimus Prime"
+      aria-label={label}
     >
       <div className="tf-optimus-stage">
-        {(form === 'truck' || form === 'transforming') && (
+        {showTruck && (
           <svg viewBox="0 0 220 140" className="tf-truck-svg" aria-hidden="true">
-            {/* cab */}
             <rect x="18" y="48" width="78" height="52" rx="10" fill="#1f4f9c" />
             <rect x="28" y="56" width="40" height="22" rx="4" fill="#7ec8ff" opacity="0.85" />
             <rect x="18" y="88" width="78" height="14" fill="#c62828" />
-            {/* smokestacks */}
             <rect x="30" y="28" width="8" height="24" rx="2" fill="#c0c6d4" />
             <rect x="48" y="24" width="8" height="28" rx="2" fill="#c0c6d4" />
-            {/* trailer */}
             <rect x="92" y="42" width="110" height="60" rx="8" fill="#c62828" />
             <rect x="102" y="52" width="90" height="18" rx="4" fill="#1f4f9c" />
             <circle cx="147" cy="62" r="10" fill="#f0c040" />
             <path d="M139 58h16l-8 14z" fill="#1f4f9c" />
-            {/* wheels */}
             <circle cx="40" cy="112" r="16" fill="#222831" />
             <circle cx="40" cy="112" r="8" fill="#f0c040" />
             <circle cx="78" cy="112" r="16" fill="#222831" />
@@ -52,13 +54,12 @@ export function OptimusPrime({ form, pose = 'idle', onClick }: OptimusPrimeProps
             <circle cx="130" cy="112" r="8" fill="#f0c040" />
             <circle cx="180" cy="112" r="16" fill="#222831" />
             <circle cx="180" cy="112" r="8" fill="#f0c040" />
-            {/* headlights */}
             <circle cx="22" cy="78" r="5" fill="#ffe08a" />
             <circle cx="22" cy="92" r="5" fill="#ffe08a" />
           </svg>
         )}
 
-        {(form === 'robot' || form === 'transforming') && (
+        {showRobot && (
           <svg viewBox="0 0 160 200" className="tf-robot-svg tf-optimus-robot" aria-hidden="true">
             <rect x="48" y="140" width="22" height="40" rx="6" fill="#1f4f9c" className="part leg-l" />
             <rect x="90" y="140" width="22" height="40" rx="6" fill="#1f4f9c" className="part leg-r" />
@@ -87,7 +88,7 @@ export function OptimusPrime({ form, pose = 'idle', onClick }: OptimusPrimeProps
           </svg>
         )}
 
-        {form === 'transforming' && (
+        {isTransforming && (
           <div className="tf-transform-fx" aria-hidden="true">
             <span className="ring r1" />
             <span className="ring r2" />
@@ -97,9 +98,7 @@ export function OptimusPrime({ form, pose = 'idle', onClick }: OptimusPrimeProps
           </div>
         )}
       </div>
-      <span className="tf-robot-name">
-        {form === 'truck' ? 'Optimus (Truck)' : 'Optimus Prime'}
-      </span>
+      <span className="tf-robot-name">{label}</span>
     </Tag>
   )
 }

@@ -372,35 +372,58 @@
   animation: tfWin 700ms ease infinite;
 }
 
-/* Transform morph */
-.tf-optimus.transforming .tf-truck-svg {
+/* Transform morph: truck → robot */
+.tf-optimus.toRobot .tf-truck-svg {
   position: absolute;
   width: 100%;
   animation: tfTruckMorph 1.5s ease forwards;
 }
 
-.tf-optimus.transforming .tf-optimus-robot {
+.tf-optimus.toRobot .tf-optimus-robot {
   position: absolute;
   width: 78%;
   animation: tfRobotAssemble 1.5s ease forwards;
 }
 
-.tf-optimus.transforming .part {
+.tf-optimus.toRobot .part {
   transform-box: fill-box;
   transform-origin: center;
 }
 
-.tf-optimus.transforming .part.head { animation: tfPartIn 0.7s 0.55s both; }
-.tf-optimus.transforming .part.torso,
-.tf-optimus.transforming .part.chest,
-.tf-optimus.transforming .part.badge { animation: tfPartIn 0.7s 0.35s both; }
-.tf-optimus.transforming .part.arm-l { animation: tfArmInL 0.7s 0.45s both; }
-.tf-optimus.transforming .part.arm-r,
-.tf-optimus.transforming .part.fist-r { animation: tfArmInR 0.7s 0.45s both; }
-.tf-optimus.transforming .part.leg-l,
-.tf-optimus.transforming .part.foot-l { animation: tfLegIn 0.7s 0.25s both; }
-.tf-optimus.transforming .part.leg-r,
-.tf-optimus.transforming .part.foot-r { animation: tfLegIn 0.7s 0.3s both; }
+.tf-optimus.toRobot .part.head { animation: tfPartIn 0.7s 0.55s both; }
+.tf-optimus.toRobot .part.torso,
+.tf-optimus.toRobot .part.chest,
+.tf-optimus.toRobot .part.badge { animation: tfPartIn 0.7s 0.35s both; }
+.tf-optimus.toRobot .part.arm-l { animation: tfArmInL 0.7s 0.45s both; }
+.tf-optimus.toRobot .part.arm-r,
+.tf-optimus.toRobot .part.fist-r { animation: tfArmInR 0.7s 0.45s both; }
+.tf-optimus.toRobot .part.leg-l,
+.tf-optimus.toRobot .part.foot-l { animation: tfLegIn 0.7s 0.25s both; }
+.tf-optimus.toRobot .part.leg-r,
+.tf-optimus.toRobot .part.foot-r { animation: tfLegIn 0.7s 0.3s both; }
+
+/* Transform morph: robot → truck */
+.tf-optimus.toTruck .tf-optimus-robot {
+  position: absolute;
+  width: 78%;
+  animation: tfRobotDisassemble 1.5s ease forwards;
+}
+
+.tf-optimus.toTruck .tf-truck-svg {
+  position: absolute;
+  width: 100%;
+  animation: tfTruckAssemble 1.5s ease forwards;
+}
+
+.tf-optimus.toTruck .part {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: tfPartOut 0.6s ease forwards;
+}
+
+.tf-optimus.truck.ram .tf-truck-svg {
+  animation: tfRam 420ms ease;
+}
 
 .tf-transform-fx {
   position: absolute;
@@ -436,6 +459,21 @@
 .tf-transform-fx .spark.s2 { top: 22%; right: 18%; animation-delay: 0.15s; }
 .tf-transform-fx .spark.s3 { bottom: 28%; left: 46%; animation-delay: 0.28s; }
 
+.tf-move.transform-toggle {
+  background: linear-gradient(180deg, #5ca8ff, #1f4f9c);
+  color: #fff8ef;
+}
+
+.tf-move.transform-toggle.to-truck {
+  background: linear-gradient(180deg, #ff8a7a, #c62828);
+}
+
+.tf-move.ram {
+  background: linear-gradient(180deg, #ffe08a, #f0c040);
+  min-width: 140px;
+  flex: 1;
+}
+
 .tf-robot.idle .tf-robot-svg { animation: tfIdle 2.2s ease-in-out infinite; }
 .tf-robot.hit .tf-robot-svg { animation: tfHit 280ms ease; }
 .tf-robot.ko .tf-robot-svg { animation: tfKo 700ms ease forwards; }
@@ -463,10 +501,33 @@
   100% { transform: scale(0.2) rotate(25deg); opacity: 0; }
 }
 
+@keyframes tfTruckAssemble {
+  0% { transform: scale(0.2) rotate(-20deg); opacity: 0; }
+  55% { opacity: 0.7; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
 @keyframes tfRobotAssemble {
   0% { transform: scale(0.3) rotate(-12deg); opacity: 0; }
   40% { opacity: 0.4; }
   100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes tfRobotDisassemble {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  55% { transform: scale(0.55) rotate(10deg); opacity: 0.5; }
+  100% { transform: scale(0.2) rotate(18deg); opacity: 0; }
+}
+
+@keyframes tfPartOut {
+  to { opacity: 0; transform: scale(0.4) translateY(12px); }
+}
+
+@keyframes tfRam {
+  0%,
+  100% { transform: translateX(0); }
+  35% { transform: translateX(28px) scale(1.05); }
+  55% { transform: translateX(18px); }
 }
 
 @keyframes tfPartIn {
