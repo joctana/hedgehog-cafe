@@ -66,10 +66,11 @@ Choose **Hedgehog Café** or **Transformers**.
 
 ### Transformers
 1. Watch Optimus **roll in as a truck**, then tap **TRANSFORM!** to become a robot.
-2. Fight Starscream, Soundwave, then Megatron with **Punch**, **Laser**, and **Energon**.
-3. Fill Energon pips with hits/dodges to unlock the big Energon smash.
-4. When a Decepticon winds up, tap **DODGE!** for bonus stars.
-5. Win the war and Optimus transforms back into a truck to roll out!
+2. During battle, tap **Truck** / **Robot** anytime to change forms again.
+3. In truck mode use **Ram**; in robot mode use **Punch**, **Laser**, and **Energon**.
+4. Fill Energon pips with hits/dodges to unlock the big Energon smash.
+5. When a Decepticon winds up, tap **DODGE!** for bonus stars.
+6. Win the war and Optimus rolls out as a truck!
 
 ## Tech
 
