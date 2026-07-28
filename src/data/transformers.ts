@@ -1,5 +1,7 @@
 export type RobotId = 'optimus' | 'starscream' | 'megatron' | 'soundwave'
 
+export type AttackMove = 'punch' | 'laser' | 'energon'
+
 export interface RobotProfile {
   id: RobotId
   name: string
@@ -9,17 +11,17 @@ export interface RobotProfile {
   accent: string
   hitsToDefeat: number
   taunt: string
+  weakness: AttackMove
 }
 
-export const OPTIMUS: RobotProfile = {
-  id: 'optimus',
+export const OPTIMUS = {
+  id: 'optimus' as const,
   name: 'Optimus Prime',
-  role: 'autobot',
+  role: 'autobot' as const,
   primary: '#1f4f9c',
   secondary: '#c62828',
   accent: '#f0c040',
-  hitsToDefeat: 0,
-  taunt: 'Autobots, roll out!',
+  taunt: 'Autobots, transform and roll out!',
 }
 
 export const DECEPTICONS: RobotProfile[] = [
@@ -30,8 +32,9 @@ export const DECEPTICONS: RobotProfile[] = [
     primary: '#6b4c9a',
     secondary: '#c0c6d4',
     accent: '#e6b85c',
-    hitsToDefeat: 3,
-    taunt: 'You cannot stop me!',
+    hitsToDefeat: 4,
+    taunt: 'Catch me if you can!',
+    weakness: 'laser',
   },
   {
     id: 'soundwave',
@@ -40,8 +43,9 @@ export const DECEPTICONS: RobotProfile[] = [
     primary: '#3d3f6b',
     secondary: '#7a80a8',
     accent: '#5ec8ff',
-    hitsToDefeat: 4,
+    hitsToDefeat: 5,
     taunt: 'Soundwave superior!',
+    weakness: 'punch',
   },
   {
     id: 'megatron',
@@ -50,7 +54,17 @@ export const DECEPTICONS: RobotProfile[] = [
     primary: '#5a5e66',
     secondary: '#8b9099',
     accent: '#d4a017',
-    hitsToDefeat: 5,
-    taunt: 'Decepticons, attack!',
+    hitsToDefeat: 6,
+    taunt: 'You will fall, Prime!',
+    weakness: 'energon',
   },
 ]
+
+export const MOVES: Record<
+  AttackMove,
+  { label: string; emoji: string; damage: number; energonCost: number }
+> = {
+  punch: { label: 'Punch', emoji: '👊', damage: 1, energonCost: 0 },
+  laser: { label: 'Laser', emoji: '🔫', damage: 1, energonCost: 0 },
+  energon: { label: 'Energon', emoji: '⚡', damage: 2, energonCost: 3 },
+}

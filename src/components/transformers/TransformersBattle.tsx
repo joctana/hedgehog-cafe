@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react'
-import { DECEPTICONS, OPTIMUS } from '../../data/transformers'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { DECEPTICONS, MOVES, type AttackMove } from '../../data/transformers'
 import type { SoundKind } from '../../hooks/useSounds'
+import { OptimusPrime, type OptimusForm, type OptimusPose } from './OptimusPrime'
 import { Robot } from './Robot'
 import './transformers.css'
 
@@ -9,87 +10,228 @@ interface TransformersBattleProps {
   playSound: (kind: SoundKind) => void
 }
 
-type EnemyPose = 'idle' | 'hit' | 'ko'
-type HeroPose = 'idle' | 'attack' | 'win'
+type Phase = 'intro' | 'ready' | 'transforming' | 'battle' | 'victory'
+type EnemyPose = 'idle' | 'hit' | 'ko' | 'windup' | 'fly'
 
 export function TransformersBattle({ onBack, playSound }: TransformersBattleProps) {
+  const [phase, setPhase] = useState<Phase>('intro')
+  const [form, setForm] = useState<OptimusForm>('truck')
+  const [heroPose, setHeroPose] = useState<OptimusPose>('driveIn')
   const [index, setIndex] = useState(0)
   const [hits, setHits] = useState(0)
-  const [heroPose, setHeroPose] = useState<HeroPose>('idle')
+  const [energon, setEnergon] = useState(0)
+  const [stars, setStars] = useState(0)
   const [enemyPose, setEnemyPose] = useState<EnemyPose>('idle')
-  const [hint, setHint] = useState('Tap BLAST or the Decepticon!')
-  const [flash, setFlash] = useState(false)
-  const [won, setWon] = useState(false)
+  const [hint, setHint] = useState('Optimus is rolling in...')
+  const [flash, setFlash] = useState<'none' | 'blast' | 'laser' | 'energon'>('none')
   const [busy, setBusy] = useState(false)
+  const [dodgeWindow, setDodgeWindow] = useState(false)
+  const [combo, setCombo] = useState(0)
+  const dodgeTimer = useRef<number | null>(null)
+  const attackTimer = useRef<number | null>(null)
+  const busyRef = useRef(false)
 
   const enemy = DECEPTICONS[index]
   const needed = enemy?.hitsToDefeat ?? 1
   const hpLeft = Math.max(0, needed - hits)
   const hpPct = enemy ? (hpLeft / needed) * 100 : 0
 
+  const clearTimers = useCallback(() => {
+    if (dodgeTimer.current) window.clearTimeout(dodgeTimer.current)
+    if (attackTimer.current) window.clearTimeout(attackTimer.current)
+    dodgeTimer.current = null
+    attackTimer.current = null
+  }, [])
+
+  const scheduleEnemyAttack = useCallback(() => {
+    clearTimers()
+    attackTimer.current = window.setTimeout(() => {
+      if (busyRef.current) return
+      setEnemyPose('windup')
+      setDodgeWindow(true)
+      setHint('DODGE!')
+      playSound('tap')
+
+      dodgeTimer.current = window.setTimeout(() => {
+        setDodgeWindow(false)
+        setEnemyPose('idle')
+        setCombo(0)
+        setHint('Almost — dodge next time!')
+        playSound('hit')
+        // Soft fail: schedule another chance soon
+        attackTimer.current = window.setTimeout(() => {
+          if (!busyRef.current) scheduleEnemyAttack()
+        }, 2200)
+      }, 1600)
+    }, 3000)
+  }, [clearTimers, playSound])
+
   useEffect(() => {
-    if (!enemy) return
-    setHint(enemy.taunt)
-  }, [enemy])
+    playSound('transform')
+    const t1 = window.setTimeout(() => {
+      setHeroPose('idle')
+      setPhase('ready')
+      setHint('Tap TRANSFORM!')
+    }, 1400)
+    return () => {
+      window.clearTimeout(t1)
+      clearTimers()
+    }
+    // Mount-only intro
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    busyRef.current = busy
+  }, [busy])
+
+  const startTransform = () => {
+    if (phase !== 'ready') return
+    setPhase('transforming')
+    setForm('transforming')
+    setHint('TRANSFORM!')
+    playSound('transform')
+
+    window.setTimeout(() => {
+      setForm('robot')
+      setPhase('battle')
+      setHeroPose('idle')
+      setHint(`${DECEPTICONS[0].name} appears!`)
+      playSound('celebrate')
+      scheduleEnemyAttack()
+    }, 1600)
+  }
+
+  const dodge = () => {
+    if (!dodgeWindow || busy) return
+    clearTimers()
+    setDodgeWindow(false)
+    setEnemyPose('idle')
+    setCombo((c) => c + 1)
+    setEnergon((e) => Math.min(5, e + 1))
+    setStars((s) => s + 1)
+    setHint('Nice dodge!')
+    playSound('happy')
+    scheduleEnemyAttack()
+  }
 
   const advanceOrWin = useCallback(() => {
+    setStars((s) => s + 3)
     if (index >= DECEPTICONS.length - 1) {
-      setWon(true)
+      clearTimers()
+      setPhase('victory')
       setHeroPose('win')
       setHint('Autobots win!')
       playSound('celebrate')
+      window.setTimeout(() => {
+        setForm('transforming')
+        playSound('transform')
+      }, 900)
+      window.setTimeout(() => {
+        setForm('truck')
+        setHeroPose('driveOut')
+        setHint('Roll out!')
+      }, 2200)
       return
     }
     setIndex((i) => i + 1)
     setHits(0)
     setEnemyPose('idle')
     setBusy(false)
+    setCombo(0)
+    setHint('Next Decepticon!')
     playSound('transform')
-  }, [index, playSound])
+    scheduleEnemyAttack()
+  }, [clearTimers, index, playSound, scheduleEnemyAttack])
 
-  const blast = useCallback(() => {
-    if (busy || won || !enemy) return
-    setBusy(true)
-    setHeroPose('attack')
-    setEnemyPose('hit')
-    setFlash(true)
-    playSound('blast')
-    setHint('BOOM!')
-
-    window.setTimeout(() => setFlash(false), 180)
-    window.setTimeout(() => setHeroPose('idle'), 350)
-
-    const nextHits = hits + 1
-    window.setTimeout(() => {
-      if (nextHits >= needed) {
-        setHits(needed)
-        setEnemyPose('ko')
-        setHint(`${enemy.name} is down!`)
-        playSound('hit')
-        window.setTimeout(advanceOrWin, 900)
-      } else {
-        setHits(nextHits)
-        setEnemyPose('idle')
-        setHint('Again! Keep blasting!')
-        playSound('hit')
-        setBusy(false)
+  const attack = useCallback(
+    (move: AttackMove) => {
+      if (phase !== 'battle' || busy || !enemy) return
+      const moveInfo = MOVES[move]
+      if (energon < moveInfo.energonCost) {
+        setHint('Need more Energon!')
+        playSound('tap')
+        return
       }
-    }, 280)
-  }, [advanceOrWin, busy, enemy, hits, needed, playSound, won])
+
+      clearTimers()
+      setDodgeWindow(false)
+      setBusy(true)
+      setHeroPose('attack')
+      setEnemyPose(move === 'laser' ? 'fly' : 'hit')
+      setFlash(move === 'punch' ? 'blast' : move)
+      playSound(move === 'laser' ? 'blast' : move === 'energon' ? 'transform' : 'hit')
+
+      const weakBonus = enemy.weakness === move ? 1 : 0
+      const totalDamage = moveInfo.damage + weakBonus
+      const nextHits = Math.min(needed, hits + totalDamage)
+      const gainedEnergon = move === 'energon' ? -moveInfo.energonCost : 1
+
+      if (weakBonus) setHint(`Super effective ${moveInfo.label}!`)
+      else setHint(move === 'energon' ? 'ENERGON SMASH!' : `${moveInfo.label}!`)
+
+      window.setTimeout(() => setFlash('none'), 220)
+      window.setTimeout(() => setHeroPose('idle'), 380)
+
+      window.setTimeout(() => {
+        setHits(nextHits)
+        setEnergon((e) => Math.max(0, Math.min(5, e + gainedEnergon)))
+        setCombo((c) => c + 1)
+        setStars((s) => s + 1 + weakBonus)
+
+        if (nextHits >= needed) {
+          setEnemyPose('ko')
+          setHint(`${enemy.name} is down!`)
+          playSound('celebrate')
+          window.setTimeout(advanceOrWin, 1000)
+        } else {
+          setEnemyPose('idle')
+          setBusy(false)
+          scheduleEnemyAttack()
+        }
+      }, 320)
+    },
+    [
+      advanceOrWin,
+      busy,
+      clearTimers,
+      enemy,
+      energon,
+      hits,
+      needed,
+      phase,
+      playSound,
+      scheduleEnemyAttack,
+    ],
+  )
 
   const restart = () => {
+    clearTimers()
+    setPhase('intro')
+    setForm('truck')
+    setHeroPose('driveIn')
     setIndex(0)
     setHits(0)
-    setHeroPose('idle')
+    setEnergon(0)
+    setStars(0)
     setEnemyPose('idle')
-    setWon(false)
     setBusy(false)
-    setHint('Tap BLAST or the Decepticon!')
+    setDodgeWindow(false)
+    setCombo(0)
+    setHint('Optimus is rolling in...')
     playSound('transform')
+    window.setTimeout(() => {
+      setHeroPose('idle')
+      setPhase('ready')
+      setHint('Tap TRANSFORM!')
+    }, 1400)
   }
 
   return (
-    <section className={`tf-battle ${flash ? 'flash' : ''}`} aria-label="Transformers battle">
+    <section
+      className={`tf-battle flash-${flash} ${dodgeWindow ? 'dodge-mode' : ''}`}
+      aria-label="Transformers battle"
+    >
       <div className="tf-sky" aria-hidden="true" />
       <div className="tf-ground" aria-hidden="true" />
 
@@ -99,41 +241,122 @@ export function TransformersBattle({ onBack, playSound }: TransformersBattleProp
         </button>
         <div className="tf-title-block">
           <h1>Transformers</h1>
-          <p>{won ? 'Victory!' : `Battle ${index + 1} / ${DECEPTICONS.length}`}</p>
+          <p>
+            {phase === 'victory'
+              ? 'Victory!'
+              : phase === 'battle'
+                ? `Battle ${index + 1} / ${DECEPTICONS.length}`
+                : 'Roll out!'}
+          </p>
         </div>
-        <div style={{ width: 96 }} aria-hidden="true" />
+        <div className="tf-stars" aria-label={`${stars} stars`}>
+          ⭐ {stars}
+        </div>
       </header>
 
       <p className="tf-hint">{hint}</p>
 
-      {!won && enemy && (
-        <div className="tf-hp" aria-label={`${enemy.name} energy`}>
-          <span>{enemy.name}</span>
-          <div className="tf-hp-track">
-            <div className="tf-hp-fill" style={{ width: `${hpPct}%` }} />
+      {phase === 'battle' && enemy && (
+        <div className="tf-status-row">
+          <div className="tf-hp" aria-label={`${enemy.name} energy`}>
+            <span>{enemy.name}</span>
+            <div className="tf-hp-track">
+              <div className="tf-hp-fill" style={{ width: `${hpPct}%` }} />
+            </div>
           </div>
+          <div className="tf-energon" aria-label={`Energon ${energon} of 5`}>
+            <span>Energon</span>
+            <div className="tf-energon-pips">
+              {Array.from({ length: 5 }, (_, i) => (
+                <span key={i} className={i < energon ? 'filled' : ''} />
+              ))}
+            </div>
+          </div>
+          {combo > 1 && <div className="tf-combo">Combo x{combo}</div>}
         </div>
       )}
 
-      <div className="tf-arena">
-        <Robot profile={OPTIMUS} pose={heroPose} size="lg" />
-        {!won && enemy ? (
+      <div className={`tf-arena phase-${phase}`}>
+        <OptimusPrime
+          form={form}
+          pose={heroPose}
+          onClick={phase === 'ready' ? startTransform : undefined}
+        />
+
+        {phase === 'battle' && enemy && (
           <Robot
             profile={enemy}
             pose={enemyPose}
             size="lg"
             mirror
-            onClick={blast}
+            onClick={() => attack('punch')}
           />
-        ) : (
+        )}
+
+        {phase === 'victory' && form === 'robot' && (
           <div className="tf-victory-badge" aria-hidden="true">
-            ⚡
+            ⭐
           </div>
         )}
       </div>
 
       <div className="tf-controls">
-        {won ? (
+        {phase === 'intro' && (
+          <button type="button" className="tf-blast transform" disabled>
+            Rolling out...
+          </button>
+        )}
+
+        {phase === 'ready' && (
+          <button type="button" className="tf-blast transform" onClick={startTransform}>
+            🚛 TRANSFORM!
+          </button>
+        )}
+
+        {phase === 'transforming' && (
+          <button type="button" className="tf-blast transform" disabled>
+            Transforming...
+          </button>
+        )}
+
+        {phase === 'battle' &&
+          (dodgeWindow ? (
+            <button type="button" className="tf-blast dodge" onClick={dodge}>
+              🛡️ DODGE!
+            </button>
+          ) : (
+            <div className="tf-move-row">
+              <button
+                type="button"
+                className="tf-move"
+                disabled={busy}
+                onClick={() => attack('punch')}
+              >
+                <span aria-hidden="true">{MOVES.punch.emoji}</span>
+                Punch
+              </button>
+              <button
+                type="button"
+                className="tf-move laser"
+                disabled={busy}
+                onClick={() => attack('laser')}
+              >
+                <span aria-hidden="true">{MOVES.laser.emoji}</span>
+                Laser
+              </button>
+              <button
+                type="button"
+                className={`tf-move energon ${energon >= MOVES.energon.energonCost ? 'ready' : ''}`}
+                disabled={busy || energon < MOVES.energon.energonCost}
+                onClick={() => attack('energon')}
+              >
+                <span aria-hidden="true">{MOVES.energon.emoji}</span>
+                Energon
+              </button>
+            </div>
+          ))}
+
+        {phase === 'victory' && (
           <>
             <button type="button" className="tf-blast win" onClick={restart}>
               Play again!
@@ -142,16 +365,6 @@ export function TransformersBattle({ onBack, playSound }: TransformersBattleProp
               Back home
             </button>
           </>
-        ) : (
-          <button
-            type="button"
-            className="tf-blast"
-            onClick={blast}
-            disabled={busy}
-            aria-label="Blast"
-          >
-            💥 BLAST!
-          </button>
         )}
       </div>
     </section>

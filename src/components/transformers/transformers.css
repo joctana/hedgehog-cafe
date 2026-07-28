@@ -16,9 +16,10 @@
   gap: 8px;
 }
 
-.tf-battle.flash {
-  filter: brightness(1.25);
-}
+.tf-battle.flash-blast { filter: brightness(1.2); }
+.tf-battle.flash-laser { filter: brightness(1.25) saturate(1.2) hue-rotate(-10deg); }
+.tf-battle.flash-energon { filter: brightness(1.35) saturate(1.4); }
+.tf-battle.dodge-mode { box-shadow: inset 0 0 0 6px rgba(255, 210, 80, 0.55); }
 
 .tf-sky {
   position: absolute;
@@ -76,6 +77,17 @@
   color: #c9d7f2;
 }
 
+.tf-stars {
+  min-width: 72px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 8px 12px;
+  border-radius: 16px;
+  background: rgba(10, 20, 40, 0.55);
+  color: #ffe08a;
+}
+
 .tf-hint {
   position: relative;
   z-index: 2;
@@ -88,11 +100,17 @@
   font-size: 1.05rem;
 }
 
-.tf-hp {
+.tf-status-row {
   position: relative;
   z-index: 2;
-  width: min(520px, 92%);
+  width: min(640px, 96%);
   justify-self: center;
+  display: grid;
+  gap: 8px;
+}
+
+.tf-hp,
+.tf-energon {
   display: grid;
   gap: 6px;
   font-weight: 800;
@@ -111,6 +129,32 @@
   border-radius: inherit;
   background: linear-gradient(90deg, #ff5d5d, #ffb347);
   transition: width 180ms ease;
+}
+
+.tf-energon-pips {
+  display: flex;
+  gap: 6px;
+}
+
+.tf-energon-pips span {
+  width: 22px;
+  height: 14px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.tf-energon-pips span.filled {
+  background: linear-gradient(180deg, #7ef0ff, #2bb7ff);
+  box-shadow: 0 0 10px rgba(80, 200, 255, 0.55);
+}
+
+.tf-combo {
+  justify-self: center;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: #ffe08a;
+  animation: tfPop 300ms ease;
 }
 
 .tf-arena {
@@ -153,7 +197,19 @@
 }
 
 .tf-blast:disabled {
-  opacity: 0.7;
+  opacity: 0.75;
+}
+
+.tf-blast.transform {
+  background: linear-gradient(180deg, #5ca8ff, #1f4f9c);
+  box-shadow: 0 10px 0 #12305f, 0 16px 28px rgba(0, 0, 0, 0.35);
+}
+
+.tf-blast.dodge {
+  background: linear-gradient(180deg, #ffe08a, #f0c040);
+  color: #2a1a08;
+  box-shadow: 0 10px 0 #b8860b, 0 16px 28px rgba(0, 0, 0, 0.35);
+  animation: tfPulse 0.7s ease-in-out infinite;
 }
 
 .tf-blast.win {
@@ -172,6 +228,55 @@
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
 }
 
+.tf-move-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.tf-move {
+  min-width: 104px;
+  min-height: 72px;
+  padding: 8px 14px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  gap: 2px;
+  background: rgba(255, 246, 234, 0.95);
+  color: #1a2438;
+  font-weight: 800;
+  font-size: 1rem;
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.25), 0 12px 20px rgba(0, 0, 0, 0.25);
+}
+
+.tf-move span {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.tf-move.laser {
+  background: linear-gradient(180deg, #b8f0ff, #6ec8ff);
+}
+
+.tf-move.energon {
+  background: rgba(255, 246, 234, 0.45);
+  color: #d8e2f5;
+  opacity: 0.65;
+}
+
+.tf-move.energon.ready {
+  background: linear-gradient(180deg, #fff4a8, #7ef0ff);
+  color: #1a2438;
+  opacity: 1;
+  box-shadow: 0 8px 0 #2f6f8f, 0 0 22px rgba(100, 220, 255, 0.45);
+}
+
+.tf-move:disabled {
+  opacity: 0.55;
+}
+
 .tf-victory-badge {
   width: min(40vw, 180px);
   height: min(40vw, 180px);
@@ -181,7 +286,9 @@
   animation: tfPop 700ms ease both;
 }
 
-.tf-robot {
+/* Shared robot / Optimus */
+.tf-robot,
+.tf-optimus {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -191,19 +298,18 @@
   width: min(38vw, 220px);
 }
 
-.tf-robot.lg {
-  width: min(42vw, 260px);
+.tf-robot.lg,
+.tf-optimus {
+  width: min(46vw, 280px);
 }
 
-.tf-robot:disabled {
-  cursor: default;
-}
-
-.tf-robot.clickable {
+.tf-robot.clickable,
+.tf-optimus.clickable {
   cursor: pointer;
 }
 
-.tf-robot-svg {
+.tf-robot-svg,
+.tf-truck-svg {
   width: 100%;
   height: auto;
   overflow: visible;
@@ -225,46 +331,187 @@
   border-radius: 999px;
 }
 
-.tf-robot.idle .tf-robot-svg {
+.tf-optimus-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.1;
+  display: grid;
+  place-items: center;
+}
+
+.tf-optimus.truck .tf-truck-svg {
+  width: 100%;
+  animation: none;
+}
+
+.tf-optimus.truck.driveIn .tf-truck-svg {
+  animation: tfDriveIn 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.tf-optimus.truck.driveOut .tf-truck-svg {
+  animation: tfDriveOut 1.2s ease forwards;
+}
+
+.tf-optimus.truck.idle .tf-truck-svg {
+  animation: tfTruckIdle 1.8s ease-in-out infinite;
+}
+
+.tf-optimus.robot .tf-optimus-robot {
+  width: 78%;
+}
+
+.tf-optimus.robot.idle .tf-optimus-robot {
   animation: tfIdle 2.2s ease-in-out infinite;
 }
 
-.tf-robot.attack .tf-robot-svg {
+.tf-optimus.robot.attack .tf-optimus-robot {
   animation: tfAttack 350ms ease;
 }
 
-.tf-robot.hit .tf-robot-svg {
-  animation: tfHit 280ms ease;
-}
-
-.tf-robot.ko .tf-robot-svg {
-  animation: tfKo 700ms ease forwards;
-}
-
-.tf-robot.win .tf-robot-svg {
+.tf-optimus.robot.win .tf-optimus-robot {
   animation: tfWin 700ms ease infinite;
 }
 
-.tf-robot.attack .arm.right {
-  transform-origin: 131px 90px;
-  animation: tfPunch 350ms ease;
+/* Transform morph */
+.tf-optimus.transforming .tf-truck-svg {
+  position: absolute;
+  width: 100%;
+  animation: tfTruckMorph 1.5s ease forwards;
+}
+
+.tf-optimus.transforming .tf-optimus-robot {
+  position: absolute;
+  width: 78%;
+  animation: tfRobotAssemble 1.5s ease forwards;
+}
+
+.tf-optimus.transforming .part {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.tf-optimus.transforming .part.head { animation: tfPartIn 0.7s 0.55s both; }
+.tf-optimus.transforming .part.torso,
+.tf-optimus.transforming .part.chest,
+.tf-optimus.transforming .part.badge { animation: tfPartIn 0.7s 0.35s both; }
+.tf-optimus.transforming .part.arm-l { animation: tfArmInL 0.7s 0.45s both; }
+.tf-optimus.transforming .part.arm-r,
+.tf-optimus.transforming .part.fist-r { animation: tfArmInR 0.7s 0.45s both; }
+.tf-optimus.transforming .part.leg-l,
+.tf-optimus.transforming .part.foot-l { animation: tfLegIn 0.7s 0.25s both; }
+.tf-optimus.transforming .part.leg-r,
+.tf-optimus.transforming .part.foot-r { animation: tfLegIn 0.7s 0.3s both; }
+
+.tf-transform-fx {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.tf-transform-fx .ring {
+  position: absolute;
+  width: 40%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 220, 100, 0.75);
+  animation: tfRing 1.4s ease-out forwards;
+}
+
+.tf-transform-fx .ring.r2 {
+  width: 60%;
+  animation-delay: 0.15s;
+  border-color: rgba(100, 200, 255, 0.7);
+}
+
+.tf-transform-fx .spark {
+  position: absolute;
+  color: #ffe08a;
+  font-size: 1.4rem;
+  animation: tfSpark 1.2s ease-out forwards;
+}
+
+.tf-transform-fx .spark.s1 { top: 18%; left: 20%; }
+.tf-transform-fx .spark.s2 { top: 22%; right: 18%; animation-delay: 0.15s; }
+.tf-transform-fx .spark.s3 { bottom: 28%; left: 46%; animation-delay: 0.28s; }
+
+.tf-robot.idle .tf-robot-svg { animation: tfIdle 2.2s ease-in-out infinite; }
+.tf-robot.hit .tf-robot-svg { animation: tfHit 280ms ease; }
+.tf-robot.ko .tf-robot-svg { animation: tfKo 700ms ease forwards; }
+.tf-robot.windup .tf-robot-svg { animation: tfWindup 0.5s ease-in-out infinite; }
+.tf-robot.fly .tf-robot-svg { animation: tfFly 450ms ease; }
+.tf-robot.bot-starscream.fly .wing { animation: tfWing 450ms ease; }
+
+@keyframes tfDriveIn {
+  from { transform: translateX(-120%) scale(0.95); opacity: 0.2; }
+  to { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+@keyframes tfDriveOut {
+  to { transform: translateX(130%); opacity: 0.2; }
+}
+
+@keyframes tfTruckIdle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes tfTruckMorph {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  45% { transform: scale(0.7) rotate(8deg); opacity: 0.7; }
+  100% { transform: scale(0.2) rotate(25deg); opacity: 0; }
+}
+
+@keyframes tfRobotAssemble {
+  0% { transform: scale(0.3) rotate(-12deg); opacity: 0; }
+  40% { opacity: 0.4; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes tfPartIn {
+  from { opacity: 0; transform: translateY(-18px) scale(0.6); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes tfArmInL {
+  from { opacity: 0; transform: translate(-24px, 10px) rotate(30deg); }
+  to { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes tfArmInR {
+  from { opacity: 0; transform: translate(24px, 10px) rotate(-30deg); }
+  to { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes tfLegIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes tfRing {
+  from { transform: scale(0.4); opacity: 0.9; }
+  to { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes tfSpark {
+  0% { opacity: 0; transform: scale(0.4); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-24px) scale(1.3); }
 }
 
 @keyframes tfIdle {
-  0%,
-  100% { transform: translateY(0); }
+  0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
 }
 
 @keyframes tfAttack {
-  0%,
-  100% { transform: translateX(0); }
+  0%, 100% { transform: translateX(0); }
   40% { transform: translateX(18px); }
 }
 
 @keyframes tfHit {
-  0%,
-  100% { transform: translateX(0) rotate(0deg); }
+  0%, 100% { transform: translateX(0) rotate(0deg); }
   30% { transform: translateX(10px) rotate(4deg); }
   60% { transform: translateX(-8px) rotate(-4deg); }
 }
@@ -277,15 +524,23 @@
 }
 
 @keyframes tfWin {
-  0%,
-  100% { transform: translateY(0) rotate(0deg); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-14px) rotate(-3deg); }
 }
 
-@keyframes tfPunch {
-  0%,
-  100% { transform: rotate(0deg); }
-  50% { transform: rotate(-25deg); }
+@keyframes tfWindup {
+  0%, 100% { transform: translateX(0) scale(1); }
+  50% { transform: translateX(-8px) scale(1.05); }
+}
+
+@keyframes tfFly {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-18px) rotate(-6deg); }
+}
+
+@keyframes tfWing {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(1.2); }
 }
 
 @keyframes tfPop {
@@ -293,16 +548,34 @@
   to { transform: scale(1); opacity: 1; }
 }
 
+@keyframes tfPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
 @media (orientation: landscape) and (max-height: 700px) {
-  .tf-robot.lg {
+  .tf-robot.lg,
+  .tf-optimus {
     width: min(34vw, 200px);
   }
 
-  .tf-blast {
+  .tf-blast,
+  .tf-move {
     min-height: 64px;
   }
 
   .tf-title-block h1 {
     font-size: 1.5rem;
+  }
+
+  .tf-move {
+    min-width: 92px;
+  }
+}
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .tf-move {
+    min-width: 30%;
+    flex: 1;
   }
 }
