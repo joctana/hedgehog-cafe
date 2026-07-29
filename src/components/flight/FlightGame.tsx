@@ -37,12 +37,22 @@ function makeCollectibles(): Collectible[] {
     'star',
     'cloud',
     'star',
+    'fish',
+    'cloud',
+    'star',
+    'star',
+    'cloud',
+    'fish',
+    'star',
+    'cloud',
+    'star',
+    'fish',
   ]
   return kinds.map((kind, i) => ({
     id: i + 1,
-    // World X along the route (plane meets them as progress advances)
-    x: 16 + i * 8.5,
-    y: 20 + ((i * 19) % 55),
+    // World X along the longer route (plane meets them as progress advances)
+    x: 12 + i * 4.4,
+    y: 18 + ((i * 17) % 58),
     kind,
     taken: false,
   }))
@@ -117,7 +127,8 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
         setTilt((t) => t * 0.85)
       }
 
-      progressRef.current = Math.min(100, progressRef.current + 7.5 * dt)
+      // ~45–50s Phuket → Denpasar (was ~13s)
+      progressRef.current = Math.min(100, progressRef.current + 2.05 * dt)
       setProgress(progressRef.current)
       setAltitude(altitudeRef.current)
       collectNearPlane()
@@ -131,9 +142,10 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
         return
       }
 
-      if (progressRef.current > 90) setHint('Bali ahead — get ready to land!')
-      else if (progressRef.current > 55 && progressRef.current < 62) setHint('Island hopping!')
-      else if (progressRef.current > 25 && progressRef.current < 32) setHint('Over the big blue sea!')
+      if (progressRef.current > 88) setHint('Bali ahead — get ready to land!')
+      else if (progressRef.current > 68 && progressRef.current < 74) setHint('Island hopping!')
+      else if (progressRef.current > 42 && progressRef.current < 48) setHint('Still over the ocean...')
+      else if (progressRef.current > 18 && progressRef.current < 24) setHint('Over the big blue sea!')
 
       rafRef.current = requestAnimationFrame(tick)
     }

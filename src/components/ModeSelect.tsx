@@ -34,7 +34,7 @@ export function ModeSelect({ onPickCafe, onPickTransformers, onPickFlight }: Mod
             ✈️
           </span>
           <span className="mode-name">Sky Trip</span>
-          <span className="mode-blurb">Fly Phuket to Denpasar, Bali</span>
+          <span className="mode-blurb">AirAsia A320 · Phuket to Bali</span>
         </button>
       </div>
     </section>

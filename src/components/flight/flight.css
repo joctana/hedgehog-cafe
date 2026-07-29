@@ -201,9 +201,9 @@
 
 .flight-plane-wrap {
   position: absolute;
-  left: 18%;
+  left: 14%;
   transform: translateY(-50%);
-  width: min(42vw, 220px);
+  width: min(52vw, 300px);
   transition: top 60ms linear;
   z-index: 3;
   pointer-events: none;
@@ -321,7 +321,7 @@
 
 @media (orientation: landscape) and (max-height: 700px) {
   .flight-plane-wrap {
-    width: min(30vw, 170px);
+    width: min(38vw, 240px);
   }
 
   .flight-go,
