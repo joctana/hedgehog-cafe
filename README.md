@@ -6,6 +6,7 @@ Pick a game on the home screen:
 
 - **Hedgehog Café** — feed, clean, and tuck in hedgehog friends
 - **Transformers** — help Optimus Prime blast Decepticons in a simple battle mini-game
+- **Sky Trip** — fly a blue airplane from Phuket, Thailand to Denpasar, Bali
 
 There are no fail states, timers, ads, or accounts.
 
@@ -52,7 +53,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café** or **Transformers**.
+Choose **Hedgehog Café**, **Transformers**, or **Sky Trip**.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -71,6 +72,12 @@ Choose **Hedgehog Café** or **Transformers**.
 4. Fill Energon pips with hits/dodges to unlock the big Energon smash.
 5. When a Decepticon winds up, tap **DODGE!** for bonus stars.
 6. Win the war and Optimus rolls out as a truck!
+
+### Sky Trip
+1. Tap **Take off!** in Phuket.
+2. Steer with the big **↑ / ↓** buttons, or drag up and down on the sky.
+3. Collect stars, clouds, and fish along the way.
+4. Follow the route bar to **Denpasar, Bali** and land for a welcome celebration.
 
 ## Tech
 

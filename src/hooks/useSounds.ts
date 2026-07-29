@@ -11,6 +11,7 @@ export type SoundKind =
   | 'blast'
   | 'hit'
   | 'transform'
+  | 'whoosh'
 
 function playTone(
   ctx: AudioContext,
@@ -90,6 +91,11 @@ export function useSounds(muted: boolean) {
             playTone(ctx, 400, 0.1, 'square', 0.05)
             playTone(ctx, 600, 0.12, 'sawtooth', 0.04)
             playTone(ctx, 800, 0.14, 'sine', 0.05)
+            break
+          case 'whoosh':
+            playTone(ctx, 520, 0.12, 'triangle', 0.05)
+            playTone(ctx, 360, 0.18, 'sine', 0.04)
+            playTone(ctx, 220, 0.22, 'triangle', 0.03)
             break
         }
       } catch {
