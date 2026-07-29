@@ -74,9 +74,9 @@ Choose **Hedgehog Café**, **Transformers**, or **Sky Trip**.
 6. Win the war and Optimus rolls out as a truck!
 
 ### Sky Trip
-1. Tap **Take off!** in Phuket.
+1. Tap **Take off!** in Phuket on an AirAsia-style Airbus A320.
 2. Steer with the big **↑ / ↓** buttons, or drag up and down on the sky.
-3. Collect stars, clouds, and fish along the way.
+3. Collect stars, clouds, and fish on the longer Phuket → Bali hop (~45–50 seconds).
 4. Follow the route bar to **Denpasar, Bali** and land for a welcome celebration.
 
 ## Tech
