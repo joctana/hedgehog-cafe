@@ -190,6 +190,69 @@
   box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
+.flight-runway {
+  position: absolute;
+  bottom: 6%;
+  width: 46%;
+  height: 18%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.flight-runway.left { left: 2%; }
+.flight-runway.right { right: 2%; }
+
+.runway-strip {
+  position: absolute;
+  inset: 20% 0 10%;
+  border-radius: 10px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #4a4a4a 0,
+      #4a4a4a 18px,
+      #f5f5f5 18px,
+      #f5f5f5 28px
+    ),
+    #5a5a5a;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  display: grid;
+  place-items: center;
+}
+
+.runway-mark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  color: #fff;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.25);
+  padding: 4px 12px;
+  border-radius: 10px;
+}
+
+.flight-dust {
+  position: absolute;
+  left: 20%;
+  bottom: -6%;
+  width: 55%;
+  height: 18px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.55), transparent 70%);
+  animation: flightDust 0.35s ease-out infinite;
+}
+
+.flight-plane-wrap.rolling .flight-plane {
+  animation: flightRollShake 0.2s linear infinite;
+}
+
+.flight-steer.highlight {
+  outline: 3px solid #fbbf24;
+  outline-offset: 3px;
+  background: #fff3c4;
+  animation: flightPulse 0.9s ease-in-out infinite;
+}
+
 .flight-item {
   position: absolute;
   font-size: clamp(1.4rem, 4vw, 2rem);
@@ -317,6 +380,24 @@
 @keyframes flightPop {
   from { transform: scale(0.88); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes flightDust {
+  0% { opacity: 0.2; transform: scaleX(0.8); }
+  50% { opacity: 0.8; transform: scaleX(1.1); }
+  100% { opacity: 0.15; transform: scaleX(1.3); }
+}
+
+@keyframes flightRollShake {
+  0%,
+  100% { transform: translateY(0); }
+  50% { transform: translateY(1px); }
+}
+
+@keyframes flightPulse {
+  0%,
+  100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 @media (orientation: landscape) and (max-height: 700px) {

@@ -8,7 +8,7 @@ interface FlightGameProps {
   playSound: (kind: SoundKind) => void
 }
 
-type Phase = 'ready' | 'flying' | 'landed'
+type Phase = 'ready' | 'takeoff' | 'flying' | 'landing' | 'landed'
 
 interface Collectible {
   id: number
@@ -17,6 +17,11 @@ interface Collectible {
   kind: 'star' | 'cloud' | 'fish'
   taken: boolean
 }
+
+const GROUND_ALT = 82
+const TAKEOFF_CLIMB_ALT = 58
+const LANDING_TOUCH_ALT = 78
+const LANDING_START_PROGRESS = 86
 
 const ROUTE_LABELS = [
   { at: 0, label: 'Phuket' },
@@ -50,9 +55,8 @@ function makeCollectibles(): Collectible[] {
   ]
   return kinds.map((kind, i) => ({
     id: i + 1,
-    // World X along the longer route (plane meets them as progress advances)
-    x: 12 + i * 4.4,
-    y: 18 + ((i * 17) % 58),
+    x: 18 + i * 3.8,
+    y: 18 + ((i * 17) % 50),
     kind,
     taken: false,
   }))
@@ -61,20 +65,30 @@ function makeCollectibles(): Collectible[] {
 export function FlightGame({ onBack, playSound }: FlightGameProps) {
   const [phase, setPhase] = useState<Phase>('ready')
   const [progress, setProgress] = useState(0)
-  const [altitude, setAltitude] = useState(50)
+  const [altitude, setAltitude] = useState(GROUND_ALT)
   const [tilt, setTilt] = useState(0)
   const [items, setItems] = useState<Collectible[]>(() => makeCollectibles())
   const [score, setScore] = useState(0)
   const [hint, setHint] = useState('Ready for takeoff in Phuket!')
+  const [gearDown, setGearDown] = useState(true)
   const holdRef = useRef<'up' | 'down' | null>(null)
   const dragRef = useRef(false)
   const stageRef = useRef<HTMLDivElement>(null)
   const progressRef = useRef(0)
-  const altitudeRef = useRef(50)
+  const altitudeRef = useRef(GROUND_ALT)
+  const phaseRef = useRef<Phase>('ready')
   const rafRef = useRef<number | null>(null)
+  const takeoffAssist = useRef(0)
+  const landingAssist = useRef(0)
 
   const scenery =
-    progress < 20 ? 'beach' : progress < 55 ? 'ocean' : progress < 85 ? 'islands' : 'bali'
+    phase === 'ready' || phase === 'takeoff'
+      ? 'beach'
+      : progress < 55
+        ? 'ocean'
+        : progress < 85
+          ? 'islands'
+          : 'bali'
 
   const stopLoop = () => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current)
@@ -82,7 +96,7 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
   }
 
   const collectNearPlane = useCallback(() => {
-    // Plane is visually fixed near 18% screen-x; items scroll by world progress.
+    if (phaseRef.current !== 'flying') return
     const planeWorldX = progressRef.current + 8
     const planeY = altitudeRef.current
     setItems((prev) => {
@@ -107,7 +121,11 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
   }, [playSound])
 
   useEffect(() => {
-    if (phase !== 'flying') {
+    phaseRef.current = phase
+  }, [phase])
+
+  useEffect(() => {
+    if (phase !== 'takeoff' && phase !== 'flying' && phase !== 'landing') {
       stopLoop()
       return
     }
@@ -116,36 +134,120 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
     const tick = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000)
       last = now
+      const current = phaseRef.current
 
-      if (holdRef.current === 'up') {
-        altitudeRef.current = Math.max(8, altitudeRef.current - 38 * dt)
-        setTilt(-12)
-      } else if (holdRef.current === 'down') {
-        altitudeRef.current = Math.min(88, altitudeRef.current + 38 * dt)
-        setTilt(12)
-      } else if (!dragRef.current) {
-        setTilt((t) => t * 0.85)
+      if (current === 'takeoff') {
+        // Roll down the runway, then climb
+        progressRef.current = Math.min(12, progressRef.current + 3.2 * dt)
+
+        if (holdRef.current === 'up') {
+          altitudeRef.current = Math.max(28, altitudeRef.current - 32 * dt)
+          setTilt(-16)
+          takeoffAssist.current += dt
+        } else {
+          // Gentle bounce on runway until climb
+          if (altitudeRef.current > GROUND_ALT - 1) {
+            altitudeRef.current = GROUND_ALT
+            setTilt(progressRef.current > 2 ? -4 : 0)
+          }
+          takeoffAssist.current += dt * 0.35
+        }
+
+        // Soft assist so little kids always get airborne
+        if (takeoffAssist.current > 4 && altitudeRef.current > TAKEOFF_CLIMB_ALT) {
+          altitudeRef.current = Math.max(TAKEOFF_CLIMB_ALT - 4, altitudeRef.current - 10 * dt)
+          setTilt(-10)
+        }
+
+        setProgress(progressRef.current)
+        setAltitude(altitudeRef.current)
+
+        if (altitudeRef.current <= TAKEOFF_CLIMB_ALT && progressRef.current >= 6) {
+          setPhase('flying')
+          phaseRef.current = 'flying'
+          setGearDown(false)
+          setHint('Gear up! Fly to Bali!')
+          playSound('whoosh')
+        } else if (progressRef.current < 3) {
+          setHint('Speeding down the runway...')
+        } else {
+          setHint('Hold ↑ to climb!')
+        }
+      } else if (current === 'flying') {
+        if (holdRef.current === 'up') {
+          altitudeRef.current = Math.max(8, altitudeRef.current - 38 * dt)
+          setTilt(-12)
+        } else if (holdRef.current === 'down') {
+          altitudeRef.current = Math.min(88, altitudeRef.current + 38 * dt)
+          setTilt(12)
+        } else if (!dragRef.current) {
+          setTilt((t) => t * 0.85)
+        }
+
+        progressRef.current = Math.min(LANDING_START_PROGRESS, progressRef.current + 2.05 * dt)
+        setProgress(progressRef.current)
+        setAltitude(altitudeRef.current)
+        collectNearPlane()
+
+        if (progressRef.current >= LANDING_START_PROGRESS) {
+          setPhase('landing')
+          phaseRef.current = 'landing'
+          setGearDown(true)
+          setHint('Denpasar ahead — hold ↓ to land!')
+          playSound('tap')
+          landingAssist.current = 0
+        } else if (progressRef.current > 68 && progressRef.current < 74) {
+          setHint('Island hopping!')
+        } else if (progressRef.current > 42 && progressRef.current < 48) {
+          setHint('Still over the ocean...')
+        } else if (progressRef.current > 18 && progressRef.current < 24) {
+          setHint('Over the big blue sea!')
+        }
+      } else if (current === 'landing') {
+        progressRef.current = Math.min(100, progressRef.current + 1.6 * dt)
+        landingAssist.current += dt
+
+        if (holdRef.current === 'down') {
+          altitudeRef.current = Math.min(GROUND_ALT, altitudeRef.current + 34 * dt)
+          setTilt(14)
+        } else if (holdRef.current === 'up') {
+          altitudeRef.current = Math.max(30, altitudeRef.current - 20 * dt)
+          setTilt(-8)
+        } else {
+          // Soft glide toward the runway
+          const target = GROUND_ALT - 4
+          altitudeRef.current += (target - altitudeRef.current) * Math.min(1, 0.35 * dt)
+          setTilt(8)
+        }
+
+        // Extra assist after a few seconds so landing always succeeds
+        if (landingAssist.current > 5) {
+          altitudeRef.current = Math.min(GROUND_ALT, altitudeRef.current + 18 * dt)
+          setTilt(12)
+        }
+
+        setProgress(progressRef.current)
+        setAltitude(altitudeRef.current)
+
+        const onRunway =
+          altitudeRef.current >= LANDING_TOUCH_ALT && progressRef.current >= 94
+        if (onRunway || progressRef.current >= 100) {
+          altitudeRef.current = GROUND_ALT
+          progressRef.current = 100
+          setAltitude(GROUND_ALT)
+          setProgress(100)
+          setTilt(0)
+          setPhase('landed')
+          phaseRef.current = 'landed'
+          setHint('Touchdown in Denpasar, Bali!')
+          playSound('celebrate')
+          stopLoop()
+          return
+        }
+
+        if (altitudeRef.current > 65) setHint('Almost there — keep holding ↓!')
+        else setHint('Hold ↓ to descend to the runway!')
       }
-
-      // ~45–50s Phuket → Denpasar (was ~13s)
-      progressRef.current = Math.min(100, progressRef.current + 2.05 * dt)
-      setProgress(progressRef.current)
-      setAltitude(altitudeRef.current)
-      collectNearPlane()
-
-      if (progressRef.current >= 100) {
-        setPhase('landed')
-        setTilt(0)
-        setHint('Welcome to Denpasar, Bali!')
-        playSound('celebrate')
-        stopLoop()
-        return
-      }
-
-      if (progressRef.current > 88) setHint('Bali ahead — get ready to land!')
-      else if (progressRef.current > 68 && progressRef.current < 74) setHint('Island hopping!')
-      else if (progressRef.current > 42 && progressRef.current < 48) setHint('Still over the ocean...')
-      else if (progressRef.current > 18 && progressRef.current < 24) setHint('Over the big blue sea!')
 
       rafRef.current = requestAnimationFrame(tick)
     }
@@ -154,15 +256,20 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
     return stopLoop
   }, [collectNearPlane, phase, playSound])
 
-  const takeOff = () => {
+  const startTakeoff = () => {
     progressRef.current = 0
-    altitudeRef.current = 50
+    altitudeRef.current = GROUND_ALT
+    takeoffAssist.current = 0
+    landingAssist.current = 0
     setProgress(0)
-    setAltitude(50)
+    setAltitude(GROUND_ALT)
+    setTilt(0)
+    setGearDown(true)
     setItems(makeCollectibles())
     setScore(0)
-    setPhase('flying')
-    setHint('Fly to Bali! Use ↑ ↓ or drag the sky.')
+    setPhase('takeoff')
+    phaseRef.current = 'takeoff'
+    setHint('Speeding down the runway...')
     playSound('whoosh')
   }
 
@@ -171,23 +278,31 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
     holdRef.current = null
     dragRef.current = false
     progressRef.current = 0
-    altitudeRef.current = 50
+    altitudeRef.current = GROUND_ALT
+    takeoffAssist.current = 0
+    landingAssist.current = 0
     setPhase('ready')
+    phaseRef.current = 'ready'
     setProgress(0)
-    setAltitude(50)
+    setAltitude(GROUND_ALT)
     setTilt(0)
+    setGearDown(true)
     setItems(makeCollectibles())
     setScore(0)
     setHint('Ready for takeoff in Phuket!')
     playSound('tap')
   }
 
+  const steeringEnabled = phase === 'takeoff' || phase === 'flying' || phase === 'landing'
+
   const onStagePointer = (clientY: number) => {
     const stage = stageRef.current
-    if (!stage || phase !== 'flying') return
+    if (!stage || !steeringEnabled) return
     const rect = stage.getBoundingClientRect()
     const ratio = (clientY - rect.top) / rect.height
-    const next = Math.min(88, Math.max(8, ratio * 100))
+    const minAlt = phase === 'takeoff' ? 28 : 8
+    const maxAlt = phase === 'landing' || phase === 'takeoff' ? GROUND_ALT : 88
+    const next = Math.min(maxAlt, Math.max(minAlt, ratio * 100))
     altitudeRef.current = next
     setAltitude(next)
     setTilt(next < altitude ? -10 : next > altitude ? 10 : 0)
@@ -197,8 +312,14 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
     ROUTE_LABELS.reduce((best, stop) => (progress >= stop.at ? stop : best), ROUTE_LABELS[0])
       ?.label ?? 'Phuket'
 
+  const showRunway = phase === 'ready' || phase === 'takeoff' || phase === 'landing' || phase === 'landed'
+  const runwaySide = phase === 'ready' || phase === 'takeoff' ? 'left' : 'right'
+
   return (
-    <section className={`flight-game scenery-${scenery}`} aria-label="Airplane flight">
+    <section
+      className={`flight-game scenery-${scenery} phase-${phase}`}
+      aria-label="Airplane flight"
+    >
       <div className="flight-sky" aria-hidden="true">
         <div className="sun" />
         <div className="sea" />
@@ -239,7 +360,7 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
         className="flight-stage"
         ref={stageRef}
         onPointerDown={(event) => {
-          if (phase !== 'flying') return
+          if (!steeringEnabled) return
           dragRef.current = true
           event.currentTarget.setPointerCapture(event.pointerId)
           onStagePointer(event.clientY)
@@ -250,37 +371,53 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
         }}
         onPointerUp={() => {
           dragRef.current = false
-          setTilt(0)
+          if (phase === 'flying') setTilt(0)
         }}
         onPointerCancel={() => {
           dragRef.current = false
-          setTilt(0)
+          if (phase === 'flying') setTilt(0)
         }}
       >
-        {items.map((item) => {
-          if (item.taken) return null
-          // Scroll items from right toward the fixed plane as progress advances.
-          const screenX = 18 + (item.x - progress)
-          if (screenX < -10 || screenX > 110) return null
-          return (
-            <span
-              key={item.id}
-              className={`flight-item ${item.kind}`}
-              style={{ left: `${screenX}%`, top: `${item.y}%` }}
-            >
-              {item.kind === 'star' ? '⭐' : item.kind === 'cloud' ? '☁️' : '🐠'}
-            </span>
-          )
-        })}
+        {showRunway && (
+          <div className={`flight-runway ${runwaySide}`} aria-hidden="true">
+            <div className="runway-strip">
+              <span className="runway-mark">
+                {runwaySide === 'left' ? 'HKT' : 'DPS'}
+              </span>
+            </div>
+          </div>
+        )}
 
-        <div className="flight-plane-wrap" style={{ top: `${altitude}%` }}>
-          <Airplane tilt={tilt} />
+        {phase === 'flying' &&
+          items.map((item) => {
+            if (item.taken) return null
+            const screenX = 18 + (item.x - progress)
+            if (screenX < -10 || screenX > 110) return null
+            return (
+              <span
+                key={item.id}
+                className={`flight-item ${item.kind}`}
+                style={{ left: `${screenX}%`, top: `${item.y}%` }}
+              >
+                {item.kind === 'star' ? '⭐' : item.kind === 'cloud' ? '☁️' : '🐠'}
+              </span>
+            )
+          })}
+
+        <div
+          className={`flight-plane-wrap ${phase === 'takeoff' ? 'rolling' : ''}`}
+          style={{ top: `${altitude}%` }}
+        >
+          <Airplane tilt={tilt} gearDown={gearDown} />
+          {(phase === 'takeoff' || phase === 'landing') && altitude >= GROUND_ALT - 2 && (
+            <span className="flight-dust" aria-hidden="true" />
+          )}
         </div>
 
         {phase === 'landed' && (
           <div className="flight-landing" role="status">
             <h2>Welcome to Bali!</h2>
-            <p>You flew from Phuket to Denpasar.</p>
+            <p>Touchdown in Denpasar.</p>
             <p className="flight-landing-score">Stars & friends: {score}</p>
           </div>
         )}
@@ -288,16 +425,16 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
 
       <div className="flight-controls">
         {phase === 'ready' && (
-          <button type="button" className="flight-go" onClick={takeOff}>
+          <button type="button" className="flight-go" onClick={startTakeoff}>
             ✈️ Take off!
           </button>
         )}
 
-        {phase === 'flying' && (
+        {steeringEnabled && (
           <>
             <button
               type="button"
-              className="flight-steer"
+              className={`flight-steer ${phase === 'takeoff' ? 'highlight' : ''}`}
               aria-label="Fly up"
               onPointerDown={() => {
                 holdRef.current = 'up'
@@ -305,18 +442,16 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
               }}
               onPointerUp={() => {
                 holdRef.current = null
-                setTilt(0)
               }}
               onPointerLeave={() => {
                 holdRef.current = null
-                setTilt(0)
               }}
             >
               ↑
             </button>
             <button
               type="button"
-              className="flight-steer"
+              className={`flight-steer ${phase === 'landing' ? 'highlight' : ''}`}
               aria-label="Fly down"
               onPointerDown={() => {
                 holdRef.current = 'down'
@@ -324,11 +459,9 @@ export function FlightGame({ onBack, playSound }: FlightGameProps) {
               }}
               onPointerUp={() => {
                 holdRef.current = null
-                setTilt(0)
               }}
               onPointerLeave={() => {
                 holdRef.current = null
-                setTilt(0)
               }}
             >
               ↓
