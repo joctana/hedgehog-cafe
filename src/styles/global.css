@@ -97,8 +97,13 @@ button:focus-visible {
   background: #0b1a33;
 }
 
-.app-shell.tf-shell::before {
+.app-shell.tf-shell::before,
+.app-shell.flight-shell::before {
   opacity: 0;
+}
+
+.app-shell.flight-shell {
+  background: #7ec8ff;
 }
 
 .mode-select {
@@ -116,9 +121,9 @@ button:focus-visible {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(14px, 3vw, 28px);
-  width: min(920px, 94%);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 2.5vw, 24px);
+  width: min(1100px, 96%);
   margin: 0 auto;
   align-content: center;
 }
@@ -129,8 +134,8 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: min(42vh, 340px);
-  padding: 24px 18px;
+  min-height: min(38vh, 300px);
+  padding: 22px 16px;
   border-radius: 32px;
   text-align: center;
   box-shadow: 0 16px 32px var(--shadow);
@@ -156,6 +161,14 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
 }
 
+.mode-card.flight {
+  background:
+    radial-gradient(circle at 30% 15%, rgba(255, 255, 255, 0.55), transparent 45%),
+    linear-gradient(180deg, #7ec8ff, #2563eb);
+  color: #0f2744;
+  box-shadow: 0 16px 32px rgba(30, 64, 140, 0.28);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -169,6 +182,15 @@ button:focus-visible {
 
 .mode-card.transformers .mode-name {
   color: #f6d76b;
+}
+
+.mode-card.flight .mode-name {
+  color: #fff8ef;
+  text-shadow: 0 2px 0 rgba(15, 39, 68, 0.25);
+}
+
+.mode-card.flight .mode-blurb {
+  color: rgba(255, 248, 239, 0.92);
 }
 
 .mode-blurb {
@@ -706,6 +728,22 @@ button:focus-visible {
   }
 
   .mode-card {
-    min-height: 28vh;
+    min-height: 22vh;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 1100px) {
+  .mode-choices {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mode-card {
+    min-height: min(46vh, 260px);
+    padding: 16px 12px;
+  }
+
+  .mode-blurb {
+    max-width: 14ch;
+    font-size: 0.95rem;
   }
 }
