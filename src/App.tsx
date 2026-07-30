@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { CafeScene } from './components/CafeScene'
 import { CareScene } from './components/CareScene'
+import { F1Race } from './components/f1/F1Race'
 import { FlightGame } from './components/flight/FlightGame'
 import { ModeSelect } from './components/ModeSelect'
 import { TransformersBattle } from './components/transformers/TransformersBattle'
@@ -9,7 +10,7 @@ import { useSounds } from './hooks/useSounds'
 
 const TIP_KEY = 'hedgehog-cafe-tip-dismissed'
 
-type AppMode = 'home' | 'cafe' | 'transformers' | 'flight'
+type AppMode = 'home' | 'cafe' | 'transformers' | 'flight' | 'f1'
 
 export default function App() {
   const care = useHedgehogCare()
@@ -35,7 +36,7 @@ export default function App() {
 
   return (
     <div
-      className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''} ${mode === 'flight' ? 'flight-shell' : ''}`}
+      className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''} ${mode === 'flight' ? 'flight-shell' : ''} ${mode === 'f1' ? 'f1-shell-host' : ''}`}
     >
       <div className="top-bar">
         <button
@@ -61,6 +62,10 @@ export default function App() {
           onPickFlight={() => {
             play('whoosh')
             setMode('flight')
+          }}
+          onPickF1={() => {
+            play('blast')
+            setMode('f1')
           }}
         />
       )}
@@ -118,6 +123,17 @@ export default function App() {
 
       {mode === 'flight' && (
         <FlightGame
+          onBack={() => {
+            play('tap')
+            goHome()
+          }}
+          playSound={play}
+        />
+      )}
+
+      {mode === 'f1' && (
+        <F1Race
+          muted={muted}
           onBack={() => {
             play('tap')
             goHome()

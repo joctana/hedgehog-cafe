@@ -7,6 +7,7 @@ Pick a game on the home screen:
 - **Hedgehog Café** — feed, clean, and tuck in hedgehog friends
 - **Transformers** — help Optimus Prime blast Decepticons in a simple battle mini-game
 - **Sky Trip** — fly a blue airplane from Phuket, Thailand to Denpasar, Bali
+- **F1 Race** — pick a driver from *F1 The Movie* (including Lachlan!) and race for P1
 
 There are no fail states, timers, ads, or accounts.
 
@@ -53,7 +54,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, or **Sky Trip**.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, or **F1 Race**.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -79,9 +80,17 @@ Choose **Hedgehog Café**, **Transformers**, or **Sky Trip**.
 3. Near Bali, landing starts — hold **↓** to descend to the Denpasar runway.
 4. Touchdown celebration in Denpasar (takeoff/landing are assisted so kids always succeed).
 
+### F1 Race
+1. Choose a driver: **Sonny Hayes**, **Joshua Pearce**, **Lewis Hamilton**, **Max Verstappen**, or **Lachlan Beattie**.
+2. Steer left/right and tap **DRS Boost** to take the lead.
+3. When you hit P1, the race engineer calls: *“You're P1, you're P1, push, push, push!”*
+4. If you crash, hold the **fire extinguisher** on the flames until they're out, then jump back in.
+5. Cross the line to see: **We have the driver!**
+
 ## Tech
 
 - Vite + React + TypeScript
 - SVG hedgehogs and CSS animations
 - Web Audio soft sound effects (mute toggle in the corner)
+- Speech synthesis for F1 race callouts
 - PWA manifest + Apple web-app meta for home-screen install

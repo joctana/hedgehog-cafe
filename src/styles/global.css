@@ -98,12 +98,17 @@ button:focus-visible {
 }
 
 .app-shell.tf-shell::before,
-.app-shell.flight-shell::before {
+.app-shell.flight-shell::before,
+.app-shell.f1-shell-host::before {
   opacity: 0;
 }
 
 .app-shell.flight-shell {
   background: #7ec8ff;
+}
+
+.app-shell.f1-shell-host {
+  background: #0f1419;
 }
 
 .mode-select {
@@ -121,9 +126,9 @@ button:focus-visible {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(12px, 2.5vw, 24px);
-  width: min(1100px, 96%);
+  width: min(900px, 96%);
   margin: 0 auto;
   align-content: center;
 }
@@ -134,7 +139,7 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: min(38vh, 300px);
+  min-height: min(28vh, 240px);
   padding: 22px 16px;
   border-radius: 32px;
   text-align: center;
@@ -169,6 +174,14 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(30, 64, 140, 0.28);
 }
 
+.mode-card.f1 {
+  background:
+    radial-gradient(circle at 70% 15%, rgba(250, 204, 21, 0.28), transparent 45%),
+    linear-gradient(180deg, #1a2332, #0f1419);
+  color: #f1f5f9;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -191,6 +204,14 @@ button:focus-visible {
 
 .mode-card.flight .mode-blurb {
   color: rgba(255, 248, 239, 0.92);
+}
+
+.mode-card.f1 .mode-name {
+  color: #facc15;
+}
+
+.mode-card.f1 .mode-blurb {
+  color: rgba(241, 245, 249, 0.88);
 }
 
 .mode-blurb {
@@ -734,16 +755,16 @@ button:focus-visible {
 
 @media (orientation: landscape) and (max-width: 1100px) {
   .mode-choices {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .mode-card {
-    min-height: min(46vh, 260px);
+    min-height: min(38vh, 220px);
     padding: 16px 12px;
   }
 
   .mode-blurb {
-    max-width: 14ch;
+    max-width: 18ch;
     font-size: 0.95rem;
   }
 }
