@@ -2,9 +2,15 @@ interface ModeSelectProps {
   onPickCafe: () => void
   onPickTransformers: () => void
   onPickFlight: () => void
+  onPickF1: () => void
 }
 
-export function ModeSelect({ onPickCafe, onPickTransformers, onPickFlight }: ModeSelectProps) {
+export function ModeSelect({
+  onPickCafe,
+  onPickTransformers,
+  onPickFlight,
+  onPickF1,
+}: ModeSelectProps) {
   return (
     <section className="scene mode-select" aria-label="Choose a game">
       <header className="brand-block mode-brand">
@@ -35,6 +41,14 @@ export function ModeSelect({ onPickCafe, onPickTransformers, onPickFlight }: Mod
           </span>
           <span className="mode-name">Sky Trip</span>
           <span className="mode-blurb">AirAsia A320 · Phuket to Bali</span>
+        </button>
+
+        <button type="button" className="mode-card f1" onClick={onPickF1}>
+          <span className="mode-emoji" aria-hidden="true">
+            🏎️
+          </span>
+          <span className="mode-name">F1 Race</span>
+          <span className="mode-blurb">Sonny, Josh, Lewis, Max & Lachlan</span>
         </button>
       </div>
     </section>
