@@ -2,13 +2,14 @@ import './flight.css'
 
 interface AirplaneProps {
   tilt?: number
+  gearDown?: boolean
 }
 
 /** Side-view Airbus A320 inspired by AirAsia's red-and-white livery. */
-export function Airplane({ tilt = 0 }: AirplaneProps) {
+export function Airplane({ tilt = 0, gearDown = false }: AirplaneProps) {
   return (
     <div
-      className="flight-plane"
+      className={`flight-plane ${gearDown ? 'gear-down' : ''}`}
       style={{ transform: `rotate(${tilt}deg)` }}
       aria-hidden="true"
     >
@@ -102,9 +103,23 @@ export function Airplane({ tilt = 0 }: AirplaneProps) {
         <path d="M48 86 L40 74 L46 74 L56 86 Z" fill="#e31c23" />
         <path d="M194 40 L202 28 L206 30 L198 44 Z" fill="#e31c23" opacity="0.9" />
 
-        {/* landing-gear hint (retracted look as small bay lines) */}
-        <rect x="112" y="74" width="10" height="3" rx="1" fill="#222" opacity="0.35" />
-        <rect x="168" y="72" width="10" height="3" rx="1" fill="#222" opacity="0.25" />
+        {gearDown ? (
+          <g className="landing-gear">
+            <rect x="108" y="76" width="4" height="18" rx="1" fill="#333" />
+            <circle cx="110" cy="96" r="5" fill="#222" />
+            <circle cx="110" cy="96" r="2" fill="#888" />
+            <rect x="164" y="74" width="4" height="16" rx="1" fill="#333" />
+            <circle cx="166" cy="92" r="5" fill="#222" />
+            <circle cx="166" cy="92" r="2" fill="#888" />
+            <rect x="220" y="64" width="3" height="14" rx="1" fill="#333" />
+            <circle cx="221.5" cy="80" r="4" fill="#222" />
+          </g>
+        ) : (
+          <g opacity="0.35">
+            <rect x="112" y="74" width="10" height="3" rx="1" fill="#222" />
+            <rect x="168" y="72" width="10" height="3" rx="1" fill="#222" />
+          </g>
+        )}
       </svg>
     </div>
   )
