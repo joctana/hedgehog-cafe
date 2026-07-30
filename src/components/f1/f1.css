@@ -1,12 +1,13 @@
 .f1-car {
-  width: 120px;
-  height: 45px;
+  width: 48px;
+  height: 100px;
   display: block;
+  transform-origin: center center;
 }
 
 .f1-car.compact {
-  width: 88px;
-  height: 33px;
+  width: 42px;
+  height: 88px;
 }
 
 .f1-car-svg {
@@ -18,15 +19,17 @@
 
 .f1-car .flame {
   animation: f1-flame 0.35s ease-in-out infinite alternate;
-  transform-origin: center bottom;
+  transform-origin: center center;
 }
 
 @keyframes f1-flame {
   from {
     transform: scale(0.9);
+    opacity: 0.85;
   }
   to {
     transform: scale(1.15);
+    opacity: 1;
   }
 }
 
@@ -161,7 +164,7 @@
   color: inherit;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
-  min-height: 9.5rem;
+  min-height: 11.5rem;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -195,6 +198,10 @@
 
 .f1-driver-car {
   margin-top: auto;
+  display: flex;
+  justify-content: center;
+  min-height: 96px;
+  align-items: flex-end;
 }
 
 .f1-hud {
@@ -323,13 +330,13 @@
 .f1-player,
 .f1-rival {
   position: absolute;
-  transform: translateX(-50%);
+  transform: translate(-50%, 0);
   transition: left 0.2s ease;
   z-index: 2;
 }
 
 .f1-player {
-  bottom: 12%;
+  bottom: 8%;
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45));
 }
 
@@ -341,16 +348,21 @@
 @keyframes f1-boost-shake {
   0%,
   100% {
-    transform: translateX(-50%) translateY(0);
+    transform: translate(-50%, 0);
   }
   50% {
-    transform: translateX(-50%) translateY(-3px);
+    transform: translate(-50%, -4px);
   }
 }
 
 .f1-rival {
   z-index: 1;
-  opacity: 0.92;
+  opacity: 0.95;
+}
+
+.f1-rival.is-crashed {
+  z-index: 3;
+  filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.8));
 }
 
 .f1-controls {
@@ -385,6 +397,45 @@
 
 .f1-steer:active,
 .f1-boost:active {
+  transform: translateY(2px);
+}
+
+.f1-help-offer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.f1-help-car {
+  margin: 0.5rem 0;
+}
+
+.f1-help-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: min(100%, 320px);
+}
+
+.f1-help-btn {
+  border: none;
+  border-radius: 1rem;
+  font-weight: 800;
+  font-size: 1.35rem;
+  min-height: 4rem;
+  cursor: pointer;
+  background: linear-gradient(180deg, #fb923c, #ea580c);
+  color: #fff;
+  box-shadow: 0 4px 0 #c2410c;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.f1-help-btn:active {
   transform: translateY(2px);
 }
 
