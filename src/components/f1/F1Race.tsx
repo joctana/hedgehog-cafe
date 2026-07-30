@@ -5,13 +5,16 @@ import { useSpeech } from '../../hooks/useSpeech'
 import { RaceCar } from './RaceCar'
 import './f1.css'
 
-type Phase = 'select' | 'racing' | 'crash' | 'win'
+type Phase = 'select' | 'racing' | 'help-offer' | 'crash' | 'win'
 
 type Rival = {
   id: number
   name: string
   progress: number
+  lane: number
   driver: F1Driver
+  crashed: boolean
+  out: boolean
 }
 
 type Props = {
@@ -21,7 +24,7 @@ type Props = {
 }
 
 const RACE_DISTANCE = 100
-const CRASH_MARKS = [38, 68]
+const CRASH_MARKS = [36, 64]
 const MAX_CRASHES = CRASH_MARKS.length
 
 const RIVAL_LIVERIES: F1Driver[] = [
@@ -67,6 +70,7 @@ export function F1Race({ muted, onBack, playSound }: Props) {
   const [rivals, setRivals] = useState<Rival[]>([])
   const [position, setPosition] = useState(3)
   const [saidP1, setSaidP1] = useState(false)
+  const [crashedRival, setCrashedRival] = useState<Rival | null>(null)
   const [foam, setFoam] = useState(0)
   const [aimX, setAimX] = useState(50)
   const [sprayOn, setSprayOn] = useState(false)
@@ -76,15 +80,16 @@ export function F1Race({ muted, onBack, playSound }: Props) {
   const boostUntil = useRef(0)
   const sprayRef = useRef(false)
   const progressRef = useRef(0)
+  const rivalsRef = useRef<Rival[]>([])
   const crashCountRef = useRef(0)
   const wonRef = useRef(false)
-  const crashingRef = useRef(false)
+  const pausedRef = useRef(false)
 
   const resetRace = useCallback(
     (picked: F1Driver) => {
       stop()
       wonRef.current = false
-      crashingRef.current = false
+      pausedRef.current = false
       progressRef.current = 0
       crashCountRef.current = 0
       setDriver(picked)
@@ -93,45 +98,87 @@ export function F1Race({ muted, onBack, playSound }: Props) {
       setBoosting(false)
       setPosition(3)
       setSaidP1(false)
+      setCrashedRival(null)
       setFoam(0)
       setFlameLeft(100)
       setSprayOn(false)
       boostUntil.current = 0
-      setRivals(
-        RIVAL_LIVERIES.map((d, i) => ({
-          id: i + 1,
-          name: RIVAL_NAMES[i] ?? d.name,
-          progress: 1 + i * 2,
-          driver: d,
-        })),
-      )
+      const starting = RIVAL_LIVERIES.map((d, i) => ({
+        id: i + 1,
+        name: RIVAL_NAMES[i] ?? d.name,
+        progress: 1 + i * 2,
+        lane: i % 3,
+        driver: d,
+        crashed: false,
+        out: false,
+      }))
+      rivalsRef.current = starting
+      setRivals(starting)
       setPhase('racing')
       playSound('celebrate')
     },
     [playSound, stop],
   )
 
+  const offerHelp = useCallback(
+    (rival: Rival) => {
+      playSound('hit')
+      setCrashedRival(rival)
+      const next = rivalsRef.current.map((r) =>
+        r.id === rival.id ? { ...r, crashed: true } : r,
+      )
+      rivalsRef.current = next
+      setRivals(next)
+      setPhase('help-offer')
+      speak(`${rival.name} crashed! Want to help?`)
+    },
+    [playSound, speak],
+  )
+
   const startFireFight = useCallback(() => {
-    if (crashingRef.current || wonRef.current) return
-    crashingRef.current = true
-    playSound('hit')
+    playSound('tap')
     setFoam(0)
     setFlameLeft(100)
     setAimX(50)
     setSprayOn(false)
     sprayRef.current = false
-    crashCountRef.current += 1
     setPhase('crash')
-    speak('Crash! Grab the fire extinguisher!')
+    speak('Grab the fire extinguisher!')
   }, [playSound, speak])
+
+  const skipHelp = useCallback(() => {
+    playSound('tap')
+    speak('Okay, keep pushing!')
+    if (crashedRival) {
+      const next = rivalsRef.current.map((r) =>
+        r.id === crashedRival.id ? { ...r, crashed: false, out: true } : r,
+      )
+      rivalsRef.current = next
+      setRivals(next)
+    }
+    setCrashedRival(null)
+    pausedRef.current = false
+    setPhase('racing')
+    last.current = performance.now()
+  }, [crashedRival, playSound, speak])
 
   const finishFire = useCallback(() => {
     playSound('happy')
-    speak('Fire out! Back on track!')
-    crashingRef.current = false
+    speak('Fire out! Great teamwork!')
+    if (crashedRival) {
+      const next = rivalsRef.current.map((r) =>
+        r.id === crashedRival.id
+          ? { ...r, crashed: false, out: false, progress: Math.max(2, r.progress - 8) }
+          : r,
+      )
+      rivalsRef.current = next
+      setRivals(next)
+    }
+    setCrashedRival(null)
+    pausedRef.current = false
     setPhase('racing')
     last.current = performance.now()
-  }, [playSound, speak])
+  }, [crashedRival, playSound, speak])
 
   useEffect(() => {
     if (phase !== 'racing' || !driver) return
@@ -139,7 +186,7 @@ export function F1Race({ muted, onBack, playSound }: Props) {
     last.current = performance.now()
 
     const tick = (now: number) => {
-      if (wonRef.current || crashingRef.current) return
+      if (wonRef.current || pausedRef.current) return
 
       const dt = Math.min(0.05, (now - last.current) / 1000)
       last.current = now
@@ -159,36 +206,46 @@ export function F1Race({ muted, onBack, playSound }: Props) {
         return
       }
 
-      if (
-        crashCountRef.current < MAX_CRASHES &&
-        nextProgress >= CRASH_MARKS[crashCountRef.current]!
-      ) {
-        startFireFight()
-        return
-      }
-
-      setRivals((prev) =>
-        prev.map((r, i) => ({
+      const nextRivals = rivalsRef.current.map((r, i) => {
+        if (r.out || r.crashed) return r
+        return {
           ...r,
           progress: Math.min(
             RACE_DISTANCE - 0.5,
             r.progress + (7.5 + i * 0.8 + Math.sin(now / 600 + i) * 1.2) * dt,
           ),
-        })),
-      )
+        }
+      })
+      rivalsRef.current = nextRivals
+      setRivals(nextRivals)
+
+      if (
+        crashCountRef.current < MAX_CRASHES &&
+        nextProgress >= CRASH_MARKS[crashCountRef.current]!
+      ) {
+        const candidates = nextRivals.filter((r) => !r.out && !r.crashed)
+        if (candidates.length > 0) {
+          const victim = candidates[Math.floor(Math.random() * candidates.length)]!
+          pausedRef.current = true
+          crashCountRef.current += 1
+          offerHelp(victim)
+          return
+        }
+      }
 
       raf.current = requestAnimationFrame(tick)
     }
 
     raf.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf.current)
-  }, [phase, driver, playSound, speak, startFireFight])
+  }, [phase, driver, playSound, speak, offerHelp])
 
   useEffect(() => {
     if (phase !== 'racing') return
+    const activeRivals = rivals.filter((r) => !r.out)
     const all = [
       { name: 'you', progress },
-      ...rivals.map((r) => ({ name: r.name, progress: r.progress })),
+      ...activeRivals.map((r) => ({ name: r.name, progress: r.progress })),
     ].sort((a, b) => b.progress - a.progress)
     const pos = all.findIndex((x) => x.name === 'you') + 1
     setPosition(pos)
@@ -237,6 +294,8 @@ export function F1Race({ muted, onBack, playSound }: Props) {
     setAimX(Math.max(8, Math.min(92, x)))
   }
 
+  const laneLeft = (laneIndex: number) => `${18 + laneIndex * 28}%`
+
   if (phase === 'select') {
     return (
       <div className="f1-shell">
@@ -265,7 +324,7 @@ export function F1Race({ muted, onBack, playSound }: Props) {
                 <span className="f1-driver-name">{d.name}</span>
                 <span className="f1-driver-team">{d.teamName}</span>
                 <span className="f1-driver-car">
-                  <RaceCar driver={d} size={88} />
+                  <RaceCar driver={d} size={96} />
                 </span>
               </button>
             ))}
@@ -277,15 +336,46 @@ export function F1Race({ muted, onBack, playSound }: Props) {
 
   if (!driver) return null
 
-  if (phase === 'crash') {
+  if (phase === 'help-offer' && crashedRival) {
     return (
       <div className="f1-shell crash-mode">
         <header className="f1-top">
           <button type="button" className="back-btn" onClick={onBack} aria-label="Back to games">
             ← Games
           </button>
-          <h1 className="f1-title">Fire!</h1>
-          <span className="f1-chip danger">Put it out</span>
+          <h1 className="f1-title">Yellow flag!</h1>
+          <span className="f1-chip danger">Crash</span>
+        </header>
+
+        <div className="f1-help-offer">
+          <p className="f1-crash-msg">
+            {crashedRival.name} crashed — want to help put out the fire?
+          </p>
+          <div className="f1-help-car">
+            <RaceCar driver={crashedRival.driver} crashed flameIntensity={1} size={150} rotate={25} />
+          </div>
+          <div className="f1-help-actions">
+            <button type="button" className="f1-help-btn" onClick={startFireFight}>
+              🧯 Help!
+            </button>
+            <button type="button" className="f1-steer" onClick={skipHelp}>
+              Keep racing
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (phase === 'crash' && crashedRival) {
+    return (
+      <div className="f1-shell crash-mode">
+        <header className="f1-top">
+          <button type="button" className="back-btn" onClick={onBack} aria-label="Back to games">
+            ← Games
+          </button>
+          <h1 className="f1-title">Help {crashedRival.name}!</h1>
+          <span className="f1-chip danger">Fire</span>
         </header>
 
         <div className="f1-crash-stage">
@@ -314,10 +404,11 @@ export function F1Race({ muted, onBack, playSound }: Props) {
           >
             <div className="f1-crashed-car">
               <RaceCar
-                driver={driver}
+                driver={crashedRival.driver}
                 crashed
                 flameIntensity={flameLeft / 100}
                 size={160}
+                rotate={28}
               />
             </div>
             {sprayOn && (
@@ -408,7 +499,9 @@ export function F1Race({ muted, onBack, playSound }: Props) {
         <ul className="f1-standings">
           {[
             { name: driver.name, progress, you: true },
-            ...rivals.map((r) => ({ name: r.name, progress: r.progress, you: false })),
+            ...rivals
+              .filter((r) => !r.out)
+              .map((r) => ({ name: r.name, progress: r.progress, you: false })),
           ]
             .sort((a, b) => b.progress - a.progress)
             .map((row, i) => (
@@ -420,30 +513,36 @@ export function F1Race({ muted, onBack, playSound }: Props) {
       </div>
 
       <div className="f1-track-wrap">
-        <div className="f1-track" style={{ backgroundPosition: `0 ${trackOffset}px` }}>
-          {rivals.map((r, idx) => {
+        <div className="f1-track" style={{ backgroundPosition: `center ${trackOffset}px` }}>
+          {rivals.map((r) => {
+            if (r.out) return null
             const ahead = r.progress - progress
             const y = 42 - ahead * 2.2
-            if (y < -10 || y > 110) return null
+            if (y < -15 || y > 115) return null
             return (
               <div
                 key={r.id}
-                className="f1-rival"
+                className={`f1-rival ${r.crashed ? 'is-crashed' : ''}`}
                 style={{
                   top: `${y}%`,
-                  left: `${18 + idx * 28}%`,
+                  left: laneLeft(r.lane),
                 }}
               >
-                <RaceCar driver={r.driver} size={72} />
+                <RaceCar
+                  driver={r.driver}
+                  size={78}
+                  crashed={r.crashed}
+                  rotate={r.crashed ? 40 : 0}
+                />
               </div>
             )
           })}
 
           <div
             className={`f1-player ${boosting ? 'boosting' : ''}`}
-            style={{ left: `${18 + lane * 28}%` }}
+            style={{ left: laneLeft(lane) }}
           >
-            <RaceCar driver={driver} size={100} />
+            <RaceCar driver={driver} size={108} />
           </div>
         </div>
       </div>

@@ -84,7 +84,7 @@ Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, or **F1 Race**.
 1. Choose a driver: **Sonny Hayes**, **Joshua Pearce**, **Lewis Hamilton**, **Max Verstappen**, or **Lachlan Beattie**.
 2. Steer left/right and tap **DRS Boost** to take the lead.
 3. When you hit P1, the race engineer calls: *“You're P1, you're P1, push, push, push!”*
-4. If you crash, hold the **fire extinguisher** on the flames until they're out, then jump back in.
+4. If another car crashes, you can tap **Help!** and hold the **fire extinguisher** on the flames — or keep racing.
 5. Cross the line to see: **We have the driver!**
 
 ## Tech
