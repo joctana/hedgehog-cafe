@@ -86,23 +86,27 @@ export function F1Race({ muted, onBack, playSound }: Props) {
   const wonRef = useRef(false)
   const pausedRef = useRef(false)
   const laneRef = useRef(1)
+  const phaseRef = useRef(phase)
+  phaseRef.current = phase
 
   const applyTiltLane = useCallback(
     (next: number) => {
-      if (phase !== 'racing') return
+      if (phaseRef.current !== 'racing') return
       if (next === laneRef.current) return
       laneRef.current = next
       setLane(next)
       playSound('tap')
     },
-    [phase, playSound],
+    [playSound],
   )
 
   const {
     status: tiltStatus,
     tilt: tiltDegrees,
+    calibrating: tiltCalibrating,
     enable: enableTilt,
     disable: disableTilt,
+    recenter: recenterTilt,
     syncLane: syncTiltLane,
   } = useTiltSteer({
     active: phase === 'racing',
@@ -365,7 +369,8 @@ export function F1Race({ muted, onBack, playSound }: Props) {
                     : 'Enable tilt steer'}
               </button>
               <p className="f1-tilt-hint">
-                Tip the iPad left and right to change lanes. Buttons still work.
+                Hold the iPad how you like, tap enable, then tip left/right to
+                change lanes. Buttons still work.
               </p>
             </div>
           )}
@@ -612,9 +617,13 @@ export function F1Race({ muted, onBack, playSound }: Props) {
         <div className="f1-tilt-meter" aria-hidden>
           <span
             className="f1-tilt-needle"
-            style={{ left: `${50 + Math.max(-40, Math.min(40, tiltDegrees))}%` }}
+            style={{
+              left: `${50 + Math.max(-42, Math.min(42, tiltDegrees * 14))}%`,
+            }}
           />
-          <span className="f1-tilt-label">Tilt</span>
+          <span className="f1-tilt-label">
+            {tiltCalibrating ? 'Hold still…' : 'Tilt'}
+          </span>
         </div>
       )}
 
@@ -629,13 +638,31 @@ export function F1Race({ muted, onBack, playSound }: Props) {
           Right ▶
         </button>
         {tiltStatus !== 'unavailable' && (
-          <button
-            type="button"
-            className={`f1-tilt-toggle ${tiltStatus === 'on' ? 'on' : ''}`}
-            onClick={toggleTilt}
-          >
-            {tiltStatus === 'on' ? 'Tilt ON' : 'Tilt steer'}
-          </button>
+          <div className="f1-tilt-row">
+            <button
+              type="button"
+              className={`f1-tilt-toggle ${tiltStatus === 'on' ? 'on' : ''}`}
+              onClick={toggleTilt}
+            >
+              {tiltStatus === 'on'
+                ? tiltCalibrating
+                  ? 'Hold still…'
+                  : 'Tilt ON'
+                : 'Tilt steer'}
+            </button>
+            {tiltStatus === 'on' && !tiltCalibrating && (
+              <button
+                type="button"
+                className="f1-tilt-recenter"
+                onClick={() => {
+                  recenterTilt()
+                  playSound('tap')
+                }}
+              >
+                Recenter
+              </button>
+            )}
+          </div>
         )}
       </div>
     </div>

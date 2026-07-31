@@ -441,10 +441,31 @@
   flex-shrink: 0;
 }
 
-.f1-tilt-toggle {
+.f1-tilt-row {
   grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.55rem;
+}
+
+.f1-tilt-toggle {
   min-height: 2.75rem;
   font-size: 0.95rem;
+  width: 100%;
+}
+
+.f1-tilt-recenter {
+  border: none;
+  border-radius: 1rem;
+  font-weight: 800;
+  font-size: 0.9rem;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.14);
+  color: #f8fafc;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
 }
 
 .f1-steer,
@@ -665,7 +686,7 @@
   }
 
   .f1-boost,
-  .f1-tilt-toggle {
+  .f1-tilt-row {
     grid-column: 1 / -1;
   }
 }
