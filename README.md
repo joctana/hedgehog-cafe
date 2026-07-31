@@ -84,7 +84,7 @@ Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, or **F1 Race**.
 1. Choose a driver: **Sonny Hayes**, **Joshua Pearce**, **Lewis Hamilton**, **Max Verstappen**, or **Lachlan Beattie**.
 2. Steer with **Left / Right** buttons, or tap **Enable tilt steer** and tip the iPad. Tap **DRS Boost** to take the lead.
 3. When you hit P1, the race engineer calls: *“You're P1, you're P1, push, push, push!”*
-4. If another car crashes, you can tap **Help!** and hold the **fire extinguisher** on the flames — or keep racing.
+4. Around mid-race, another car may crash — tap **Help!** and hold the **fire extinguisher**, or keep racing.
 5. Cross the line to see: **We have the driver!**
 
 Tilt steer uses the iPad motion sensors (Safari will ask for permission once). It recenters to how you’re holding the iPad when a race starts — tap **Recenter** anytime if steering feels off. Buttons always remain as a backup.

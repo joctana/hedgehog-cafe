@@ -25,8 +25,15 @@ type Props = {
 }
 
 const RACE_DISTANCE = 100
-const CRASH_MARKS = [36, 64]
+/** One yellow-flag moment mid-race — keeps rescue special, not constant. */
+const CRASH_MARKS = [55]
 const MAX_CRASHES = CRASH_MARKS.length
+
+/** Base / DRS speeds — tuned for a ~30–40s race without constant boosting. */
+const PLAYER_SPEED = 3.1
+const PLAYER_BOOST_SPEED = 5.4
+const RIVAL_BASE_SPEED = 2.05
+const RIVAL_SPEED_STEP = 0.22
 
 const RIVAL_LIVERIES: F1Driver[] = [
   {
@@ -223,7 +230,7 @@ export function F1Race({ muted, onBack, playSound }: Props) {
       const boosted = now < boostUntil.current
       setBoosting(boosted)
 
-      const playerSpeed = (boosted ? 18 : 11) * dt
+      const playerSpeed = (boosted ? PLAYER_BOOST_SPEED : PLAYER_SPEED) * dt
       const nextProgress = Math.min(RACE_DISTANCE, progressRef.current + playerSpeed)
       progressRef.current = nextProgress
       setProgress(nextProgress)
@@ -242,7 +249,8 @@ export function F1Race({ muted, onBack, playSound }: Props) {
           ...r,
           progress: Math.min(
             RACE_DISTANCE - 0.5,
-            r.progress + (7.5 + i * 0.8 + Math.sin(now / 600 + i) * 1.2) * dt,
+            r.progress +
+              (RIVAL_BASE_SPEED + i * RIVAL_SPEED_STEP + Math.sin(now / 700 + i) * 0.55) * dt,
           ),
         }
       })
@@ -534,7 +542,7 @@ export function F1Race({ muted, onBack, playSound }: Props) {
     )
   }
 
-  const trackOffset = progress * 18
+  const trackOffset = progress * 42
 
   return (
     <div className="f1-shell">
