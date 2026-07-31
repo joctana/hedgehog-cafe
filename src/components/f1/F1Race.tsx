@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { F1_DRIVERS, RIVAL_NAMES, type F1Driver } from '../../data/f1Drivers'
 import type { SoundKind } from '../../hooks/useSounds'
 import { useSpeech } from '../../hooks/useSpeech'
+import { useTiltSteer } from '../../hooks/useTiltSteer'
 import { RaceCar } from './RaceCar'
 import './f1.css'
 
@@ -84,6 +85,29 @@ export function F1Race({ muted, onBack, playSound }: Props) {
   const crashCountRef = useRef(0)
   const wonRef = useRef(false)
   const pausedRef = useRef(false)
+  const laneRef = useRef(1)
+
+  const applyTiltLane = useCallback(
+    (next: number) => {
+      if (phase !== 'racing') return
+      if (next === laneRef.current) return
+      laneRef.current = next
+      setLane(next)
+      playSound('tap')
+    },
+    [phase, playSound],
+  )
+
+  const {
+    status: tiltStatus,
+    tilt: tiltDegrees,
+    enable: enableTilt,
+    disable: disableTilt,
+    syncLane: syncTiltLane,
+  } = useTiltSteer({
+    active: phase === 'racing',
+    onLane: applyTiltLane,
+  })
 
   const resetRace = useCallback(
     (picked: F1Driver) => {
@@ -94,7 +118,9 @@ export function F1Race({ muted, onBack, playSound }: Props) {
       crashCountRef.current = 0
       setDriver(picked)
       setProgress(0)
+      laneRef.current = 1
       setLane(1)
+      syncTiltLane(1)
       setBoosting(false)
       setPosition(3)
       setSaidP1(false)
@@ -117,7 +143,7 @@ export function F1Race({ muted, onBack, playSound }: Props) {
       setPhase('racing')
       playSound('celebrate')
     },
-    [playSound, stop],
+    [playSound, stop, syncTiltLane],
   )
 
   const offerHelp = useCallback(
@@ -285,8 +311,25 @@ export function F1Race({ muted, onBack, playSound }: Props) {
 
   const moveLane = (dir: -1 | 1) => {
     if (phase !== 'racing') return
-    setLane((l) => Math.max(0, Math.min(2, l + dir)))
+    setLane((l) => {
+      const next = Math.max(0, Math.min(2, l + dir))
+      laneRef.current = next
+      syncTiltLane(next)
+      return next
+    })
     playSound('tap')
+  }
+
+  const toggleTilt = () => {
+    if (tiltStatus === 'on') {
+      disableTilt()
+      playSound('tap')
+      return
+    }
+    void enableTilt().then((ok) => {
+      if (ok) playSound('whoosh')
+      else playSound('tap')
+    })
   }
 
   const onExtinguishPointer = (clientX: number, rect: DOMRect) => {
@@ -308,6 +351,24 @@ export function F1Race({ muted, onBack, playSound }: Props) {
         </header>
         <div className="f1-select">
           <p className="f1-select-lead">Choose your driver</p>
+          {tiltStatus !== 'unavailable' && (
+            <div className="f1-tilt-setup">
+              <button
+                type="button"
+                className={`f1-tilt-btn ${tiltStatus === 'on' ? 'on' : ''}`}
+                onClick={toggleTilt}
+              >
+                {tiltStatus === 'on'
+                  ? 'Tilt steer ON'
+                  : tiltStatus === 'denied'
+                    ? 'Tilt blocked — use buttons'
+                    : 'Enable tilt steer'}
+              </button>
+              <p className="f1-tilt-hint">
+                Tip the iPad left and right to change lanes. Buttons still work.
+              </p>
+            </div>
+          )}
           <div className="f1-driver-grid">
             {F1_DRIVERS.map((d) => (
               <button
@@ -547,6 +608,16 @@ export function F1Race({ muted, onBack, playSound }: Props) {
         </div>
       </div>
 
+      {tiltStatus === 'on' && (
+        <div className="f1-tilt-meter" aria-hidden>
+          <span
+            className="f1-tilt-needle"
+            style={{ left: `${50 + Math.max(-40, Math.min(40, tiltDegrees))}%` }}
+          />
+          <span className="f1-tilt-label">Tilt</span>
+        </div>
+      )}
+
       <div className="f1-controls">
         <button type="button" className="f1-steer" onClick={() => moveLane(-1)}>
           ◀ Left
@@ -557,6 +628,15 @@ export function F1Race({ muted, onBack, playSound }: Props) {
         <button type="button" className="f1-steer" onClick={() => moveLane(1)}>
           Right ▶
         </button>
+        {tiltStatus !== 'unavailable' && (
+          <button
+            type="button"
+            className={`f1-tilt-toggle ${tiltStatus === 'on' ? 'on' : ''}`}
+            onClick={toggleTilt}
+          >
+            {tiltStatus === 'on' ? 'Tilt ON' : 'Tilt steer'}
+          </button>
+        )}
       </div>
     </div>
   )
