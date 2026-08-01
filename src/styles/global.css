@@ -99,7 +99,8 @@ button:focus-visible {
 
 .app-shell.tf-shell::before,
 .app-shell.flight-shell::before,
-.app-shell.f1-shell-host::before {
+.app-shell.f1-shell-host::before,
+.app-shell.bluey-shell-host::before {
   opacity: 0;
 }
 
@@ -109,6 +110,10 @@ button:focus-visible {
 
 .app-shell.f1-shell-host {
   background: #0f1419;
+}
+
+.app-shell.bluey-shell-host {
+  background: #b8e0f5;
 }
 
 .mode-select {
@@ -127,10 +132,13 @@ button:focus-visible {
   z-index: 2;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(12px, 2.5vw, 24px);
+  gap: clamp(10px, 2vw, 20px);
   width: min(900px, 96%);
   margin: 0 auto;
   align-content: center;
+  max-height: min(72vh, 720px);
+  overflow: auto;
+  padding-bottom: 12px;
 }
 
 .mode-card {
@@ -139,8 +147,8 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: min(28vh, 240px);
-  padding: 22px 16px;
+  min-height: min(22vh, 200px);
+  padding: 18px 14px;
   border-radius: 32px;
   text-align: center;
   box-shadow: 0 16px 32px var(--shadow);
@@ -182,6 +190,14 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
 }
 
+.mode-card.bluey {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.65), transparent 45%),
+    linear-gradient(180deg, #9fd4f0, #5aa0c8);
+  color: #1f3a4a;
+  box-shadow: 0 16px 32px rgba(74, 143, 184, 0.28);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -212,6 +228,15 @@ button:focus-visible {
 
 .mode-card.f1 .mode-blurb {
   color: rgba(241, 245, 249, 0.88);
+}
+
+.mode-card.bluey .mode-name {
+  color: #fff8ef;
+  text-shadow: 0 2px 0 rgba(31, 58, 74, 0.2);
+}
+
+.mode-card.bluey .mode-blurb {
+  color: rgba(255, 248, 239, 0.92);
 }
 
 .mode-blurb {
@@ -755,16 +780,17 @@ button:focus-visible {
 
 @media (orientation: landscape) and (max-width: 1100px) {
   .mode-choices {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-height: min(68vh, 560px);
   }
 
   .mode-card {
-    min-height: min(38vh, 220px);
-    padding: 16px 12px;
+    min-height: min(28vh, 180px);
+    padding: 14px 10px;
   }
 
   .mode-blurb {
-    max-width: 18ch;
-    font-size: 0.95rem;
+    max-width: 16ch;
+    font-size: 0.9rem;
   }
 }

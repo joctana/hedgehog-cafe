@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { BlueyBarber } from './components/bluey/BlueyBarber'
 import { CafeScene } from './components/CafeScene'
 import { CareScene } from './components/CareScene'
 import { F1Race } from './components/f1/F1Race'
@@ -10,7 +11,7 @@ import { useSounds } from './hooks/useSounds'
 
 const TIP_KEY = 'hedgehog-cafe-tip-dismissed'
 
-type AppMode = 'home' | 'cafe' | 'transformers' | 'flight' | 'f1'
+type AppMode = 'home' | 'cafe' | 'transformers' | 'flight' | 'f1' | 'bluey'
 
 export default function App() {
   const care = useHedgehogCare()
@@ -36,7 +37,7 @@ export default function App() {
 
   return (
     <div
-      className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''} ${mode === 'flight' ? 'flight-shell' : ''} ${mode === 'f1' ? 'f1-shell-host' : ''}`}
+      className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''} ${mode === 'flight' ? 'flight-shell' : ''} ${mode === 'f1' ? 'f1-shell-host' : ''} ${mode === 'bluey' ? 'bluey-shell-host' : ''}`}
     >
       <div className="top-bar">
         <button
@@ -66,6 +67,10 @@ export default function App() {
           onPickF1={() => {
             play('blast')
             setMode('f1')
+          }}
+          onPickBluey={() => {
+            play('happy')
+            setMode('bluey')
           }}
         />
       )}
@@ -134,6 +139,16 @@ export default function App() {
       {mode === 'f1' && (
         <F1Race
           muted={muted}
+          onBack={() => {
+            play('tap')
+            goHome()
+          }}
+          playSound={play}
+        />
+      )}
+
+      {mode === 'bluey' && (
+        <BlueyBarber
           onBack={() => {
             play('tap')
             goHome()
