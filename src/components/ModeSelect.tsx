@@ -3,6 +3,7 @@ interface ModeSelectProps {
   onPickTransformers: () => void
   onPickFlight: () => void
   onPickF1: () => void
+  onPickBluey: () => void
 }
 
 export function ModeSelect({
@@ -10,6 +11,7 @@ export function ModeSelect({
   onPickTransformers,
   onPickFlight,
   onPickF1,
+  onPickBluey,
 }: ModeSelectProps) {
   return (
     <section className="scene mode-select" aria-label="Choose a game">
@@ -49,6 +51,14 @@ export function ModeSelect({
           </span>
           <span className="mode-name">F1 Race</span>
           <span className="mode-blurb">Sonny, Josh, Lewis, Max & Lachlan</span>
+        </button>
+
+        <button type="button" className="mode-card bluey" onClick={onPickBluey}>
+          <span className="mode-emoji" aria-hidden="true">
+            💈
+          </span>
+          <span className="mode-name">Bluey Barber</span>
+          <span className="mode-blurb">Give Bluey & friends a haircut</span>
         </button>
       </div>
     </section>

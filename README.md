@@ -8,6 +8,7 @@ Pick a game on the home screen:
 - **Transformers** — help Optimus Prime blast Decepticons in a simple battle mini-game
 - **Sky Trip** — fly a blue airplane from Phuket, Thailand to Denpasar, Bali
 - **F1 Race** — pick a driver from *F1 The Movie* (including Lachlan!) and race for P1
+- **Bluey Barber** — pick Bluey, Bingo, Bandit, Chilli, or Muffin and give them a haircut
 
 There are no fail states, timers, ads, or accounts.
 
@@ -54,7 +55,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, or **F1 Race**.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, or **Bluey Barber**.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -89,10 +90,16 @@ Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, or **F1 Race**.
 
 Tilt steer uses the iPad motion sensors (Safari will ask for permission once). It recenters to how you’re holding the iPad when a race starts — tap **Recenter** anytime if steering feels off. Buttons always remain as a backup.
 
+### Bluey Barber
+1. Choose **Bluey**, **Bingo**, **Bandit**, **Chilli**, or **Muffin**.
+2. Pick **Scissors** or **Clippers**.
+3. Tap the glowing fluffy spots to snip — hair clippings fall away.
+4. When every tuft is gone: **Looking gorgeous!**
+
 ## Tech
 
 - Vite + React + TypeScript
-- SVG hedgehogs and CSS animations
+- SVG characters and CSS animations
 - Web Audio soft sound effects (mute toggle in the corner)
 - Speech synthesis for F1 race callouts
 - PWA manifest + Apple web-app meta for home-screen install

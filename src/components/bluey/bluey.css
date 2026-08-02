@@ -1,0 +1,421 @@
+.bluey-shell {
+  --bluey-sky: #9fd4f0;
+  --bluey-shop: #fff6ea;
+  --bluey-wood: #c4785a;
+  --bluey-ink: #3a2a22;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--bluey-ink);
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(159, 212, 240, 0.55), transparent 55%),
+    radial-gradient(ellipse 70% 40% at 100% 100%, rgba(232, 161, 92, 0.28), transparent 50%),
+    linear-gradient(180deg, #b8e0f5 0%, #e8f4fb 35%, #f7ebe0 70%, #e8c9a8 100%);
+}
+
+.bluey-shell.done {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 20%, rgba(230, 184, 92, 0.45), transparent 55%),
+    linear-gradient(180deg, #b8e0f5 0%, #fff6ea 55%, #f0d6a0 100%);
+}
+
+.bluey-shell .back-btn {
+  background: rgba(255, 246, 234, 0.92);
+  color: var(--bluey-ink);
+  box-shadow: 0 6px 14px rgba(58, 42, 34, 0.12);
+}
+
+.bluey-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  padding-top: calc(0.75rem + env(safe-area-inset-top));
+  flex-shrink: 0;
+}
+
+.bluey-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 3vw, 1.5rem);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.bluey-title small {
+  display: block;
+  font-size: 0.65em;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.bluey-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.4rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.65);
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.bluey-chip.win {
+  background: #e6b85c;
+  animation: bluey-pulse 1s ease-in-out infinite;
+}
+
+@keyframes bluey-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.bluey-select {
+  flex: 1;
+  overflow: auto;
+  padding: 0.25rem 1rem 1.5rem;
+}
+
+.bluey-lead {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.bluey-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.85rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.bluey-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.85rem 0.6rem 1rem;
+  border-radius: 1.25rem;
+  border: 3px solid var(--accent);
+  background: linear-gradient(165deg, #fff 0%, color-mix(in srgb, var(--coat) 35%, #fff) 100%);
+  box-shadow: 0 10px 20px rgba(58, 42, 34, 0.12);
+  min-height: 11rem;
+  transition: transform 0.15s ease;
+}
+
+.bluey-card:active {
+  transform: scale(0.96);
+}
+
+.bluey-card-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin-top: 0.25rem;
+}
+
+.bluey-card-role {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  font-weight: 700;
+}
+
+.bluey-pup {
+  display: block;
+  filter: drop-shadow(0 8px 12px rgba(58, 42, 34, 0.15));
+}
+
+.bluey-pup.happy {
+  animation: bluey-bounce 0.7s ease infinite alternate;
+}
+
+@keyframes bluey-bounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-6px);
+  }
+}
+
+.bluey-pup-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.hair-tuft {
+  animation: bluey-wiggle 1.4s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+.tuft-bangR,
+.tuft-sideR {
+  animation-delay: 0.2s;
+}
+
+.tuft-top,
+.tuft-fluff {
+  animation-delay: 0.35s;
+}
+
+@keyframes bluey-wiggle {
+  from {
+    transform: rotate(-2deg);
+  }
+  to {
+    transform: rotate(2deg);
+  }
+}
+
+.bluey-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0 1.1rem 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.bluey-meter {
+  flex: 1;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  overflow: hidden;
+}
+
+.bluey-meter i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #7eb8d9, #4a8fb8);
+  transition: width 0.25s ease;
+}
+
+.bluey-hint {
+  text-align: center;
+  margin: 0 1rem 0.4rem;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.bluey-shop {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+}
+
+.bluey-mirror {
+  position: absolute;
+  top: 4%;
+  width: min(70%, 280px);
+  height: 18%;
+  border-radius: 1rem 1rem 0.5rem 0.5rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(180, 210, 230, 0.35)),
+    #dceaf2;
+  border: 6px solid #c9a06e;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5);
+  opacity: 0.85;
+}
+
+.bluey-chair {
+  position: relative;
+  width: min(100%, 320px);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.bluey-cape {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: 72%;
+  height: 28%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #5b8fd4, #3a6eb0);
+  border-radius: 40% 40% 20% 20%;
+  z-index: 0;
+  box-shadow: 0 8px 0 #2d578c;
+}
+
+.bluey-chair .bluey-pup {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 12%;
+}
+
+.bluey-tuft-hit {
+  position: absolute;
+  z-index: 3;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px dashed rgba(255, 255, 255, 0.85);
+  background: rgba(230, 184, 92, 0.35);
+  box-shadow: 0 0 0 4px rgba(196, 120, 90, 0.2);
+  animation: bluey-target 1s ease-in-out infinite alternate;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bluey-tuft-hit.tool-clippers {
+  border-style: solid;
+  background: rgba(126, 184, 217, 0.4);
+}
+
+.bluey-tuft-hit:active {
+  transform: scale(0.9);
+  background: rgba(111, 155, 106, 0.5);
+}
+
+@keyframes bluey-target {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+.bluey-tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem calc(0.85rem + env(safe-area-inset-bottom));
+  flex-shrink: 0;
+}
+
+.bluey-tool,
+.bluey-primary,
+.bluey-secondary {
+  border: none;
+  border-radius: 1rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  min-height: 3.4rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bluey-tool {
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--bluey-ink);
+}
+
+.bluey-tool.active {
+  background: linear-gradient(180deg, #7eb8d9, #4a8fb8);
+  color: #fff;
+  box-shadow: 0 4px 0 #3a6e90;
+}
+
+.bluey-tool:active,
+.bluey-primary:active {
+  transform: translateY(2px);
+}
+
+.bluey-clippings {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.bluey-clip {
+  position: fixed;
+  width: 14px;
+  height: 8px;
+  border-radius: 40%;
+  animation: bluey-fall 0.85s ease-in forwards;
+}
+
+@keyframes bluey-fall {
+  to {
+    transform: translateY(120px) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+.bluey-done {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.bluey-done-banner {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 5vw, 2.4rem);
+  font-weight: 800;
+  color: #3a6eb0;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.6);
+  animation: bluey-pop 0.55s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes bluey-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.bluey-done-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.bluey-primary {
+  background: linear-gradient(180deg, #7eb8d9, #4a8fb8);
+  color: #fff;
+  box-shadow: 0 4px 0 #3a6e90;
+  padding: 0 1.4rem;
+}
+
+.bluey-secondary {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--bluey-ink);
+  padding: 0 1.4rem;
+}
+
+@media (max-width: 520px) {
+  .bluey-tuft-hit {
+    width: 64px;
+    height: 64px;
+  }
+
+  .bluey-mirror {
+    height: 14%;
+  }
+}
