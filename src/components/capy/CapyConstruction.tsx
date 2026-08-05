@@ -285,6 +285,10 @@ export function CapyConstruction({ onBack, playSound }: Props) {
         </div>
         <div className="capy-cone" aria-hidden />
 
+        <div className="capy-carlos-onsite" aria-hidden>
+          <CarlosCapy size={128} waving={digging || dumping} />
+        </div>
+
         <div className="capy-pile" style={{ ['--pile' as string]: `${Math.max(18, pile)}%` }}>
           <span>Sand</span>
         </div>

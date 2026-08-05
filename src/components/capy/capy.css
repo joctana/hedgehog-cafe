@@ -316,6 +316,22 @@
   background: #fff;
 }
 
+.capy-carlos-onsite {
+  position: absolute;
+  left: 48%;
+  bottom: 2%;
+  transform: translateX(-50%);
+  z-index: 5;
+  width: clamp(100px, 28%, 140px);
+  filter: drop-shadow(0 8px 12px rgba(58, 42, 26, 0.25));
+  pointer-events: none;
+}
+
+.capy-carlos-onsite .capy-carlos {
+  width: 100% !important;
+  height: auto !important;
+}
+
 .capy-pile {
   position: absolute;
   left: 4%;
@@ -342,8 +358,8 @@
 
 .capy-ex-wrap {
   position: absolute;
-  left: 18%;
-  bottom: 8%;
+  left: 14%;
+  bottom: 14%;
   z-index: 3;
   opacity: 0.55;
   transition: opacity 0.2s ease, filter 0.2s ease;
@@ -356,7 +372,7 @@
 
 .capy-truck-wrap {
   position: absolute;
-  bottom: 6%;
+  bottom: 16%;
   transform: translateX(-50%);
   z-index: 4;
   transition: left 0.25s ease, opacity 0.2s ease;
