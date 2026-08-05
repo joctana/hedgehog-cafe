@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { BlueyBarber } from './components/bluey/BlueyBarber'
 import { CafeScene } from './components/CafeScene'
 import { CareScene } from './components/CareScene'
+import { CapyConstruction } from './components/capy/CapyConstruction'
 import { F1Race } from './components/f1/F1Race'
 import { FlightGame } from './components/flight/FlightGame'
 import { ModeSelect } from './components/ModeSelect'
@@ -11,7 +12,7 @@ import { useSounds } from './hooks/useSounds'
 
 const TIP_KEY = 'hedgehog-cafe-tip-dismissed'
 
-type AppMode = 'home' | 'cafe' | 'transformers' | 'flight' | 'f1' | 'bluey'
+type AppMode = 'home' | 'cafe' | 'transformers' | 'flight' | 'f1' | 'bluey' | 'capy'
 
 export default function App() {
   const care = useHedgehogCare()
@@ -37,7 +38,7 @@ export default function App() {
 
   return (
     <div
-      className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''} ${mode === 'flight' ? 'flight-shell' : ''} ${mode === 'f1' ? 'f1-shell-host' : ''} ${mode === 'bluey' ? 'bluey-shell-host' : ''}`}
+      className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''} ${mode === 'flight' ? 'flight-shell' : ''} ${mode === 'f1' ? 'f1-shell-host' : ''} ${mode === 'bluey' ? 'bluey-shell-host' : ''} ${mode === 'capy' ? 'capy-shell-host' : ''}`}
     >
       <div className="top-bar">
         <button
@@ -71,6 +72,10 @@ export default function App() {
           onPickBluey={() => {
             play('happy')
             setMode('bluey')
+          }}
+          onPickCapy={() => {
+            play('hit')
+            setMode('capy')
           }}
         />
       )}
@@ -149,6 +154,16 @@ export default function App() {
 
       {mode === 'bluey' && (
         <BlueyBarber
+          onBack={() => {
+            play('tap')
+            goHome()
+          }}
+          playSound={play}
+        />
+      )}
+
+      {mode === 'capy' && (
+        <CapyConstruction
           onBack={() => {
             play('tap')
             goHome()

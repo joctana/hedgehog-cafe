@@ -4,6 +4,7 @@ interface ModeSelectProps {
   onPickFlight: () => void
   onPickF1: () => void
   onPickBluey: () => void
+  onPickCapy: () => void
 }
 
 export function ModeSelect({
@@ -12,6 +13,7 @@ export function ModeSelect({
   onPickFlight,
   onPickF1,
   onPickBluey,
+  onPickCapy,
 }: ModeSelectProps) {
   return (
     <section className="scene mode-select" aria-label="Choose a game">
@@ -59,6 +61,14 @@ export function ModeSelect({
           </span>
           <span className="mode-name">Bluey Barber</span>
           <span className="mode-blurb">Give Bluey & friends a haircut</span>
+        </button>
+
+        <button type="button" className="mode-card capy" onClick={onPickCapy}>
+          <span className="mode-emoji" aria-hidden="true">
+            🦺
+          </span>
+          <span className="mode-name">Capy Construction</span>
+          <span className="mode-blurb">Carlos digs & dumps with kindness</span>
         </button>
       </div>
     </section>

@@ -1,0 +1,513 @@
+.capy-shell {
+  --capy-sand: #d2b48c;
+  --capy-dirt: #c4a574;
+  --capy-yellow: #f5c518;
+  --capy-ink: #3a2a1a;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--capy-ink);
+  background:
+    radial-gradient(ellipse 90% 45% at 50% -5%, rgba(135, 206, 250, 0.55), transparent 55%),
+    linear-gradient(180deg, #87ceeb 0%, #b8dcf0 28%, #e8d5b0 55%, #c4a574 100%);
+}
+
+.capy-shell.done {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 15%, rgba(245, 197, 24, 0.4), transparent 55%),
+    linear-gradient(180deg, #87ceeb 0%, #fff6ea 60%, #e8c9a8 100%);
+}
+
+.capy-shell .back-btn {
+  background: rgba(255, 246, 234, 0.92);
+  color: var(--capy-ink);
+  box-shadow: 0 6px 14px rgba(58, 42, 26, 0.12);
+}
+
+.capy-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  padding-top: calc(0.75rem + env(safe-area-inset-top));
+  flex-shrink: 0;
+}
+
+.capy-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 3vw, 1.45rem);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.capy-title small {
+  display: block;
+  font-size: 0.65em;
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.capy-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.4rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.65);
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.capy-chip.win {
+  background: var(--capy-yellow);
+  animation: capy-pulse 1s ease-in-out infinite;
+}
+
+@keyframes capy-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.capy-intro,
+.capy-done {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.capy-signs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.capy-sign {
+  background: #c9a06e;
+  border: 4px solid #8b5a3c;
+  border-radius: 0.4rem;
+  padding: 0.55rem 0.9rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  box-shadow: 0 6px 0 #6e4228;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.capy-sign.kindness {
+  font-size: 0.85rem;
+}
+
+.capy-lead {
+  margin: 0;
+  max-width: 28ch;
+  font-weight: 700;
+  font-size: 1.05rem;
+  opacity: 0.9;
+}
+
+.capy-primary,
+.capy-secondary,
+.capy-pick,
+.capy-steer,
+.capy-action {
+  border: none;
+  border-radius: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.capy-primary {
+  background: linear-gradient(180deg, #ffd84d, #f5c518);
+  color: #3a2a1a;
+  box-shadow: 0 4px 0 #c99500;
+  min-height: 3.5rem;
+  padding: 0 1.6rem;
+  font-size: 1.2rem;
+}
+
+.capy-secondary {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--capy-ink);
+  min-height: 3.2rem;
+  padding: 0 1.4rem;
+  font-size: 1.05rem;
+}
+
+.capy-primary:active,
+.capy-action:active,
+.capy-steer:active {
+  transform: translateY(2px);
+}
+
+.capy-carlos.waving {
+  animation: capy-wave 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes capy-wave {
+  from {
+    transform: rotate(-2deg) translateY(0);
+  }
+  to {
+    transform: rotate(2deg) translateY(-6px);
+  }
+}
+
+.capy-carlos-svg,
+.capy-vehicle-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.capy-done-banner {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 5vw, 2.5rem);
+  font-weight: 800;
+  color: #8b5a3c;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.5);
+  animation: capy-pop 0.55s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes capy-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.capy-done-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.capy-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0 1.1rem 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.capy-meter {
+  flex: 1;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+}
+
+.capy-meter i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f5c518, #e6a800);
+  transition: width 0.25s ease;
+}
+
+.capy-hint {
+  text-align: center;
+  margin: 0 1rem 0.35rem;
+  font-weight: 700;
+  font-size: 0.98rem;
+  min-height: 1.4em;
+}
+
+.capy-site {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin: 0 0.75rem;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 3px solid rgba(139, 90, 60, 0.35);
+  background: linear-gradient(180deg, #87ceeb 0%, #87ceeb 38%, #d2b48c 38%, #b8956a 100%);
+  box-shadow: inset 0 -20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.capy-hills {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 18%;
+  height: 22%;
+  background:
+    radial-gradient(ellipse 40% 100% at 20% 100%, #c4a574 0%, transparent 70%),
+    radial-gradient(ellipse 50% 120% at 70% 100%, #b8956a 0%, transparent 70%),
+    radial-gradient(ellipse 35% 90% at 95% 100%, #a67c52 0%, transparent 70%);
+  opacity: 0.9;
+}
+
+.capy-sign-site {
+  position: absolute;
+  top: 8%;
+  z-index: 2;
+  background: #c9a06e;
+  border: 3px solid #8b5a3c;
+  border-radius: 0.35rem;
+  padding: 0.35rem 0.55rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.72rem;
+  box-shadow: 0 4px 0 #6e4228;
+}
+
+.capy-sign-site.left {
+  left: 4%;
+}
+
+.capy-sign-site.right {
+  right: 4%;
+  max-width: 10rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.capy-cone {
+  position: absolute;
+  right: 22%;
+  bottom: 38%;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 28px solid #f97316;
+  z-index: 2;
+  filter: drop-shadow(0 2px 0 #c2410c);
+}
+
+.capy-cone::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 10px;
+  width: 16px;
+  height: 4px;
+  background: #fff;
+}
+
+.capy-pile {
+  position: absolute;
+  left: 4%;
+  bottom: 12%;
+  width: 22%;
+  height: var(--pile, 60%);
+  max-height: 55%;
+  background: radial-gradient(ellipse at 50% 80%, #e8d5b0, #c4a574 70%);
+  border-radius: 50% 50% 10% 10%;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 0.35rem;
+  box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.1);
+  transition: height 0.3s ease;
+}
+
+.capy-pile span {
+  font-size: 0.7rem;
+  font-weight: 800;
+  opacity: 0.7;
+}
+
+.capy-ex-wrap {
+  position: absolute;
+  left: 18%;
+  bottom: 8%;
+  z-index: 3;
+  opacity: 0.55;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.capy-ex-wrap.active {
+  opacity: 1;
+  filter: drop-shadow(0 0 10px rgba(245, 197, 24, 0.55));
+}
+
+.capy-truck-wrap {
+  position: absolute;
+  bottom: 6%;
+  transform: translateX(-50%);
+  z-index: 4;
+  transition: left 0.25s ease, opacity 0.2s ease;
+  opacity: 0.55;
+}
+
+.capy-truck-wrap.active {
+  opacity: 1;
+  filter: drop-shadow(0 0 10px rgba(245, 197, 24, 0.55));
+}
+
+.capy-excavator.digging .ex-arm {
+  animation: capy-dig 0.32s ease;
+}
+
+@keyframes capy-dig {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(12deg);
+  }
+}
+
+.capy-truck.dumping .truck-bed {
+  transform-origin: 150px 95px;
+  animation: capy-dump 0.45s ease;
+}
+
+@keyframes capy-dump {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-18deg);
+  }
+}
+
+.capy-pads {
+  position: absolute;
+  right: 4%;
+  bottom: 10%;
+  display: flex;
+  gap: 0.45rem;
+  z-index: 2;
+  width: 42%;
+}
+
+.capy-pad {
+  flex: 1;
+  height: 72px;
+  background: rgba(90, 70, 40, 0.25);
+  border: 2px dashed rgba(90, 70, 40, 0.45);
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.capy-pad-sand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, #e8d5b0, #c4a574);
+  transition: height 0.3s ease;
+}
+
+.capy-pad span {
+  position: relative;
+  z-index: 1;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.2rem;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.capy-vehicle-pick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  padding: 0.55rem 1rem 0.35rem;
+  flex-shrink: 0;
+}
+
+.capy-pick {
+  min-height: 2.9rem;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--capy-ink);
+}
+
+.capy-pick.active {
+  background: linear-gradient(180deg, #ffd84d, #f5c518);
+  box-shadow: 0 3px 0 #c99500;
+}
+
+.capy-controls {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.35rem 1rem calc(0.85rem + env(safe-area-inset-bottom));
+  flex-shrink: 0;
+}
+
+.capy-controls.excavator {
+  grid-template-columns: 1fr 1fr;
+}
+
+.capy-controls.truck {
+  grid-template-columns: auto 1fr 1fr auto;
+}
+
+.capy-steer {
+  min-width: 3.2rem;
+  min-height: 3.4rem;
+  background: rgba(255, 255, 255, 0.55);
+  font-size: 1.3rem;
+}
+
+.capy-action {
+  min-height: 3.4rem;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.capy-action.dig {
+  background: linear-gradient(180deg, #a67c52, #8f6540);
+  box-shadow: 0 4px 0 #6e4a2c;
+}
+
+.capy-action.pour {
+  background: linear-gradient(180deg, #5b8fd4, #3a6eb0);
+  box-shadow: 0 4px 0 #2d578c;
+}
+
+@media (max-width: 520px) {
+  .capy-pads {
+    width: 48%;
+    height: auto;
+  }
+
+  .capy-pad {
+    height: 58px;
+  }
+
+  .capy-sign-site.right {
+    font-size: 0.62rem;
+    max-width: 7.5rem;
+  }
+}
