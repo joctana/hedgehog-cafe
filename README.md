@@ -9,6 +9,7 @@ Pick a game on the home screen:
 - **Sky Trip** — fly a blue airplane from Phuket, Thailand to Denpasar, Bali
 - **F1 Race** — pick a driver from *F1 The Movie* (including Lachlan!) and race for P1
 - **Bluey Barber** — pick Bluey, Bingo, Bandit, Chilli, or Muffin and give them a haircut
+- **Capy Construction** — Carlos the capybara digs and dumps sand with kindness
 
 There are no fail states, timers, ads, or accounts.
 
@@ -55,7 +56,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, or **Bluey Barber**.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, or **Capy Construction**.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -95,6 +96,12 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 2. Pick **Scissors** or **Clippers**.
 3. Tap the glowing fluffy spots to snip — hair clippings fall away.
 4. When every tuft is gone: **Looking gorgeous!**
+
+### Capy Construction
+1. Meet **Carlos** the hard-hat capybara — work with kindness!
+2. Choose the **excavator** or **dump truck**.
+3. **Dig/Load** sand from the pile, then **Pour/Dump** onto the build pads.
+4. Drive the truck with ◀ ▶ to reach pads. Fill all three pads to finish.
 
 ## Tech
 

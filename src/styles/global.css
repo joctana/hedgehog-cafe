@@ -100,7 +100,8 @@ button:focus-visible {
 .app-shell.tf-shell::before,
 .app-shell.flight-shell::before,
 .app-shell.f1-shell-host::before,
-.app-shell.bluey-shell-host::before {
+.app-shell.bluey-shell-host::before,
+.app-shell.capy-shell-host::before {
   opacity: 0;
 }
 
@@ -114,6 +115,10 @@ button:focus-visible {
 
 .app-shell.bluey-shell-host {
   background: #b8e0f5;
+}
+
+.app-shell.capy-shell-host {
+  background: #87ceeb;
 }
 
 .mode-select {
@@ -198,6 +203,14 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(74, 143, 184, 0.28);
 }
 
+.mode-card.capy {
+  background:
+    radial-gradient(circle at 70% 15%, rgba(255, 248, 220, 0.55), transparent 45%),
+    linear-gradient(180deg, #f5c518, #c99500);
+  color: #3a2a1a;
+  box-shadow: 0 16px 32px rgba(160, 110, 20, 0.28);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -237,6 +250,14 @@ button:focus-visible {
 
 .mode-card.bluey .mode-blurb {
   color: rgba(255, 248, 239, 0.92);
+}
+
+.mode-card.capy .mode-name {
+  color: #3a2a1a;
+}
+
+.mode-card.capy .mode-blurb {
+  color: rgba(58, 42, 26, 0.85);
 }
 
 .mode-blurb {
@@ -785,12 +806,12 @@ button:focus-visible {
   }
 
   .mode-card {
-    min-height: min(28vh, 180px);
-    padding: 14px 10px;
+    min-height: min(24vh, 160px);
+    padding: 12px 10px;
   }
 
   .mode-blurb {
     max-width: 16ch;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 }
