@@ -129,6 +129,7 @@
 .capy-primary,
 .capy-secondary,
 .capy-pick,
+.capy-tab,
 .capy-steer,
 .capy-action {
   border: none;
@@ -454,39 +455,82 @@
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-.capy-vehicle-pick {
+.capy-ex-wrap.parked {
+  opacity: 0.28;
+  filter: grayscale(0.35);
+  pointer-events: none;
+}
+
+.capy-truck-wrap.parked {
+  opacity: 0.28;
+  filter: grayscale(0.35);
+  pointer-events: none;
+}
+
+.capy-dock {
+  flex-shrink: 0;
+  padding: 0.45rem 0.85rem calc(0.75rem + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  background: linear-gradient(180deg, rgba(255, 246, 234, 0.55), rgba(232, 201, 168, 0.85));
+  border-top: 2px solid rgba(139, 90, 60, 0.2);
+}
+
+.capy-tabs {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.55rem;
-  padding: 0.55rem 1rem 0.35rem;
-  flex-shrink: 0;
+  gap: 0.4rem;
+  padding: 0.3rem;
+  border-radius: 1.1rem;
+  background: rgba(58, 42, 26, 0.1);
 }
 
-.capy-pick {
-  min-height: 2.9rem;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.55);
+.capy-tab {
+  border: none;
+  border-radius: 0.85rem;
+  min-height: 3rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  cursor: pointer;
+  background: transparent;
   color: var(--capy-ink);
+  opacity: 0.7;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.capy-pick.active {
+.capy-tab.active {
   background: linear-gradient(180deg, #ffd84d, #f5c518);
   box-shadow: 0 3px 0 #c99500;
+  opacity: 1;
+}
+
+.capy-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.capy-panel-load {
+  margin: 0;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.capy-vehicle-pick {
+  display: none;
 }
 
 .capy-controls {
   display: grid;
   gap: 0.55rem;
-  padding: 0.35rem 1rem calc(0.85rem + env(safe-area-inset-bottom));
   flex-shrink: 0;
 }
 
-.capy-controls.excavator {
+.capy-controls.simple {
   grid-template-columns: 1fr 1fr;
-}
-
-.capy-controls.truck {
-  grid-template-columns: auto 1fr 1fr auto;
 }
 
 .capy-steer {
@@ -497,9 +541,13 @@
 }
 
 .capy-action {
-  min-height: 3.4rem;
-  font-size: 1.1rem;
+  min-height: 3.6rem;
+  font-size: 1.15rem;
   color: #fff;
+}
+
+.capy-action:disabled {
+  opacity: 0.55;
 }
 
 .capy-action.dig {

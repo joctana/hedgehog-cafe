@@ -14,38 +14,32 @@ type Props = {
 
 const PAD_GOAL = 100
 const PAD_COUNT = 3
-const DIG_AMOUNT = 34
+const DIG_AMOUNT = 40
+const TRUCK_PILE_X = 16
+const TRUCK_PAD_X = [48, 62, 76]
 
 export function CapyConstruction({ onBack, playSound }: Props) {
   const [phase, setPhase] = useState<Phase>('intro')
   const [vehicle, setVehicle] = useState<Vehicle>('excavator')
   const [bucket, setBucket] = useState(0)
   const [truckLoad, setTruckLoad] = useState(0)
-  const [truckX, setTruckX] = useState(18)
+  const [truckX, setTruckX] = useState(TRUCK_PILE_X)
   const [pads, setPads] = useState(() => Array.from({ length: PAD_COUNT }, () => 0))
   const [pile, setPile] = useState(100)
   const [digging, setDigging] = useState(false)
   const [dumping, setDumping] = useState(false)
-  const [message, setMessage] = useState('Pick a machine and move that sand!')
+  const [busy, setBusy] = useState(false)
+  const [message, setMessage] = useState('Tap Dig, then Pour!')
 
   const progress = useMemo(() => {
     const total = pads.reduce((sum, p) => sum + Math.min(PAD_GOAL, p), 0)
     return total / (PAD_COUNT * PAD_GOAL)
   }, [pads])
 
-  const nearestPad = useCallback(() => {
-    const targets = [35, 55, 78]
-    let best = 0
-    let bestDist = Infinity
-    targets.forEach((t, i) => {
-      const d = Math.abs(truckX - t)
-      if (d < bestDist) {
-        bestDist = d
-        best = i
-      }
-    })
-    return best
-  }, [truckX])
+  const nextPadIndex = useCallback((list: number[]) => {
+    const idx = list.findIndex((p) => p < PAD_GOAL)
+    return idx < 0 ? 0 : idx
+  }, [])
 
   const checkWin = useCallback(
     (nextPads: number[]) => {
@@ -90,17 +84,36 @@ export function CapyConstruction({ onBack, playSound }: Props) {
     setVehicle('excavator')
     setBucket(0)
     setTruckLoad(0)
-    setTruckX(18)
+    setTruckX(TRUCK_PILE_X)
     setPads(Array.from({ length: PAD_COUNT }, () => 0))
     setPile(100)
-    setMessage('Dig sand, then dump it on the build pads!')
+    setBusy(false)
+    setMessage('Tap Dig, then Pour!')
     playSound('celebrate')
   }
 
-  const dig = () => {
-    if (phase !== 'work') return
+  const selectVehicle = (next: Vehicle) => {
+    if (busy) return
+    setVehicle(next)
+    playSound('tap')
+    if (next === 'excavator') {
+      setMessage('Excavator: Dig, then Pour!')
+    } else {
+      setMessage('Dump truck: Get sand, then Dump!')
+      setTruckX(TRUCK_PILE_X)
+    }
+  }
+
+  /** Excavator: scoop sand into the bucket. */
+  const excavatorDig = () => {
+    if (phase !== 'work' || busy) return
     if (pile <= 0) {
-      setMessage('Sand pile is empty — dump what you’ve got!')
+      setMessage('No more sand in the pile — pour what you have!')
+      playSound('tap')
+      return
+    }
+    if (bucket >= 95) {
+      setMessage('Bucket full — tap Pour!')
       playSound('tap')
       return
     }
@@ -109,81 +122,87 @@ export function CapyConstruction({ onBack, playSound }: Props) {
     window.setTimeout(() => setDigging(false), 320)
     playSound('hit')
 
-    if (vehicle === 'excavator') {
-      const take = Math.min(DIG_AMOUNT, pile, 100 - bucket)
-      if (take <= 0) {
-        setMessage('Bucket full! Pour into the truck or a pad.')
-        return
-      }
-      setPile((p) => Math.max(0, p - take * 0.45))
-      setBucket((b) => Math.min(100, b + take))
-      setMessage('Nice scoop, Carlos!')
-      return
-    }
-
-    if (truckX > 32) {
-      setMessage('Drive left to the sand pile to load up!')
-      playSound('tap')
-      return
-    }
-    const take = Math.min(DIG_AMOUNT, pile, 100 - truckLoad)
-    if (take <= 0) {
-      setMessage('Truck is full — drive to a pad and dump!')
-      return
-    }
-    setPile((p) => Math.max(0, p - take * 0.45))
-    setTruckLoad((t) => Math.min(100, t + take))
-    setMessage('Sand loaded in the dump truck!')
+    const take = Math.min(DIG_AMOUNT, pile, 100 - bucket)
+    setPile((p) => Math.max(0, p - take * 0.4))
+    setBucket((b) => Math.min(100, b + take))
+    setMessage('Nice scoop! Now Pour.')
   }
 
-  const pour = () => {
-    if (phase !== 'work') return
-
-    if (vehicle === 'excavator') {
-      if (bucket < 8) {
-        setMessage('Dig some sand first!')
-        playSound('tap')
-        return
-      }
-      playSound('whoosh')
-      const truckNearby = truckX < 42
-      if (truckNearby && truckLoad < 95) {
-        const give = Math.min(bucket, 100 - truckLoad)
-        setBucket((b) => b - give)
-        setTruckLoad((t) => Math.min(100, t + give))
-        setMessage('Loaded the dump truck!')
-        return
-      }
-      const amount = bucket
-      setBucket(0)
-      fillPads(amount)
-      setMessage('Sand on the pad — keep going!')
-      return
-    }
-
-    if (truckLoad < 8) {
-      setMessage('Load sand first!')
+  /** Excavator: empty bucket onto build pads. */
+  const excavatorPour = () => {
+    if (phase !== 'work' || busy) return
+    if (bucket < 8) {
+      setMessage('Dig some sand first!')
       playSound('tap')
       return
     }
-    if (truckX < 30) {
-      setMessage('Drive right to the build pads, then dump!')
-      playSound('tap')
-      return
-    }
-    setDumping(true)
-    window.setTimeout(() => setDumping(false), 450)
     playSound('whoosh')
-    const amount = truckLoad
-    setTruckLoad(0)
-    fillPads(amount, nearestPad())
-    setMessage('Dump complete — kind work!')
+    const amount = bucket
+    setBucket(0)
+    fillPads(amount)
+    setMessage('Sand on the pad — dig again!')
   }
 
-  const moveTruck = (dir: -1 | 1) => {
-    if (phase !== 'work' || vehicle !== 'truck') return
-    setTruckX((x) => Math.max(12, Math.min(82, x + dir * 14)))
-    playSound('tap')
+  /** Truck: drive to pile and load (one tap). */
+  const truckGetSand = () => {
+    if (phase !== 'work' || busy) return
+    if (pile <= 0 && truckLoad < 8) {
+      setMessage('Sand pile is empty!')
+      playSound('tap')
+      return
+    }
+    if (truckLoad >= 95) {
+      setMessage('Truck full — tap Dump!')
+      playSound('tap')
+      return
+    }
+
+    setBusy(true)
+    setMessage('Driving to the sand…')
+    setTruckX(TRUCK_PILE_X)
+    playSound('whoosh')
+
+    window.setTimeout(() => {
+      setDigging(true)
+      playSound('hit')
+      const take = Math.min(DIG_AMOUNT + 10, pile, 100 - truckLoad)
+      setPile((p) => Math.max(0, p - take * 0.4))
+      setTruckLoad((t) => Math.min(100, t + Math.max(take, 25)))
+      window.setTimeout(() => {
+        setDigging(false)
+        setBusy(false)
+        setMessage('Loaded! Tap Dump.')
+      }, 280)
+    }, 420)
+  }
+
+  /** Truck: drive to next pad and dump (one tap). */
+  const truckDump = () => {
+    if (phase !== 'work' || busy) return
+    if (truckLoad < 8) {
+      setMessage('Get sand first!')
+      playSound('tap')
+      return
+    }
+
+    const padIdx = nextPadIndex(pads)
+    setBusy(true)
+    setMessage('Driving to the pad…')
+    setTruckX(TRUCK_PAD_X[padIdx] ?? 62)
+    playSound('whoosh')
+
+    window.setTimeout(() => {
+      setDumping(true)
+      playSound('whoosh')
+      const amount = truckLoad
+      setTruckLoad(0)
+      fillPads(amount, padIdx)
+      window.setTimeout(() => {
+        setDumping(false)
+        setBusy(false)
+        setMessage('Dumped! Get more sand.')
+      }, 400)
+    }, 450)
   }
 
   if (phase === 'intro') {
@@ -293,13 +312,17 @@ export function CapyConstruction({ onBack, playSound }: Props) {
           <span>Sand</span>
         </div>
 
-        <div className={`capy-ex-wrap ${vehicle === 'excavator' ? 'active' : ''}`}>
+        <div
+          className={`capy-ex-wrap ${vehicle === 'excavator' ? 'active' : 'parked'}`}
+          aria-hidden={vehicle !== 'excavator'}
+        >
           <Excavator size={150} load={bucket / 100} digging={digging && vehicle === 'excavator'} />
         </div>
 
         <div
-          className={`capy-truck-wrap ${vehicle === 'truck' ? 'active' : ''}`}
-          style={{ left: `${truckX}%` }}
+          className={`capy-truck-wrap ${vehicle === 'truck' ? 'active' : 'parked'}`}
+          style={{ left: vehicle === 'truck' ? `${truckX}%` : '72%' }}
+          aria-hidden={vehicle !== 'truck'}
         >
           <DumpTruck size={150} load={truckLoad / 100} dumping={dumping} />
         </div>
@@ -314,47 +337,76 @@ export function CapyConstruction({ onBack, playSound }: Props) {
         </div>
       </div>
 
-      <div className="capy-vehicle-pick">
-        <button
-          type="button"
-          className={`capy-pick ${vehicle === 'excavator' ? 'active' : ''}`}
-          onClick={() => {
-            setVehicle('excavator')
-            playSound('tap')
-            setMessage('Excavator ready — dig, then pour!')
-          }}
-        >
-          🚜 Excavator
-        </button>
-        <button
-          type="button"
-          className={`capy-pick ${vehicle === 'truck' ? 'active' : ''}`}
-          onClick={() => {
-            setVehicle('truck')
-            playSound('tap')
-            setMessage('Dump truck ready — load, drive, dump!')
-          }}
-        >
-          🚛 Dump truck
-        </button>
-      </div>
+      <div className="capy-dock" role="tablist" aria-label="Choose a machine">
+        <div className="capy-tabs">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={vehicle === 'excavator'}
+            className={`capy-tab ${vehicle === 'excavator' ? 'active' : ''}`}
+            onClick={() => selectVehicle('excavator')}
+          >
+            🚜 Excavator
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={vehicle === 'truck'}
+            className={`capy-tab ${vehicle === 'truck' ? 'active' : ''}`}
+            onClick={() => selectVehicle('truck')}
+          >
+            🚛 Dump truck
+          </button>
+        </div>
 
-      <div className={`capy-controls ${vehicle}`}>
-        {vehicle === 'truck' && (
-          <button type="button" className="capy-steer" onClick={() => moveTruck(-1)}>
-            ◀
-          </button>
-        )}
-        <button type="button" className="capy-action dig" onClick={dig}>
-          {vehicle === 'excavator' ? '⛏️ Dig' : '⬆️ Load'}
-        </button>
-        <button type="button" className="capy-action pour" onClick={pour}>
-          {vehicle === 'excavator' ? '⬇️ Pour' : '⏬ Dump'}
-        </button>
-        {vehicle === 'truck' && (
-          <button type="button" className="capy-steer" onClick={() => moveTruck(1)}>
-            ▶
-          </button>
+        {vehicle === 'excavator' ? (
+          <div className="capy-panel" role="tabpanel" aria-label="Excavator controls">
+            <p className="capy-panel-load">
+              Bucket: <b>{Math.round(bucket)}%</b>
+            </p>
+            <div className="capy-controls simple">
+              <button
+                type="button"
+                className="capy-action dig"
+                onClick={excavatorDig}
+                disabled={busy}
+              >
+                ⛏️ Dig
+              </button>
+              <button
+                type="button"
+                className="capy-action pour"
+                onClick={excavatorPour}
+                disabled={busy}
+              >
+                ⬇️ Pour
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="capy-panel" role="tabpanel" aria-label="Dump truck controls">
+            <p className="capy-panel-load">
+              Truck: <b>{Math.round(truckLoad)}%</b>
+            </p>
+            <div className="capy-controls simple">
+              <button
+                type="button"
+                className="capy-action dig"
+                onClick={truckGetSand}
+                disabled={busy}
+              >
+                ⬆️ Get sand
+              </button>
+              <button
+                type="button"
+                className="capy-action pour"
+                onClick={truckDump}
+                disabled={busy}
+              >
+                ⏬ Dump
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </div>
