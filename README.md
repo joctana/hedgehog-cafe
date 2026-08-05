@@ -99,9 +99,9 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 
 ### Capy Construction
 1. Meet **Carlos** the hard-hat capybara — work with kindness!
-2. Choose the **excavator** or **dump truck**.
-3. **Dig/Load** sand from the pile, then **Pour/Dump** onto the build pads.
-4. Drive the truck with ◀ ▶ to reach pads. Fill all three pads to finish.
+2. Use the tabs to pick **Excavator** or **Dump truck**.
+3. Excavator: **Dig** then **Pour**. Dump truck: **Get sand** then **Dump** (the truck drives for you).
+4. Fill all three pads to finish.
 
 ## Tech
 
