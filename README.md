@@ -11,6 +11,7 @@ Pick a game on the home screen:
 - **Bluey Barber** — pick Bluey, Bingo, Bandit, Chilli, or Muffin and give them a haircut
 - **Capy Construction** — Carlos the capybara digs and dumps sand with kindness
 - **Carlos: Deep Sea Diver** — explore a colorful reef and collect underwater treasure
+- **Chess with Carlos** — learn how every piece moves, then play a gentle coached match
 
 There are no fail states, timers, ads, or accounts.
 
@@ -57,7 +58,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, or **Carlos: Deep Sea Diver**.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, or **Chess with Carlos**.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -109,6 +110,13 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 2. Tap shells, starfish, coral, and other treasures—Carlos swims to collect them.
 3. Tap floating bubbles to top up Carlos's air.
 4. Find all six treasures to become a **Deep-sea superstar!**
+
+### Chess with Carlos
+1. Choose **Learn the pieces** for six guided movement puzzles: pawn, rook, bishop, knight, queen, and king.
+2. Tap a piece to see every legal destination as a bright dot.
+3. Choose **Play Carlos** for a real first match as White against a gentle opponent.
+4. Tap **Show me a move** for a coach hint, or **Try again** to undo Carlos's last turn.
+5. Carlos explains moves, check, checkmate, and draws with encouraging language.
 
 ## Tech
 
