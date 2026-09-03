@@ -101,7 +101,8 @@ button:focus-visible {
 .app-shell.flight-shell::before,
 .app-shell.f1-shell-host::before,
 .app-shell.bluey-shell-host::before,
-.app-shell.capy-shell-host::before {
+.app-shell.capy-shell-host::before,
+.app-shell.diver-shell-host::before {
   opacity: 0;
 }
 
@@ -119,6 +120,10 @@ button:focus-visible {
 
 .app-shell.capy-shell-host {
   background: #87ceeb;
+}
+
+.app-shell.diver-shell-host {
+  background: #0576af;
 }
 
 .mode-select {
@@ -211,6 +216,15 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(160, 110, 20, 0.28);
 }
 
+.mode-card.diver {
+  background:
+    radial-gradient(circle at 28% 18%, rgba(176, 238, 255, 0.55), transparent 42%),
+    radial-gradient(circle at 82% 82%, rgba(255, 126, 74, 0.24), transparent 40%),
+    linear-gradient(180deg, #16a6dc, #045d91);
+  color: #effaff;
+  box-shadow: 0 16px 32px rgba(1, 69, 108, 0.35);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -258,6 +272,15 @@ button:focus-visible {
 
 .mode-card.capy .mode-blurb {
   color: rgba(58, 42, 26, 0.85);
+}
+
+.mode-card.diver .mode-name {
+  color: #fff185;
+  text-shadow: 0 2px 0 rgba(1, 45, 73, 0.35);
+}
+
+.mode-card.diver .mode-blurb {
+  color: rgba(239, 250, 255, 0.92);
 }
 
 .mode-blurb {

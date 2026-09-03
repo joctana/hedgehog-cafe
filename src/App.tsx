@@ -3,6 +3,7 @@ import { BlueyBarber } from './components/bluey/BlueyBarber'
 import { CafeScene } from './components/CafeScene'
 import { CareScene } from './components/CareScene'
 import { CapyConstruction } from './components/capy/CapyConstruction'
+import { DeepSeaDiver } from './components/diver/DeepSeaDiver'
 import { F1Race } from './components/f1/F1Race'
 import { FlightGame } from './components/flight/FlightGame'
 import { ModeSelect } from './components/ModeSelect'
@@ -12,7 +13,15 @@ import { useSounds } from './hooks/useSounds'
 
 const TIP_KEY = 'hedgehog-cafe-tip-dismissed'
 
-type AppMode = 'home' | 'cafe' | 'transformers' | 'flight' | 'f1' | 'bluey' | 'capy'
+type AppMode =
+  | 'home'
+  | 'cafe'
+  | 'transformers'
+  | 'flight'
+  | 'f1'
+  | 'bluey'
+  | 'capy'
+  | 'diver'
 
 export default function App() {
   const care = useHedgehogCare()
@@ -38,7 +47,7 @@ export default function App() {
 
   return (
     <div
-      className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''} ${mode === 'flight' ? 'flight-shell' : ''} ${mode === 'f1' ? 'f1-shell-host' : ''} ${mode === 'bluey' ? 'bluey-shell-host' : ''} ${mode === 'capy' ? 'capy-shell-host' : ''}`}
+      className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''} ${mode === 'flight' ? 'flight-shell' : ''} ${mode === 'f1' ? 'f1-shell-host' : ''} ${mode === 'bluey' ? 'bluey-shell-host' : ''} ${mode === 'capy' ? 'capy-shell-host' : ''} ${mode === 'diver' ? 'diver-shell-host' : ''}`}
     >
       <div className="top-bar">
         <button
@@ -76,6 +85,10 @@ export default function App() {
           onPickCapy={() => {
             play('hit')
             setMode('capy')
+          }}
+          onPickDiver={() => {
+            play('bubble')
+            setMode('diver')
           }}
         />
       )}
@@ -164,6 +177,16 @@ export default function App() {
 
       {mode === 'capy' && (
         <CapyConstruction
+          onBack={() => {
+            play('tap')
+            goHome()
+          }}
+          playSound={play}
+        />
+      )}
+
+      {mode === 'diver' && (
+        <DeepSeaDiver
           onBack={() => {
             play('tap')
             goHome()

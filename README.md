@@ -10,6 +10,7 @@ Pick a game on the home screen:
 - **F1 Race** — pick a driver from *F1 The Movie* (including Lachlan!) and race for P1
 - **Bluey Barber** — pick Bluey, Bingo, Bandit, Chilli, or Muffin and give them a haircut
 - **Capy Construction** — Carlos the capybara digs and dumps sand with kindness
+- **Carlos: Deep Sea Diver** — explore a colorful reef and collect underwater treasure
 
 There are no fail states, timers, ads, or accounts.
 
@@ -56,7 +57,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, or **Capy Construction**.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, or **Carlos: Deep Sea Diver**.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -102,6 +103,12 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 2. Use the tabs to pick **Excavator** or **Dump truck**.
 3. Excavator: **Dig** then **Pour**. Dump truck: **Get sand** then **Dump** (the truck drives for you).
 4. Fill all three pads to finish.
+
+### Carlos: Deep Sea Diver
+1. Tap **Let's dive!** to enter the colorful reef.
+2. Tap shells, starfish, coral, and other treasures—Carlos swims to collect them.
+3. Tap floating bubbles to top up Carlos's air.
+4. Find all six treasures to become a **Deep-sea superstar!**
 
 ## Tech
 
