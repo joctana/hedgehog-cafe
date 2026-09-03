@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { SoundKind } from '../../hooks/useSounds'
 import { ChessBoard } from './ChessBoard'
 import { ChessCarlos } from './ChessCarlos'
@@ -197,7 +197,6 @@ export function CarlosChess({ onBack, playSound }: Props) {
     if (lessonMoved) return
     if (!lessonSelected) {
       if (square !== lesson.start) {
-        setLessonSelected(true)
         playSound('tap')
         return
       }
