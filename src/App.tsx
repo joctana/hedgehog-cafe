@@ -3,6 +3,7 @@ import { BlueyBarber } from './components/bluey/BlueyBarber'
 import { CafeScene } from './components/CafeScene'
 import { CareScene } from './components/CareScene'
 import { CapyConstruction } from './components/capy/CapyConstruction'
+import { CarlosChess } from './components/chess/CarlosChess'
 import { DeepSeaDiver } from './components/diver/DeepSeaDiver'
 import { F1Race } from './components/f1/F1Race'
 import { FlightGame } from './components/flight/FlightGame'
@@ -22,6 +23,7 @@ type AppMode =
   | 'bluey'
   | 'capy'
   | 'diver'
+  | 'chess'
 
 export default function App() {
   const care = useHedgehogCare()
@@ -47,7 +49,7 @@ export default function App() {
 
   return (
     <div
-      className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''} ${mode === 'flight' ? 'flight-shell' : ''} ${mode === 'f1' ? 'f1-shell-host' : ''} ${mode === 'bluey' ? 'bluey-shell-host' : ''} ${mode === 'capy' ? 'capy-shell-host' : ''} ${mode === 'diver' ? 'diver-shell-host' : ''}`}
+      className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''} ${mode === 'flight' ? 'flight-shell' : ''} ${mode === 'f1' ? 'f1-shell-host' : ''} ${mode === 'bluey' ? 'bluey-shell-host' : ''} ${mode === 'capy' ? 'capy-shell-host' : ''} ${mode === 'diver' ? 'diver-shell-host' : ''} ${mode === 'chess' ? 'chess-shell-host' : ''}`}
     >
       <div className="top-bar">
         <button
@@ -89,6 +91,10 @@ export default function App() {
           onPickDiver={() => {
             play('bubble')
             setMode('diver')
+          }}
+          onPickChess={() => {
+            play('tap')
+            setMode('chess')
           }}
         />
       )}
@@ -187,6 +193,16 @@ export default function App() {
 
       {mode === 'diver' && (
         <DeepSeaDiver
+          onBack={() => {
+            play('tap')
+            goHome()
+          }}
+          playSound={play}
+        />
+      )}
+
+      {mode === 'chess' && (
+        <CarlosChess
           onBack={() => {
             play('tap')
             goHome()
