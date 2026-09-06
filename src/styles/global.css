@@ -103,7 +103,8 @@ button:focus-visible {
 .app-shell.bluey-shell-host::before,
 .app-shell.capy-shell-host::before,
 .app-shell.diver-shell-host::before,
-.app-shell.chess-shell-host::before {
+.app-shell.chess-shell-host::before,
+.app-shell.gym-shell-host::before {
   opacity: 0;
 }
 
@@ -129,6 +130,10 @@ button:focus-visible {
 
 .app-shell.chess-shell-host {
   background: #d8bb8c;
+}
+
+.app-shell.gym-shell-host {
+  background: #fecdd3;
 }
 
 .mode-select {
@@ -243,6 +248,14 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(53, 40, 29, 0.28);
 }
 
+.mode-card.gym {
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.55), transparent 45%),
+    linear-gradient(180deg, #fb7185, #be123c);
+  color: #fff7ed;
+  box-shadow: 0 16px 32px rgba(190, 18, 60, 0.32);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -307,6 +320,15 @@ button:focus-visible {
 
 .mode-card.chess .mode-blurb {
   color: rgba(53, 40, 29, 0.86);
+}
+
+.mode-card.gym .mode-name {
+  color: #fff7ed;
+  text-shadow: 0 2px 0 rgba(76, 5, 25, 0.28);
+}
+
+.mode-card.gym .mode-blurb {
+  color: rgba(255, 247, 237, 0.92);
 }
 
 .mode-blurb {

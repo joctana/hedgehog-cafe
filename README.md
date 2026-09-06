@@ -12,6 +12,7 @@ Pick a game on the home screen:
 - **Capy Construction** — Carlos the capybara digs and dumps sand with kindness
 - **Carlos: Deep Sea Diver** — explore a colorful reef and collect underwater treasure
 - **Chess with Carlos** — learn how every piece moves, then play a gentle coached match
+- **Capybara Gym** — tap workouts and watch Carlos & friends get bigger and bigger
 
 There are no fail states, timers, ads, or accounts.
 
@@ -58,7 +59,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, or **Chess with Carlos**.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, or **Capybara Gym**.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -117,6 +118,12 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 3. Choose **Play Carlos** for a real first match as White against a gentle opponent.
 4. Tap **Show me a move** for a coach hint, or **Try again** to undo Carlos's last turn.
 5. Carlos explains moves, check, checkmate, and draws with encouraging language.
+
+### Capybara Gym
+1. Pick **Carlos**, **Coco**, **Pip**, or **Nugget**.
+2. Tap **Lift**, **Jump**, **Run**, or **Flex**.
+3. Each workout makes them bigger.
+4. Fill the size bar to become a gym star!
 
 ## Tech
 
