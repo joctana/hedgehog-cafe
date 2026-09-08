@@ -68,7 +68,7 @@ export function CapybaraCafe({ onBack, playSound }: Props) {
   const nextStation = cooking && phase === 'cook' ? cooking.recipe.steps[step] : null
 
   const startOrder = (table: Table) => {
-    if (won || table.eating) return
+    if (won || meals >= MEALS_TO_WIN || table.eating) return
     if (phase !== 'pick') {
       setMessage(`Finish ${cooking?.recipe.name ?? 'this meal'} first!`)
       playSound('tap')
@@ -82,7 +82,7 @@ export function CapybaraCafe({ onBack, playSound }: Props) {
   }
 
   const tapStation = (station: StationId) => {
-    if (won || phase !== 'cook' || !cooking) return
+    if (won || meals >= MEALS_TO_WIN || phase !== 'cook' || !cooking) return
     const needed = cooking.recipe.steps[step]
     if (station !== needed) {
       setMessage(`Next: ${STATIONS.find((item) => item.id === needed)?.label ?? 'this'}!`)
@@ -110,7 +110,7 @@ export function CapybaraCafe({ onBack, playSound }: Props) {
   }
 
   const serveTable = (table: Table) => {
-    if (won || phase !== 'serve' || !cooking) return
+    if (won || meals >= MEALS_TO_WIN || phase !== 'serve' || !cooking) return
     if (table.id !== cooking.id) {
       setMessage(`Take it to ${cooking.guest.name}!`)
       playSound('tap')
@@ -118,19 +118,20 @@ export function CapybaraCafe({ onBack, playSound }: Props) {
     }
 
     playSound('eat')
+    const nextMeals = meals + 1
     setTables((current) =>
       current.map((item) => (item.id === table.id ? { ...item, eating: true } : item)),
     )
     setMessage(`${table.guest.name} is munching!`)
     setCoins((value) => value + table.recipe.coins)
+    setMeals(nextMeals)
+    setActiveTable(null)
+    setStep(0)
+    setPhase('pick')
 
     window.setTimeout(() => {
-      const nextMeals = meals + 1
-      setMeals(nextMeals)
       if (nextMeals >= MEALS_TO_WIN) {
         setWon(true)
-        setPhase('pick')
-        setActiveTable(null)
         setMessage('The cafe is buzzing!')
         playSound('celebrate')
         return
@@ -148,9 +149,6 @@ export function CapybaraCafe({ onBack, playSound }: Props) {
           }
         }),
       )
-      setActiveTable(null)
-      setStep(0)
-      setPhase('pick')
       setMessage('Yum! Next friend?')
       playSound('happy')
     }, 1100)
