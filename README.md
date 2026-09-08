@@ -13,7 +13,7 @@ Pick a game on the home screen:
 - **Carlos: Deep Sea Diver** — explore a colorful reef and collect underwater treasure
 - **Chess with Carlos** — learn how every piece moves, then play a gentle coached match
 - **Capybara Gym** — tap workouts and watch Carlos & friends get bigger and bigger
-- **Capybara Cafe** — cook meals for hungry capybaras to buy and eat
+- **Capybara Cafe** — cook meals you can watch being washed, chopped, cooked, and plated, then serve them to hungry capybaras
 
 There are no fail states, timers, ads, or accounts.
 
@@ -127,10 +127,11 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 4. Fill the size bar to become a gym star!
 
 ### Capybara Cafe
-1. Tap a hungry friend (Coco, Pip, Nugget, or Bean) to take their order.
+1. Tap a hungry friend (Coco, Pip, Nugget, or Bean) to take the order shown in their thought bubble.
 2. Follow the glowing kitchen step: **Wash**, **Chop**, **Cook**, then **Plate**.
-3. Tap **Serve!** on that friend’s table so they can eat.
-4. Serve five meals to fill the cafe with happy munching capybaras.
+3. Watch the food change on Chef Carlos's counter — whole fruit gets rinsed and sparkly, chopped on the board, bubbles in the pot with steam, then lands in a bowl, on a plate, or in a cup.
+4. Tap **Serve!** on that friend’s table; the plate lands in front of them and empties bite by bite.
+5. Serve five meals to fill the cafe with happy munching capybaras.
 
 ## Tech
 
