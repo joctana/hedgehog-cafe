@@ -104,7 +104,8 @@ button:focus-visible {
 .app-shell.capy-shell-host::before,
 .app-shell.diver-shell-host::before,
 .app-shell.chess-shell-host::before,
-.app-shell.gym-shell-host::before {
+.app-shell.gym-shell-host::before,
+.app-shell.capycafe-shell-host::before {
   opacity: 0;
 }
 
@@ -134,6 +135,10 @@ button:focus-visible {
 
 .app-shell.gym-shell-host {
   background: #fecdd3;
+}
+
+.app-shell.capycafe-shell-host {
+  background: #f3d5a8;
 }
 
 .mode-select {
@@ -256,6 +261,14 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(190, 18, 60, 0.32);
 }
 
+.mode-card.capycafe {
+  background:
+    radial-gradient(circle at 28% 16%, rgba(255, 255, 255, 0.62), transparent 45%),
+    linear-gradient(180deg, #fdba74, #c2410c);
+  color: #fff7ed;
+  box-shadow: 0 16px 32px rgba(154, 52, 18, 0.3);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -328,6 +341,15 @@ button:focus-visible {
 }
 
 .mode-card.gym .mode-blurb {
+  color: rgba(255, 247, 237, 0.92);
+}
+
+.mode-card.capycafe .mode-name {
+  color: #fff7ed;
+  text-shadow: 0 2px 0 rgba(124, 45, 18, 0.28);
+}
+
+.mode-card.capycafe .mode-blurb {
   color: rgba(255, 247, 237, 0.92);
 }
 

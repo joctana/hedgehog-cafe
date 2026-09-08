@@ -13,6 +13,7 @@ Pick a game on the home screen:
 - **Carlos: Deep Sea Diver** — explore a colorful reef and collect underwater treasure
 - **Chess with Carlos** — learn how every piece moves, then play a gentle coached match
 - **Capybara Gym** — tap workouts and watch Carlos & friends get bigger and bigger
+- **Capybara Cafe** — cook meals for hungry capybaras to buy and eat
 
 There are no fail states, timers, ads, or accounts.
 
@@ -59,7 +60,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, or **Capybara Gym**.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, or **Capybara Cafe**.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -124,6 +125,12 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 2. Tap **Lift**, **Jump**, **Run**, or **Flex**.
 3. Each workout makes them bigger.
 4. Fill the size bar to become a gym star!
+
+### Capybara Cafe
+1. Tap a hungry friend (Coco, Pip, Nugget, or Bean) to take their order.
+2. Follow the glowing kitchen step: **Wash**, **Chop**, **Cook**, then **Plate**.
+3. Tap **Serve!** on that friend’s table so they can eat.
+4. Serve five meals to fill the cafe with happy munching capybaras.
 
 ## Tech
 
