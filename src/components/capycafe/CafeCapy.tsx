@@ -3,7 +3,8 @@ import type { CafeCapy as CafeCapyProfile } from '../../data/cafeCapys'
 
 type Props = {
   capy: CafeCapyProfile
-  size?: number
+  /** Number for a fixed pixel width, or any CSS length (height follows the aspect ratio). */
+  size?: number | string
   chef?: boolean
   eating?: boolean
   waiting?: boolean
@@ -21,7 +22,7 @@ export function CafeCapy({
     ['--belly']: capy.belly,
     ['--cafe-accent']: capy.accent,
     width: size,
-    height: size * 0.95,
+    height: typeof size === 'number' ? size * 0.95 : undefined,
   } as CSSProperties
 
   return (
@@ -78,8 +79,16 @@ export function CafeCapy({
 
           {eating && (
             <g className="cc-spoon">
-              <rect x="118" y="86" width="6" height="28" rx="3" fill="#c9a06e" transform="rotate(-28 121 100)" />
-              <ellipse cx="132" cy="78" rx="10" ry="8" fill="#e8d5b0" />
+              <rect
+                x="124"
+                y="96"
+                width="5"
+                height="30"
+                rx="2.5"
+                fill="#c9a06e"
+                transform="rotate(-32 126 111)"
+              />
+              <ellipse cx="112" cy="96" rx="8" ry="6" fill="#e8d5b0" transform="rotate(-32 112 96)" />
             </g>
           )}
         </g>
