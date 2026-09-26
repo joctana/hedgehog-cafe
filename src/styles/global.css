@@ -165,7 +165,7 @@ button:focus-visible {
   gap: clamp(10px, 2vw, 20px);
   width: min(900px, 96%);
   margin: 0 auto;
-  align-content: center;
+  align-content: start;
   max-height: min(72vh, 720px);
   overflow: auto;
   padding-bottom: 12px;
