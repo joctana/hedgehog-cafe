@@ -1,0 +1,465 @@
+.fish-shell {
+  --fish-ink: #14324a;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--fish-ink);
+  background: linear-gradient(180deg, #e0f2fe 0%, #7dd3fc 28%, #38bdf8 100%);
+}
+
+.fish-shell.phase-cook,
+.fish-shell.phase-eat {
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(254, 215, 170, 0.7), transparent 55%),
+    linear-gradient(180deg, #fff7ed 0%, #fdba74 42%, #fb923c 100%);
+}
+
+.fish-shell.phase-done {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 18%, rgba(250, 204, 21, 0.45), transparent 55%),
+    linear-gradient(180deg, #fff7ed 0%, #fde68a 60%, #fdba74 100%);
+}
+
+.fish-shell .back-btn {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--fish-ink);
+  box-shadow: 0 6px 14px rgba(20, 50, 74, 0.12);
+}
+
+.fish-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  padding-top: calc(0.6rem + env(safe-area-inset-top));
+  padding-right: calc(1rem + 64px);
+  flex-shrink: 0;
+}
+
+.fish-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.8vw, 1.45rem);
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.fish-title small {
+  display: block;
+  font-size: 0.68em;
+  font-weight: 650;
+}
+
+.fish-chip {
+  min-width: 3.6rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.fish-phases {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0 12px 8px;
+  flex-shrink: 0;
+}
+
+.fish-phases li {
+  padding: 0.25rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+  font-weight: 800;
+  opacity: 0.6;
+}
+
+.fish-phases li.now {
+  background: #fde68a;
+  outline: 3px solid #f59e0b;
+  opacity: 1;
+}
+
+.fish-phases li.done {
+  background: #fff;
+  opacity: 0.95;
+}
+
+/* pond */
+
+.pond {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin: 0 12px 12px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(3, 105, 161, 0.25);
+}
+
+.water {
+  position: relative;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.28), transparent 30%),
+    linear-gradient(180deg, #7dd3fc 0%, #0284c7 55%, #0369a1 100%);
+  overflow: hidden;
+}
+
+.lily {
+  position: absolute;
+  width: 70px;
+  height: 28px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: inset -8px -4px 0 #22c55e;
+  opacity: 0.85;
+}
+
+.lily-a {
+  top: 12%;
+  left: 8%;
+}
+
+.lily-b {
+  top: 58%;
+  right: 10%;
+  width: 54px;
+}
+
+.river-fish {
+  position: absolute;
+  top: calc(8% + var(--lane, 0) * 18%);
+  left: -20%;
+  border: none;
+  background: none;
+  padding: 0;
+  animation: fish-swim linear infinite;
+  z-index: 2;
+}
+
+.river-fish.lane-0 { --lane: 0; }
+.river-fish.lane-1 { --lane: 1; }
+.river-fish.lane-2 { --lane: 2; }
+.river-fish.lane-3 { --lane: 3; }
+
+.river-fish.reverse {
+  animation-direction: reverse;
+}
+
+.river-fish.caught {
+  animation: fish-leap 460ms ease-in forwards;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.river-fish-art {
+  display: block;
+  aspect-ratio: 160 / 90;
+  filter: drop-shadow(0 6px 0 rgba(3, 105, 161, 0.25));
+}
+
+.river-fish-art.flip {
+  transform: scaleX(-1);
+}
+
+.river-fish-svg,
+.fisher-capy-svg,
+.meal-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+@keyframes fish-swim {
+  from { left: -22%; }
+  to { left: 108%; }
+}
+
+@keyframes fish-leap {
+  40% { transform: translateY(-70px) rotate(-16deg) scale(1.08); }
+  100% { transform: translateY(30px) scale(0.3); opacity: 0; }
+}
+
+.bank {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 18px 8px;
+  background: linear-gradient(180deg, #86efac 0%, #d9a066 38%, #c4a574 100%);
+}
+
+.bucket {
+  position: relative;
+  width: 120px;
+  height: 96px;
+  margin-bottom: 8px;
+}
+
+.bucket-body {
+  position: absolute;
+  inset: 28px 8px 0;
+  border-radius: 8px 8px 18px 18px;
+  background: linear-gradient(180deg, #b45309, #7c2d12);
+  box-shadow: inset 0 8px 0 rgba(255, 237, 213, 0.35);
+}
+
+.bucket-body::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 8px;
+  right: 8px;
+  height: 18px;
+  border: 6px solid #9a3412;
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+}
+
+.bucket-fish {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+}
+
+.bucket-fish .river-fish-art {
+  width: 42px;
+  margin: 0 -6px;
+}
+
+/* capybara */
+
+.fisher-capy {
+  aspect-ratio: 180 / 171;
+  max-width: 46vw;
+}
+
+.fisher-capy.scooping .fisher-net {
+  transform-origin: 140px 130px;
+  animation: net-scoop 0.45s ease;
+}
+
+.fisher-capy.cooking .fisher-body {
+  animation: capy-bob 0.7s ease-in-out infinite;
+}
+
+.fisher-capy.eating .fisher-body {
+  animation: capy-chew 0.34s ease-in-out infinite;
+}
+
+@keyframes net-scoop {
+  40% { transform: rotate(-28deg) translateY(-10px); }
+  100% { transform: rotate(8deg); }
+}
+
+@keyframes capy-bob {
+  50% { transform: translateY(-5px) rotate(-2deg); }
+}
+
+@keyframes capy-chew {
+  50% { transform: scale(1.04, 0.96); }
+}
+
+/* cook + eat */
+
+.cook-stage,
+.eat-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 3vw, 36px);
+  padding: 0 16px 8px;
+}
+
+.cook-meal,
+.eat-plate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  color: inherit;
+}
+
+.meal-view {
+  max-width: min(46vw, 420px);
+}
+
+.meal-view .meal-svg {
+  width: 100%;
+  height: auto;
+}
+
+.cook-label {
+  margin: 0;
+  font-weight: 800;
+  text-align: center;
+}
+
+.fish-flames {
+  transform-origin: 110px 150px;
+  animation: flame-flicker 0.45s ease-in-out infinite;
+}
+
+.fish-steam path {
+  animation: steam-rise 1.6s ease-in-out infinite;
+}
+
+.fish-steam path:nth-child(2) { animation-delay: 0.25s; }
+.fish-steam path:nth-child(3) { animation-delay: 0.5s; }
+
+.fish-sparkles {
+  animation: spark-twinkle 1.1s ease-in-out infinite;
+  transform-origin: 120px 70px;
+}
+
+@keyframes flame-flicker {
+  50% { transform: scaleY(1.12) translateY(-3px); }
+}
+
+@keyframes steam-rise {
+  0% { opacity: 0; transform: translateY(6px); }
+  40% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateY(-14px); }
+}
+
+@keyframes spark-twinkle {
+  50% { opacity: 0.4; }
+}
+
+.fish-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 10px 12px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(20, 50, 74, 0.1);
+  flex-shrink: 0;
+}
+
+.fish-shell.phase-eat .fish-actions {
+  grid-template-columns: 1fr;
+}
+
+.fish-action {
+  min-height: 78px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 22px;
+  background: #fff7ed;
+  font-weight: 800;
+  font-size: 1.05rem;
+  box-shadow: 0 8px 16px rgba(124, 45, 18, 0.12);
+}
+
+.fish-action span {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.fish-action.idle {
+  opacity: 0.55;
+}
+
+.fish-action.next {
+  background: #fde68a;
+  outline: 4px solid #f59e0b;
+  animation: action-nudge 1.1s ease-in-out infinite;
+}
+
+.fish-action.bite {
+  max-width: 420px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@keyframes action-nudge {
+  50% { transform: translateY(-6px); }
+}
+
+.fish-done {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+}
+
+.fish-lead {
+  margin: 0;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.fish-done-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.fish-again,
+.fish-home {
+  min-height: 56px;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.fish-again {
+  background: #0284c7;
+  color: #fff;
+}
+
+.fish-home {
+  background: #fff7ed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .river-fish {
+    animation: none;
+    left: var(--rest);
+  }
+
+  .river-fish.caught {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .cook-stage,
+  .eat-stage {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .meal-view {
+    max-width: min(78vw, 360px);
+  }
+
+  .fish-action {
+    min-height: 68px;
+  }
+}

@@ -9,6 +9,7 @@ interface ModeSelectProps {
   onPickChess: () => void
   onPickGym: () => void
   onPickCapyCafe: () => void
+  onPickFishing: () => void
 }
 
 export function ModeSelect({
@@ -22,6 +23,7 @@ export function ModeSelect({
   onPickChess,
   onPickGym,
   onPickCapyCafe,
+  onPickFishing,
 }: ModeSelectProps) {
   return (
     <section className="scene mode-select" aria-label="Choose a game">
@@ -109,6 +111,14 @@ export function ModeSelect({
           </span>
           <span className="mode-name">Capybara Cafe</span>
           <span className="mode-blurb">Cook meals for hungry friends</span>
+        </button>
+
+        <button type="button" className="mode-card fishing" onClick={onPickFishing}>
+          <span className="mode-emoji" aria-hidden="true">
+            🎣
+          </span>
+          <span className="mode-name">Capy Fishing</span>
+          <span className="mode-blurb">Catch, cook, and eat the fish</span>
         </button>
       </div>
     </section>

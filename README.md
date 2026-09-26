@@ -14,6 +14,7 @@ Pick a game on the home screen:
 - **Chess with Carlos** — learn how every piece moves, then play a gentle coached match
 - **Capybara Gym** — tap workouts and watch Carlos & friends get bigger and bigger
 - **Capybara Cafe** — cook meals you can watch being washed, chopped, cooked, and plated, then serve them to hungry capybaras
+- **Capy Fishing** — help Carlos catch fish, cook them, and eat them
 
 There are no fail states, timers, ads, or accounts.
 
@@ -60,7 +61,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, or **Capybara Cafe**.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, or **Capy Fishing**.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -132,6 +133,12 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 3. Watch the food change on Chef Carlos's counter — whole fruit gets rinsed and sparkly, chopped on the board, bubbles in the pot with steam, then lands in a bowl, on a plate, or in a cup.
 4. Tap **Serve!** on that friend’s table; the plate lands in front of them and empties bite by bite.
 5. Serve five meals to fill the cafe with happy munching capybaras.
+
+### Capy Fishing
+1. Tap the fish swimming in the river. Carlos scoops them into a bucket.
+2. Catch four fish, then help him cook: **Clean**, **Grill**, and **Plate**.
+3. Tap **Eat** and take bites until the plate is empty.
+4. Carlos finishes full and happy. Tap **Fish again** to start over.
 
 ## Tech
 
