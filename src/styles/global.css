@@ -105,7 +105,8 @@ button:focus-visible {
 .app-shell.diver-shell-host::before,
 .app-shell.chess-shell-host::before,
 .app-shell.gym-shell-host::before,
-.app-shell.capycafe-shell-host::before {
+.app-shell.capycafe-shell-host::before,
+.app-shell.fishing-shell-host::before {
   opacity: 0;
 }
 
@@ -139,6 +140,10 @@ button:focus-visible {
 
 .app-shell.capycafe-shell-host {
   background: #f3d5a8;
+}
+
+.app-shell.fishing-shell-host {
+  background: #38bdf8;
 }
 
 .mode-select {
@@ -269,6 +274,14 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(154, 52, 18, 0.3);
 }
 
+.mode-card.fishing {
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.55), transparent 42%),
+    linear-gradient(180deg, #7dd3fc, #0369a1);
+  color: #f0f9ff;
+  box-shadow: 0 16px 32px rgba(3, 105, 161, 0.32);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -351,6 +364,15 @@ button:focus-visible {
 
 .mode-card.capycafe .mode-blurb {
   color: rgba(255, 247, 237, 0.92);
+}
+
+.mode-card.fishing .mode-name {
+  color: #f0f9ff;
+  text-shadow: 0 2px 0 rgba(3, 50, 80, 0.28);
+}
+
+.mode-card.fishing .mode-blurb {
+  color: rgba(240, 249, 255, 0.92);
 }
 
 .mode-blurb {
