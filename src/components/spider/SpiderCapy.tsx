@@ -3,21 +3,52 @@ import type { CSSProperties } from 'react'
 type Props = {
   size?: number | string
   shooting?: boolean
+  suited?: boolean
+  transforming?: boolean
 }
 
-/** Carlos in a red web-slinging suit. Original capybara, not a copied logo. */
-export function SpiderCapy({ size = 220, shooting = false }: Props) {
+/** Carlos as a normal capybara, then in a red web-slinging suit. */
+export function SpiderCapy({ size = 220, shooting = false, suited = false, transforming = false }: Props) {
   const style = {
     width: size,
     height: typeof size === 'number' ? size * 1.05 : undefined,
   } as CSSProperties
 
   return (
-    <div className={`spider-capy ${shooting ? 'shooting' : ''}`} style={style} aria-hidden>
+    <div
+      className={['spider-capy', suited ? 'suited' : 'plain', transforming ? 'transforming' : '', shooting ? 'shooting' : '']
+        .filter(Boolean)
+        .join(' ')}
+      style={style}
+      aria-hidden
+    >
       <svg viewBox="0 0 200 210" className="spider-capy-svg">
         <ellipse cx="100" cy="198" rx="58" ry="8" fill="rgba(0,0,0,0.28)" />
 
-        <g className="spider-body">
+        <g className="plain-body">
+          <ellipse cx="62" cy="168" rx="16" ry="18" fill="#8f6540" />
+          <ellipse cx="138" cy="168" rx="16" ry="18" fill="#8f6540" />
+          <ellipse cx="100" cy="132" rx="56" ry="40" fill="#b88960" />
+          <ellipse cx="100" cy="140" rx="38" ry="26" fill="#c99a70" />
+          <ellipse cx="48" cy="124" rx="14" ry="18" fill="#b88960" transform="rotate(16 48 124)" />
+          <ellipse cx="152" cy="124" rx="14" ry="18" fill="#b88960" transform="rotate(-16 152 124)" />
+          <ellipse cx="100" cy="74" rx="44" ry="38" fill="#b88960" />
+          <ellipse cx="100" cy="86" rx="28" ry="18" fill="#c99a70" />
+          <ellipse cx="64" cy="50" rx="12" ry="14" fill="#8f6540" />
+          <ellipse cx="136" cy="50" rx="12" ry="14" fill="#8f6540" />
+          <ellipse cx="64" cy="50" rx="6" ry="7" fill="#d4a882" />
+          <ellipse cx="136" cy="50" rx="6" ry="7" fill="#d4a882" />
+          <ellipse cx="84" cy="72" rx="6" ry="7" fill="#2a1c12" />
+          <ellipse cx="116" cy="72" rx="6" ry="7" fill="#2a1c12" />
+          <circle cx="82" cy="70" r="2" fill="#fff" />
+          <circle cx="114" cy="70" r="2" fill="#fff" />
+          <ellipse cx="100" cy="90" rx="16" ry="11" fill="#c99a70" />
+          <ellipse cx="94" cy="88" rx="3.2" ry="2.4" fill="#2a1c12" />
+          <ellipse cx="106" cy="88" rx="3.2" ry="2.4" fill="#2a1c12" />
+          <path d="M88 100 Q100 110 112 100" stroke="#6b4428" strokeWidth="3" fill="none" strokeLinecap="round" />
+        </g>
+
+        <g className="suit-body">
           <ellipse cx="62" cy="168" rx="16" ry="18" fill="#1d4ed8" />
           <ellipse cx="138" cy="168" rx="16" ry="18" fill="#1d4ed8" />
 

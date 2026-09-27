@@ -195,6 +195,57 @@
   animation: capy-sway 2.4s ease-in-out infinite;
 }
 
+.spider-capy .suit-body {
+  opacity: 0;
+}
+
+.spider-capy.suited .plain-body {
+  opacity: 0;
+}
+
+.spider-capy.suited .suit-body {
+  opacity: 1;
+}
+
+.spider-capy.transforming {
+  animation: suit-up 0.95s ease-in-out;
+}
+
+.spider-capy.transforming::after {
+  content: '';
+  position: absolute;
+  left: 18%;
+  top: 18%;
+  width: 64%;
+  height: 64%;
+  border-radius: 50%;
+  border: 6px solid rgba(255, 255, 255, 0.85);
+  animation: suit-ring 0.95s ease-out;
+  pointer-events: none;
+}
+
+.sp-stage.before-webs .baddie {
+  pointer-events: none;
+}
+
+.suit-up {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  top: 38%;
+  transform: translate(-50%, -50%);
+  min-width: min(280px, 70%);
+  min-height: 84px;
+  padding: 0.7rem 1.6rem;
+  border-radius: 999px;
+  background: #dc2626;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
 .spider-capy.shooting {
   animation: capy-shoot 280ms ease-out;
 }
@@ -220,6 +271,18 @@
 
 @keyframes capy-sway {
   50% { transform: rotate(-2deg); }
+}
+
+@keyframes suit-up {
+  0% { transform: rotate(0deg) scale(1); filter: drop-shadow(0 10px 0 rgba(0, 0, 0, 0.25)); }
+  45% { transform: rotate(200deg) scale(0.82); filter: drop-shadow(0 10px 0 rgba(0, 0, 0, 0.25)) brightness(2.2); }
+  100% { transform: rotate(360deg) scale(1); filter: drop-shadow(0 10px 0 rgba(0, 0, 0, 0.25)); }
+}
+
+@keyframes suit-ring {
+  from { transform: scale(0.4); opacity: 0; }
+  40% { opacity: 1; }
+  to { transform: scale(1.6); opacity: 0; }
 }
 
 @keyframes capy-shoot {
