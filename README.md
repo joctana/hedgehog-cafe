@@ -15,6 +15,7 @@ Pick a game on the home screen:
 - **Capybara Gym** — tap workouts and watch Carlos & friends get bigger and bigger
 - **Capybara Cafe** — cook meals you can watch being washed, chopped, cooked, and plated, then serve them to hungry capybaras
 - **Capy Fishing** — help Carlos catch fish, cook them, and eat them
+- **Capybara Spiderman** — shoot webs and wrap up silly bad guys
 
 There are no fail states, timers, ads, or accounts.
 
@@ -61,7 +62,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, or **Capy Fishing**. The newest games are shown first.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, **Capy Fishing**, or **Capybara Spiderman**. The newest games are shown first.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -139,6 +140,12 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 2. Catch four fish, then help him cook: **Clean**, **Grill**, and **Plate**.
 3. Tap **Eat** and take bites until the plate is empty.
 4. Carlos finishes full and happy. Tap **Fish again** to start over.
+
+### Capybara Spiderman
+1. Carlos wears a red web-suit on the rooftops.
+2. Tap a bouncing bad guy. A web shoots from his wrist and wraps them up.
+3. Tap the sky and a web still flies — it just does not count.
+4. Wrap five troublemakers to save the city. They get tangled, not hurt.
 
 ## Tech
 

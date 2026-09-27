@@ -106,7 +106,8 @@ button:focus-visible {
 .app-shell.chess-shell-host::before,
 .app-shell.gym-shell-host::before,
 .app-shell.capycafe-shell-host::before,
-.app-shell.fishing-shell-host::before {
+.app-shell.fishing-shell-host::before,
+.app-shell.spider-shell-host::before {
   opacity: 0;
 }
 
@@ -144,6 +145,10 @@ button:focus-visible {
 
 .app-shell.fishing-shell-host {
   background: #38bdf8;
+}
+
+.app-shell.spider-shell-host {
+  background: #1e1b4b;
 }
 
 .mode-select {
@@ -282,6 +287,14 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(3, 105, 161, 0.32);
 }
 
+.mode-card.spider {
+  background:
+    radial-gradient(circle at 70% 18%, rgba(255, 255, 255, 0.35), transparent 40%),
+    linear-gradient(180deg, #ef4444, #1d4ed8);
+  color: #fff;
+  box-shadow: 0 16px 32px rgba(30, 27, 75, 0.35);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -373,6 +386,15 @@ button:focus-visible {
 
 .mode-card.fishing .mode-blurb {
   color: rgba(240, 249, 255, 0.92);
+}
+
+.mode-card.spider .mode-name {
+  color: #fff;
+  text-shadow: 0 2px 0 rgba(30, 27, 75, 0.35);
+}
+
+.mode-card.spider .mode-blurb {
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .mode-blurb {
