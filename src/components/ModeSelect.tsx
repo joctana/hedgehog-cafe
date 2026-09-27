@@ -82,7 +82,7 @@ export function ModeSelect({
       className: 'spider',
       emoji: '🕸️',
       name: 'Capybara Spiderman',
-      blurb: 'Shoot webs and catch the bad guys',
+      blurb: 'Suit up, then catch the bad guys',
       onPick: onPickSpider,
     },
   ]

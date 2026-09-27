@@ -67,8 +67,9 @@ export function CapySpider({ onBack, playSound }: Props) {
   const [webs, setWebs] = useState<WebShot[]>([])
   const [caught, setCaught] = useState(0)
   const [shooting, setShooting] = useState(false)
-  const [phase, setPhase] = useState<'play' | 'done'>('play')
-  const [message, setMessage] = useState('Tap a bad guy to shoot a web!')
+  const [phase, setPhase] = useState<'intro' | 'transform' | 'play' | 'done'>('intro')
+  const [suited, setSuited] = useState(false)
+  const [message, setMessage] = useState('Bad guys! Carlos needs his suit.')
 
   const shootTo = (x: number, y: number) => {
     const stage = stageRef.current
@@ -137,13 +138,27 @@ export function CapySpider({ onBack, playSound }: Props) {
     }, 720)
   }
 
+  const suitUp = () => {
+    if (phase !== 'intro') return
+    setPhase('transform')
+    setMessage('Spin! Here comes the suit!')
+    playSound('transform')
+    window.setTimeout(() => setSuited(true), 420)
+    window.setTimeout(() => {
+      setPhase('play')
+      setMessage('Tap a bad guy to shoot a web!')
+      playSound('whoosh')
+    }, 980)
+  }
+
   const playAgain = () => {
     caughtIds.current = new Set()
     setBaddies(stock())
     setWebs([])
     setCaught(0)
-    setPhase('play')
-    setMessage('Tap a bad guy to shoot a web!')
+    setSuited(false)
+    setPhase('intro')
+    setMessage('Bad guys! Carlos needs his suit.')
     playSound('celebrate')
   }
 
@@ -157,12 +172,12 @@ export function CapySpider({ onBack, playSound }: Props) {
           {phase === 'done' ? 'City saved!' : 'Capybara Spiderman'}
           <small>{phase === 'done' ? 'Every troublemaker is tangled.' : message}</small>
         </h1>
-        <span className="sp-chip">🕸️ {phase === 'done' ? GOAL : caught}/{GOAL}</span>
+        <span className="sp-chip">{phase === 'intro' || phase === 'transform' ? '🐾' : `🕸️ ${phase === 'done' ? GOAL : caught}/${GOAL}`}</span>
       </header>
 
       {phase === 'done' ? (
         <div className="sp-done">
-          <SpiderCapy size={210} />
+          <SpiderCapy size={210} suited />
           <div className="sp-done-row">
             {KINDS.map((kind) => (
               <Troublemaker key={kind} kind={kind} webbed size={110} />
@@ -179,7 +194,7 @@ export function CapySpider({ onBack, playSound }: Props) {
           </div>
         </div>
       ) : (
-        <div className="sp-stage" ref={stageRef} onClick={onSky}>
+        <div className={`sp-stage ${phase === 'play' ? '' : 'before-webs'}`} ref={stageRef} onClick={onSky}>
           <div className="skyline" aria-hidden>
             <span className="moon" />
             <span className="bldg b1" />
@@ -220,8 +235,19 @@ export function CapySpider({ onBack, playSound }: Props) {
             />
           ))}
 
+          {phase === 'intro' && (
+            <button type="button" className="suit-up" onClick={suitUp}>
+              Suit up!
+            </button>
+          )}
+
           <div className="hero">
-            <SpiderCapy size="clamp(150px, 28vh, 240px)" shooting={shooting} />
+            <SpiderCapy
+              size="clamp(150px, 28vh, 240px)"
+              shooting={shooting}
+              suited={suited}
+              transforming={phase === 'transform'}
+            />
             <span className="wrist-anchor" ref={wristRef} />
           </div>
         </div>

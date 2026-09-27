@@ -15,7 +15,7 @@ Pick a game on the home screen:
 - **Capybara Gym** — tap workouts and watch Carlos & friends get bigger and bigger
 - **Capybara Cafe** — cook meals you can watch being washed, chopped, cooked, and plated, then serve them to hungry capybaras
 - **Capy Fishing** — help Carlos catch fish, cook them, and eat them
-- **Capybara Spiderman** — shoot webs and wrap up silly bad guys
+- **Capybara Spiderman** — Carlos starts as a normal capybara, suits up, then shoots webs at silly bad guys
 
 There are no fail states, timers, ads, or accounts.
 
@@ -142,10 +142,11 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 4. Carlos finishes full and happy. Tap **Fish again** to start over.
 
 ### Capybara Spiderman
-1. Carlos wears a red web-suit on the rooftops.
-2. Tap a bouncing bad guy. A web shoots from his wrist and wraps them up.
-3. Tap the sky and a web still flies — it just does not count.
-4. Wrap five troublemakers to save the city. They get tangled, not hurt.
+1. Carlos starts as a normal capybara on the rooftop, with bad guys already bouncing around.
+2. Tap **Suit up!** — he spins and changes into the red web-suit.
+3. Tap a bouncing bad guy. A web shoots from his wrist and wraps them up.
+4. Tap the sky and a web still flies — it just does not count.
+5. Wrap five troublemakers to save the city. They get tangled, not hurt.
 
 ## Tech
 
