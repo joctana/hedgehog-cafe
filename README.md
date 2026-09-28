@@ -16,6 +16,7 @@ Pick a game on the home screen:
 - **Capybara Cafe** — cook meals you can watch being washed, chopped, cooked, and plated, then serve them to hungry capybaras
 - **Capy Fishing** — help Carlos catch fish, cook them, and eat them
 - **Capybara Spiderman** — Carlos starts as a normal capybara, suits up, then shoots webs at silly bad guys
+- **Capybara Cop** — patrol in a police car, then give speeding tickets or take speeders to jail
 
 There are no fail states, timers, ads, or accounts.
 
@@ -62,7 +63,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, **Capy Fishing**, or **Capybara Spiderman**. The newest games are shown first.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, **Capy Fishing**, **Capybara Spiderman**, or **Capybara Cop**. The newest games are shown first.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -147,6 +148,12 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 3. Tap a bouncing bad guy. A web shoots from his wrist and wraps them up.
 4. Tap the sky and a web still flies — it just does not count.
 5. Wrap five troublemakers to save the city. They get tangled, not hurt.
+
+### Capybara Cop
+1. Carlos the police capybara watches the road from his patrol car.
+2. Tap a car that is speeding by to pull it over. The lights flash.
+3. Choose **Ticket** for a speeding ticket, or **Jail** for a short, friendly timeout at the town jail.
+4. Help four drivers. Either choice counts. There is no way to lose.
 
 ## Tech
 

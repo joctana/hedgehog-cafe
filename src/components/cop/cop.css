@@ -1,0 +1,375 @@
+.cop-shell {
+  --cop-ink: #0f2744;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--cop-ink);
+  background: linear-gradient(180deg, #7dd3fc 0%, #bae6fd 40%, #86efac 100%);
+}
+
+.cop-shell.phase-done {
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 16%, rgba(250, 204, 21, 0.45), transparent 55%),
+    linear-gradient(180deg, #dbeafe 0%, #fef9c3 100%);
+}
+
+.cop-shell .back-btn {
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--cop-ink);
+  box-shadow: 0 6px 14px rgba(15, 39, 68, 0.12);
+}
+
+.cop-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  padding-top: calc(0.6rem + env(safe-area-inset-top));
+  padding-right: calc(1rem + 64px);
+  flex-shrink: 0;
+}
+
+.cop-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.cop-title small {
+  display: block;
+  font-size: 0.68em;
+  font-weight: 650;
+}
+
+.cop-chip {
+  min-width: 3.6rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.cop-scene {
+  flex: 1;
+  min-height: 0;
+  margin: 0 12px 8px;
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #7dd3fc, #38bdf8 42%, #4ade80 42%, #22c55e 70%, #4b5563 70%);
+  box-shadow: 0 12px 24px rgba(15, 39, 68, 0.16);
+}
+
+.cop-sky {
+  position: relative;
+  height: 18%;
+  flex-shrink: 0;
+}
+
+.sun {
+  position: absolute;
+  top: 18%;
+  right: 10%;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fde047;
+  box-shadow: 0 0 20px rgba(253, 224, 71, 0.8);
+}
+
+.road {
+  position: relative;
+  flex: 1;
+  margin-top: auto;
+  min-height: 0;
+  background:
+    linear-gradient(#f8fafc, #f8fafc) 8% 33% / 100% 4px no-repeat,
+    linear-gradient(#f8fafc, #f8fafc) 8% 66% / 100% 4px no-repeat,
+    repeating-linear-gradient(90deg, transparent 0 18px, #f8fafc 18px 34px) 0 33% / 100% 4px no-repeat,
+    repeating-linear-gradient(90deg, transparent 0 18px, #f8fafc 18px 34px) 0 66% / 100% 4px no-repeat,
+    #4b5563;
+}
+
+.lane-line {
+  display: none;
+}
+
+.speeder {
+  position: absolute;
+  left: -25%;
+  width: clamp(150px, 22vw, 230px);
+  padding: 0;
+  background: none;
+  border: none;
+  animation: speed-by linear infinite;
+  z-index: 2;
+}
+
+.speeder.lane-0 { top: 2%; }
+.speeder.lane-1 { top: 24%; }
+.speeder.lane-2 { top: 46%; }
+
+.cop-shell:not(.phase-patrol) .road::after {
+  display: none;
+}
+
+.road::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 24%;
+  background: #6b7280;
+  border-top: 7px solid #facc15;
+  pointer-events: none;
+}
+
+.shoulder {
+  position: absolute;
+  right: 5%;
+  bottom: 1%;
+  width: min(230px, 30%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.speeder-car,
+.cop-car {
+  display: block;
+  width: 100%;
+}
+
+.speeder-car.fast {
+  filter: drop-shadow(-10px 0 0 rgba(255, 255, 255, 0.35));
+}
+
+.cop-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.cop-capy {
+  aspect-ratio: 180 / 162;
+  max-width: 46vw;
+}
+
+@keyframes speed-by {
+  from { left: -28%; }
+  to { left: 110%; }
+}
+
+.pullover {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -42%);
+  width: min(520px, 86%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.pullover .speeder-car,
+.pullover .cop-car {
+  width: min(280px, 70%);
+}
+
+.cop-car.lights .red-light,
+.cop-car.lights .blue-light {
+  animation: siren 0.35s steps(2) infinite;
+}
+
+.cop-car.lights .blue-light {
+  animation-delay: 0.17s;
+}
+
+@keyframes siren {
+  50% { opacity: 0.25; }
+}
+
+.ticket {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 8%;
+  transform: translateX(-50%) rotate(-4deg);
+  width: min(240px, 46%);
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: #fffbeb;
+  color: #1e3a8a;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 800;
+  text-align: center;
+  animation: ticket-in 280ms ease-out both;
+}
+
+.ticket strong {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+
+@keyframes ticket-in {
+  from { transform: translateX(-50%) translateY(-16px) rotate(-8deg); }
+  to { transform: translateX(-50%) rotate(-4deg); }
+}
+
+.jail-scene {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 16px;
+  padding: 12px 16px 18px;
+}
+
+.jail {
+  width: min(420px, 62%);
+  background: #f8fafc;
+  border: 8px solid #1e3a8a;
+  border-radius: 18px 18px 8px 8px;
+  padding: 10px 12px 14px;
+  text-align: center;
+}
+
+.jail-sign {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 0.2rem 0.8rem;
+  border-radius: 999px;
+  background: #1d4ed8;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+
+.jail-bars {
+  position: relative;
+  border-radius: 10px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 16px, #1e3a8a 16px 22px),
+    #dbeafe;
+  padding: 10px 8px 4px;
+}
+
+.jail-bars .speeder-car {
+  width: min(220px, 80%);
+  margin: 0 auto;
+}
+
+.jail-note {
+  margin: 8px 0 0;
+  font-weight: 800;
+}
+
+.cop-actions {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 8px 12px calc(12px + env(safe-area-inset-bottom));
+  min-height: 92px;
+  align-items: center;
+}
+
+.cop-action {
+  min-height: 78px;
+  border-radius: 22px;
+  font-weight: 800;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 8px 16px rgba(15, 39, 68, 0.14);
+}
+
+.cop-action span {
+  font-size: 1.6rem;
+}
+
+.ticket-btn {
+  background: #fef3c7;
+  color: #1e3a8a;
+}
+
+.jail-btn {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.cop-hint {
+  grid-column: 1 / -1;
+  margin: 0;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.cop-done {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+}
+
+.cop-done .cop-car {
+  width: min(280px, 60%);
+}
+
+.cop-lead {
+  margin: 0;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.cop-done-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cop-again,
+.cop-home {
+  min-height: 56px;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.cop-again {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.cop-home {
+  background: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .speeder {
+    animation: none;
+    left: var(--rest);
+  }
+}
