@@ -107,7 +107,8 @@ button:focus-visible {
 .app-shell.gym-shell-host::before,
 .app-shell.capycafe-shell-host::before,
 .app-shell.fishing-shell-host::before,
-.app-shell.spider-shell-host::before {
+.app-shell.spider-shell-host::before,
+.app-shell.cop-shell-host::before {
   opacity: 0;
 }
 
@@ -149,6 +150,10 @@ button:focus-visible {
 
 .app-shell.spider-shell-host {
   background: #1e1b4b;
+}
+
+.app-shell.cop-shell-host {
+  background: #7dd3fc;
 }
 
 .mode-select {
@@ -295,6 +300,14 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(30, 27, 75, 0.35);
 }
 
+.mode-card.cop {
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.4), transparent 42%),
+    linear-gradient(180deg, #1d4ed8, #0f172a);
+  color: #fff;
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.35);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -394,6 +407,15 @@ button:focus-visible {
 }
 
 .mode-card.spider .mode-blurb {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.mode-card.cop .mode-name {
+  color: #fef9c3;
+  text-shadow: 0 2px 0 rgba(15, 23, 42, 0.35);
+}
+
+.mode-card.cop .mode-blurb {
   color: rgba(255, 255, 255, 0.92);
 }
 
