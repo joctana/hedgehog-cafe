@@ -16,7 +16,7 @@ Pick a game on the home screen:
 - **Capybara Cafe** — cook meals you can watch being washed, chopped, cooked, and plated, then serve them to hungry capybaras
 - **Capy Fishing** — help Carlos catch fish, cook them, and eat them
 - **Capybara Spiderman** — Carlos starts as a normal capybara, suits up, then shoots webs at silly bad guys
-- **Capybara Cop** — patrol in a police car, then give speeding tickets or take speeders to jail
+- **Capybara Cop** — dress Carlos in his uniform and hat, then patrol, write tickets, or send speeders to a short timeout
 
 There are no fail states, timers, ads, or accounts.
 
@@ -150,10 +150,11 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 5. Wrap five troublemakers to save the city. They get tangled, not hurt.
 
 ### Capybara Cop
-1. Carlos the police capybara watches the road from his patrol car.
-2. Tap a car that is speeding by to pull it over. The lights flash.
-3. Choose **Ticket** for a speeding ticket, or **Jail** for a short, friendly timeout at the town jail.
-4. Help four drivers. Either choice counts. There is no way to lose.
+1. Carlos starts as a normal capybara at the station locker.
+2. Tap **Uniform** and **Hat** (either order) so he is ready for work.
+3. Tap a car that is speeding by to pull it over. The lights flash.
+4. Choose **Ticket** for a speeding ticket, or **Jail** for a short, friendly timeout at the town jail.
+5. Help four drivers. Either choice counts. There is no way to lose.
 
 ## Tech
 

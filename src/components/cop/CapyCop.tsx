@@ -19,7 +19,7 @@ type Speeder = {
   rest: number
 }
 
-type Phase = 'patrol' | 'choice' | 'ticket' | 'jail' | 'done'
+type Phase = 'ready' | 'patrol' | 'choice' | 'ticket' | 'jail' | 'done'
 
 const GOAL = 4
 const PAINTS = ['#ef4444', '#facc15', '#34d399', '#38bdf8', '#fb7185']
@@ -47,19 +47,49 @@ function traffic(): Speeder[] {
 export function CapyCop({ onBack, playSound }: Props) {
   const busy = useRef(false)
   const timer = useRef<number | null>(null)
+  const popTimer = useRef<number | null>(null)
+  const kit = useRef({ shirt: false, hat: false })
 
   useEffect(() => {
     return () => {
       if (timer.current) window.clearTimeout(timer.current)
+      if (popTimer.current) window.clearTimeout(popTimer.current)
     }
   }, [])
   const [cars, setCars] = useState<Speeder[]>(() => traffic())
   const [pulled, setPulled] = useState<Speeder | null>(null)
-  const [phase, setPhase] = useState<Phase>('patrol')
+  const [phase, setPhase] = useState<Phase>('ready')
   const [handled, setHandled] = useState(0)
   const [tickets, setTickets] = useState(0)
   const [jailed, setJailed] = useState(0)
-  const [message, setMessage] = useState('Tap a speeding car!')
+  const [shirtOn, setShirtOn] = useState(false)
+  const [hatOn, setHatOn] = useState(false)
+  const [dressing, setDressing] = useState(false)
+  const [message, setMessage] = useState('Time for work! Put on the uniform and hat.')
+
+  const wear = (piece: 'shirt' | 'hat') => {
+    if (phase !== 'ready' || kit.current[piece]) return
+    kit.current = { ...kit.current, [piece]: true }
+    setShirtOn(kit.current.shirt)
+    setHatOn(kit.current.hat)
+    setDressing(false)
+    window.requestAnimationFrame(() => setDressing(true))
+    if (popTimer.current) window.clearTimeout(popTimer.current)
+    popTimer.current = window.setTimeout(() => setDressing(false), 480)
+    if (kit.current.shirt && kit.current.hat) {
+      setMessage('Ready for work!')
+      playSound('celebrate')
+      if (timer.current) window.clearTimeout(timer.current)
+      timer.current = window.setTimeout(() => {
+        setPhase('patrol')
+        setMessage('Tap a speeding car!')
+        playSound('whoosh')
+      }, 1000)
+      return
+    }
+    setMessage(piece === 'shirt' ? 'Uniform on. Now the hat!' : 'Hat on. Now the uniform!')
+    playSound('happy')
+  }
 
   const pullOver = (car: Speeder) => {
     if (phase !== 'patrol' || busy.current) return
@@ -103,13 +133,18 @@ export function CapyCop({ onBack, playSound }: Props) {
 
   const playAgain = () => {
     busy.current = false
+    if (timer.current) window.clearTimeout(timer.current)
+    kit.current = { shirt: false, hat: false }
     setCars(traffic())
     setPulled(null)
     setHandled(0)
     setTickets(0)
     setJailed(0)
-    setPhase('patrol')
-    setMessage('Tap a speeding car!')
+    setShirtOn(false)
+    setHatOn(false)
+    setDressing(false)
+    setPhase('ready')
+    setMessage('Time for work! Put on the uniform and hat.')
     playSound('celebrate')
   }
 
@@ -123,7 +158,11 @@ export function CapyCop({ onBack, playSound }: Props) {
           {phase === 'done' ? 'Shift complete!' : 'Capybara Cop'}
           <small>{phase === 'done' ? 'Carlos kept the road safe.' : message}</small>
         </h1>
-        <span className="cop-chip">🚓 {phase === 'done' ? GOAL : handled}/{GOAL}</span>
+        <span className="cop-chip">
+          {phase === 'ready'
+            ? `👕 ${Number(shirtOn) + Number(hatOn)}/2`
+            : `🚓 ${phase === 'done' ? GOAL : handled}/${GOAL}`}
+        </span>
       </header>
 
       {phase === 'done' ? (
@@ -145,6 +184,19 @@ export function CapyCop({ onBack, playSound }: Props) {
       ) : (
         <>
           <div className="cop-scene">
+            {phase === 'ready' ? (
+              <div className="locker-room">
+                <div className="station-sign" aria-hidden>
+                  Police Station
+                </div>
+                <div className="locker-box" aria-hidden>
+                  <span />
+                  <span />
+                </div>
+                <CopCapy size="clamp(220px, 46vh, 320px)" shirt={shirtOn} hat={hatOn} dressing={dressing} />
+              </div>
+            ) : (
+              <>
             <div className="cop-sky" aria-hidden>
               <span className="sun" />
             </div>
@@ -204,10 +256,33 @@ export function CapyCop({ onBack, playSound }: Props) {
                 )}
               </div>
             )}
+              </>
+            )}
           </div>
 
           <div className="cop-actions">
-            {phase === 'choice' ? (
+            {phase === 'ready' ? (
+              <>
+                <button
+                  type="button"
+                  className={`cop-action uniform-btn ${shirtOn ? 'worn' : ''}`}
+                  aria-pressed={shirtOn}
+                  onClick={() => wear('shirt')}
+                >
+                  <span aria-hidden>👕</span>
+                  {shirtOn ? 'Uniform on' : 'Uniform'}
+                </button>
+                <button
+                  type="button"
+                  className={`cop-action hat-btn ${hatOn ? 'worn' : ''}`}
+                  aria-pressed={hatOn}
+                  onClick={() => wear('hat')}
+                >
+                  <span aria-hidden>🧢</span>
+                  {hatOn ? 'Hat on' : 'Hat'}
+                </button>
+              </>
+            ) : phase === 'choice' ? (
               <>
                 <button type="button" className="cop-action ticket-btn" onClick={() => finishStop('ticket')}>
                   <span aria-hidden>🎫</span>Ticket
@@ -225,3 +300,4 @@ export function CapyCop({ onBack, playSound }: Props) {
     </div>
   )
 }
+

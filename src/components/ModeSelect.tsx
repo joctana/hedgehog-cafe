@@ -91,7 +91,7 @@ export function ModeSelect({
       className: 'cop',
       emoji: '🚓',
       name: 'Capybara Cop',
-      blurb: 'Ticket speeders or take them to jail',
+      blurb: 'Get dressed, then ticket speeders',
       onPick: onPickCop,
     },
   ]

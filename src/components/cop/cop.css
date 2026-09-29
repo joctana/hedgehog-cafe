@@ -161,8 +161,121 @@
 }
 
 .cop-capy {
+  position: relative;
   aspect-ratio: 180 / 162;
   max-width: 46vw;
+  z-index: 1;
+}
+
+.cop-capy .shirt-kit,
+.cop-capy .hat-kit {
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.cop-capy .shirt-kit.on,
+.cop-capy .hat-kit.on {
+  opacity: 1;
+}
+
+.cop-capy.dressing {
+  animation: dress-pop 420ms ease;
+}
+
+.cop-capy.dressing::after {
+  content: '';
+  position: absolute;
+  left: 12%;
+  top: 8%;
+  width: 76%;
+  height: 76%;
+  border-radius: 50%;
+  border: 6px solid rgba(250, 204, 21, 0.9);
+  animation: dress-ring 420ms ease-out;
+  pointer-events: none;
+}
+
+@keyframes dress-pop {
+  40% { transform: scale(1.08) translateY(-8px); }
+}
+
+@keyframes dress-ring {
+  from { transform: scale(0.55); opacity: 0; }
+  35% { opacity: 1; }
+  to { transform: scale(1.35); opacity: 0; }
+}
+
+.locker-room {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 12px 16px 8px;
+  background: linear-gradient(180deg, #bfdbfe 0%, #eff6ff 62%, #d6d3d1 62%, #a8a29e 100%);
+}
+
+.station-sign {
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.35rem 1.1rem;
+  border-radius: 999px;
+  background: #1e3a8a;
+  color: #fef9c3;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1rem, 2.4vw, 1.35rem);
+  white-space: nowrap;
+}
+
+.locker-box {
+  position: absolute;
+  left: 8%;
+  bottom: 14%;
+  width: min(108px, 18%);
+  height: min(210px, 38%);
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 12px 12px 4px 4px;
+  background: #172554;
+  box-shadow: 0 8px 0 rgba(15, 23, 42, 0.16);
+}
+
+.locker-box span {
+  position: relative;
+  flex: 1;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #3b82f6, #1d4ed8);
+  box-shadow: inset 0 0 0 3px #dbeafe;
+}
+
+.locker-box span::after {
+  content: '';
+  position: absolute;
+  top: 46%;
+  right: 7px;
+  width: 7px;
+  height: 22px;
+  border-radius: 4px;
+  background: #facc15;
+}
+
+.uniform-btn {
+  background: #dbeafe;
+  color: #1e3a8a;
+}
+
+.hat-btn {
+  background: #1e3a8a;
+  color: #fff;
+}
+
+.cop-action.worn {
+  box-shadow: inset 0 0 0 4px #22c55e;
 }
 
 @keyframes speed-by {
@@ -371,5 +484,10 @@
   .speeder {
     animation: none;
     left: var(--rest);
+  }
+
+  .cop-capy.dressing,
+  .cop-capy.dressing::after {
+    animation: none;
   }
 }
