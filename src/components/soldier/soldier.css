@@ -1,0 +1,449 @@
+.soldier-shell {
+  --soldier-ink: #1c1917;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--soldier-ink);
+  background: linear-gradient(180deg, #bae6fd 0%, #86efac 55%, #65a30d 100%);
+}
+
+.soldier-shell.is-night {
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #14532d 100%);
+  color: #ecfccb;
+}
+
+.soldier-shell.phase-done {
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 12%, rgba(250, 204, 21, 0.4), transparent 55%),
+    linear-gradient(180deg, #ecfccb 0%, #fef9c3 100%);
+  color: var(--soldier-ink);
+}
+
+.soldier-shell .back-btn {
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--soldier-ink);
+  box-shadow: 0 6px 14px rgba(28, 25, 23, 0.12);
+}
+
+.soldier-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  padding-top: calc(0.6rem + env(safe-area-inset-top));
+  padding-right: calc(1rem + 64px);
+  flex-shrink: 0;
+}
+
+.soldier-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.soldier-title small {
+  display: block;
+  font-size: 0.68em;
+  font-weight: 650;
+}
+
+.soldier-chip {
+  min-width: 3.6rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--soldier-ink);
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.soldier-scene {
+  flex: 1;
+  min-height: 0;
+  margin: 0 12px 8px;
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 24px rgba(28, 25, 23, 0.16);
+}
+
+.gear-room {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 12px 16px 8px;
+  background: linear-gradient(180deg, #d9f99d 0%, #fefce8 60%, #d6d3d1 60%, #a8a29e 100%);
+}
+
+.range-sign {
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.35rem 1.1rem;
+  border-radius: 999px;
+  background: #3f6212;
+  color: #fef9c3;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1rem, 2.4vw, 1.35rem);
+  white-space: nowrap;
+}
+
+.kit-locker {
+  position: absolute;
+  left: 8%;
+  bottom: 14%;
+  width: min(108px, 18%);
+  height: min(210px, 38%);
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 12px 12px 4px 4px;
+  background: #365314;
+  box-shadow: 0 8px 0 rgba(28, 25, 23, 0.16);
+}
+
+.kit-locker span {
+  position: relative;
+  flex: 1;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #84cc16, #4d7c0f);
+  box-shadow: inset 0 0 0 3px #ecfccb;
+}
+
+.kit-locker span::after {
+  content: '';
+  position: absolute;
+  top: 46%;
+  right: 7px;
+  width: 7px;
+  height: 22px;
+  border-radius: 4px;
+  background: #facc15;
+}
+
+.soldier-capy {
+  position: relative;
+  aspect-ratio: 180 / 162;
+  max-width: 46vw;
+  z-index: 1;
+}
+
+.soldier-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.soldier-capy .uniform-kit,
+.soldier-capy .gear-kit,
+.soldier-capy .goggle-kit {
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.soldier-capy .uniform-kit.on,
+.soldier-capy .gear-kit.on,
+.soldier-capy .goggle-kit.on {
+  opacity: 1;
+}
+
+.soldier-capy.dressing {
+  animation: kit-pop 420ms ease;
+}
+
+.soldier-capy.dressing::after {
+  content: '';
+  position: absolute;
+  left: 12%;
+  top: 8%;
+  width: 76%;
+  height: 76%;
+  border-radius: 50%;
+  border: 6px solid rgba(250, 204, 21, 0.9);
+  animation: kit-ring 420ms ease-out;
+  pointer-events: none;
+}
+
+.soldier-capy.shooting {
+  animation: pew-nudge 280ms ease-out;
+}
+
+.soldier-capy.shooting .pew-dot {
+  animation: pew-flash 280ms ease-out;
+}
+
+@keyframes kit-pop {
+  40% { transform: scale(1.08) translateY(-8px); }
+}
+
+@keyframes kit-ring {
+  from { transform: scale(0.55); opacity: 0; }
+  35% { opacity: 1; }
+  to { transform: scale(1.35); opacity: 0; }
+}
+
+@keyframes pew-nudge {
+  40% { transform: translateX(10px) rotate(2deg); }
+}
+
+@keyframes pew-flash {
+  40% { transform: translateX(18px) scale(1.8); opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.range {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: background 700ms ease;
+}
+
+.range.day {
+  background: linear-gradient(180deg, #7dd3fc 0%, #bae6fd 34%, #86efac 34%, #4ade80 70%, #a3e635 100%);
+}
+
+.range.night {
+  background: linear-gradient(180deg, #020617 0%, #1e293b 36%, #14532d 36%, #166534 72%, #365314 100%);
+}
+
+.range-sky {
+  position: relative;
+  height: 22%;
+  flex-shrink: 0;
+}
+
+.sun,
+.moon {
+  position: absolute;
+  top: 18%;
+  right: 10%;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.sun {
+  background: #fde047;
+  box-shadow: 0 0 20px rgba(253, 224, 71, 0.8);
+}
+
+.moon {
+  background: #fef9c3;
+  box-shadow: 0 0 16px rgba(254, 249, 195, 0.7);
+}
+
+.star {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.star.s1 { top: 30%; left: 18%; }
+.star.s2 { top: 18%; left: 46%; width: 4px; height: 4px; }
+.star.s3 { top: 48%; left: 62%; }
+
+.range-field {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.range.nvg .range-field::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 40%, transparent 35%, rgba(6, 48, 20, 0.45) 100%),
+    rgba(74, 222, 128, 0.28);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.target-btn {
+  position: absolute;
+  width: clamp(112px, 16vw, 168px);
+  padding: 0;
+  border: none;
+  background: none;
+  animation: target-bob 2.4s ease-in-out infinite;
+  z-index: 2;
+}
+
+.target-btn.hit {
+  animation: none;
+}
+
+.target-btn:nth-child(2) { animation-delay: 0.3s; }
+.target-btn:nth-child(3) { animation-delay: 0.6s; }
+.target-btn:nth-child(4) { animation-delay: 0.15s; }
+
+.paper-target {
+  display: block;
+  width: 100%;
+  filter: drop-shadow(0 8px 0 rgba(0, 0, 0, 0.12));
+}
+
+.paper-card {
+  transform-origin: 60px 60px;
+  transition: transform 220ms ease;
+}
+
+.paper-target.hit .paper-card {
+  transform: rotate(-7deg);
+}
+
+.shooter {
+  position: absolute;
+  left: 2%;
+  bottom: 0;
+  z-index: 3;
+  width: clamp(140px, 22vw, 200px);
+  pointer-events: none;
+}
+
+.shooter .soldier-capy {
+  width: 100%;
+  max-width: none;
+}
+
+.soldier-actions {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 8px 12px calc(12px + env(safe-area-inset-bottom));
+  min-height: 92px;
+  align-items: center;
+}
+
+.soldier-action {
+  min-height: 78px;
+  border-radius: 22px;
+  font-weight: 800;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 8px 16px rgba(28, 25, 23, 0.14);
+}
+
+.soldier-action span {
+  font-size: 1.6rem;
+}
+
+.uniform-btn {
+  background: #ecfccb;
+  color: #365314;
+}
+
+.gear-btn {
+  background: #3f6212;
+  color: #fef9c3;
+}
+
+.goggles-btn {
+  grid-column: 1 / -1;
+  background: #14532d;
+  color: #ecfccb;
+}
+
+.soldier-action.worn {
+  box-shadow: inset 0 0 0 4px #22c55e;
+}
+
+.soldier-hint {
+  grid-column: 1 / -1;
+  margin: 0;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.soldier-shell.is-night .soldier-hint {
+  color: #ecfccb;
+}
+
+.soldier-done {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+}
+
+.done-papers {
+  display: flex;
+  gap: 8px;
+  width: min(420px, 90%);
+}
+
+.done-papers .paper-target {
+  width: 30%;
+}
+
+.soldier-lead {
+  margin: 0;
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.soldier-done-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.soldier-again,
+.soldier-home {
+  min-height: 56px;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.soldier-again {
+  background: #3f6212;
+  color: #fef9c3;
+}
+
+.soldier-home {
+  background: #fff;
+}
+
+@keyframes target-bob {
+  50% { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .target-btn,
+  .soldier-capy.dressing,
+  .soldier-capy.dressing::after,
+  .soldier-capy.shooting,
+  .soldier-capy.shooting .pew-dot {
+    animation: none;
+  }
+}

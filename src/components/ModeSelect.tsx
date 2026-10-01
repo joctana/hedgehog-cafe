@@ -12,6 +12,7 @@ interface ModeSelectProps {
   onPickFishing: () => void
   onPickSpider: () => void
   onPickCop: () => void
+  onPickSoldier: () => void
 }
 
 type GameCard = {
@@ -36,6 +37,7 @@ export function ModeSelect({
   onPickFishing,
   onPickSpider,
   onPickCop,
+  onPickSoldier,
 }: ModeSelectProps) {
   // Oldest first; add new games at the end. The picker shows them newest first.
   const games: GameCard[] = [
@@ -93,6 +95,13 @@ export function ModeSelect({
       name: 'Capybara Cop',
       blurb: 'Get dressed, then ticket speeders',
       onPick: onPickCop,
+    },
+    {
+      className: 'soldier',
+      emoji: '🪖',
+      name: 'Capybara Soldier',
+      blurb: 'Gear up, then pew paper targets',
+      onPick: onPickSoldier,
     },
   ]
 
