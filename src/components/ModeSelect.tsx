@@ -109,7 +109,7 @@ export function ModeSelect({
       className: 'towers',
       emoji: '🧱',
       name: 'Capybara Towers',
-      blurb: 'Stack higher, then knock theirs down',
+      blurb: 'Stack higher, then fire the cannon',
       onPick: onPickTowers,
     },
   ]

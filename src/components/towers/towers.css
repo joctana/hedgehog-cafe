@@ -59,6 +59,7 @@
 }
 
 .yard {
+  position: relative;
   flex: 1;
   min-height: 0;
   margin: 0 12px 8px;
@@ -191,9 +192,45 @@
   color: #9a3412;
 }
 
-.knock-btn {
+.fire-btn {
   background: #ea580c;
   color: #fff;
+}
+
+.toy-cannon {
+  position: relative;
+  display: block;
+  width: min(132px, 88%);
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.toy-cannon.firing {
+  animation: cannon-kick 280ms ease-out;
+}
+
+.cannonball {
+  position: absolute;
+  right: 0;
+  top: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f5f5f4, #57534e 55%, #1c1917);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+  animation: ball-fly 500ms linear forwards;
+}
+
+.done-stack .toy-cannon {
+  width: 72px;
+}
+
+@keyframes cannon-kick {
+  40% { transform: translateX(-12px); }
+}
+
+@keyframes ball-fly {
+  to { transform: translateX(min(560px, 48vw)); }
 }
 
 .tower-done {
@@ -322,7 +359,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .tower-block,
-  .tower-side.falling .tower-block {
+  .tower-side.falling .tower-block,
+  .toy-cannon.firing,
+  .cannonball {
     animation: none;
   }
 }
