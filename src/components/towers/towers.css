@@ -1,0 +1,328 @@
+.tower-shell {
+  --tower-ink: #3f2a1d;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--tower-ink);
+  background: linear-gradient(180deg, #bae6fd 0%, #86efac 100%);
+}
+
+.tower-shell.phase-done {
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 12%, rgba(251, 191, 36, 0.45), transparent 55%),
+    linear-gradient(180deg, #fef3c7 0%, #bbf7d0 100%);
+}
+
+.tower-shell .back-btn {
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--tower-ink);
+  box-shadow: 0 6px 14px rgba(63, 42, 29, 0.12);
+}
+
+.tower-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  padding-top: calc(0.6rem + env(safe-area-inset-top));
+  padding-right: calc(1rem + 64px);
+  flex-shrink: 0;
+}
+
+.tower-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.tower-title small {
+  display: block;
+  font-size: 0.68em;
+  font-weight: 650;
+}
+
+.tower-chip {
+  min-width: 3.6rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.yard {
+  flex: 1;
+  min-height: 0;
+  margin: 0 12px 8px;
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  gap: 10px;
+  padding: 16px 12px 8px;
+  background: linear-gradient(180deg, #7dd3fc 0%, #e0f2fe 46%, #86efac 46%, #4ade80 100%);
+  box-shadow: 0 12px 24px rgba(63, 42, 29, 0.16);
+}
+
+.tower-side {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.block-stack {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+}
+
+.tower-block {
+  width: min(120px, 78%);
+  height: 34px;
+  border-radius: 10px;
+  box-shadow:
+    inset 0 -5px 0 rgba(0, 0, 0, 0.12),
+    0 4px 0 rgba(63, 42, 29, 0.08);
+  animation: block-drop 220ms ease-out;
+  flex-shrink: 0;
+}
+
+.tower-side.leading .tower-block:last-child {
+  box-shadow:
+    inset 0 -5px 0 rgba(0, 0, 0, 0.12),
+    0 0 0 3px #fef9c3;
+}
+
+.tower-side.falling .tower-block {
+  animation: block-tumble 720ms ease-in forwards;
+}
+
+.tower-side.falling .tower-block:nth-child(odd) {
+  --slide: -46px;
+  --spin: -28deg;
+}
+
+.tower-side.falling .tower-block:nth-child(even) {
+  --slide: 42px;
+  --spin: 24deg;
+}
+
+.tower-side.falling .tower-block:nth-child(3n) {
+  animation-delay: 40ms;
+}
+
+.tower-capy {
+  flex-shrink: 0;
+  width: min(150px, 40%);
+}
+
+.tower-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.side-name {
+  margin: 0;
+  font-weight: 800;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.side-name small {
+  min-width: 1.4rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: #fff;
+  text-align: center;
+}
+
+.tower-actions {
+  flex-shrink: 0;
+  padding: 8px 12px calc(12px + env(safe-area-inset-bottom));
+}
+
+.tower-action {
+  width: 100%;
+  min-height: 78px;
+  border-radius: 22px;
+  font-weight: 800;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 8px 16px rgba(63, 42, 29, 0.16);
+}
+
+.tower-action span {
+  font-size: 1.6rem;
+}
+
+.tower-hint {
+  margin: 0;
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.35rem;
+}
+
+.stack-btn {
+  background: #fef3c7;
+  color: #9a3412;
+}
+
+.knock-btn {
+  background: #ea580c;
+  color: #fff;
+}
+
+.tower-done {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+}
+
+.done-sides {
+  display: flex;
+  gap: 18px;
+  width: min(640px, 100%);
+  justify-content: center;
+}
+
+.done-side {
+  flex: 1;
+  max-width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.done-side p {
+  margin: 0;
+  font-weight: 800;
+}
+
+.done-stack {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 3px;
+  min-height: 80px;
+}
+
+.done-stack i {
+  display: block;
+  width: 72px;
+  height: 16px;
+  border-radius: 5px;
+}
+
+.rubble {
+  position: relative;
+  width: 120px;
+  height: 80px;
+}
+
+.rubble i {
+  position: absolute;
+  bottom: 8px;
+  width: 54px;
+  height: 16px;
+  border-radius: 5px;
+  background: #fbbf24;
+}
+
+.rubble i:nth-child(1) {
+  left: 4px;
+  transform: rotate(-18deg);
+  background: #f87171;
+}
+
+.rubble i:nth-child(2) {
+  left: 36px;
+  bottom: 18px;
+  transform: rotate(12deg);
+  background: #60a5fa;
+}
+
+.rubble i:nth-child(3) {
+  left: 18px;
+  bottom: 4px;
+  transform: rotate(6deg);
+}
+
+.tower-lead {
+  margin: 0;
+  max-width: 28rem;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.tower-done-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tower-again,
+.tower-home {
+  min-height: 56px;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.tower-again {
+  background: #ea580c;
+  color: #fff;
+}
+
+.tower-home {
+  background: #fff;
+}
+
+@keyframes block-drop {
+  from { transform: translateY(-18px); opacity: 0; }
+}
+
+@keyframes block-tumble {
+  to {
+    transform: translate(var(--slide, 20px), 70px) rotate(var(--spin, 20deg));
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tower-block,
+  .tower-side.falling .tower-block {
+    animation: none;
+  }
+}
