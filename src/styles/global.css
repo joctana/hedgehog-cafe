@@ -109,7 +109,8 @@ button:focus-visible {
 .app-shell.fishing-shell-host::before,
 .app-shell.spider-shell-host::before,
 .app-shell.cop-shell-host::before,
-.app-shell.soldier-shell-host::before {
+.app-shell.soldier-shell-host::before,
+.app-shell.towers-shell-host::before {
   opacity: 0;
 }
 
@@ -159,6 +160,10 @@ button:focus-visible {
 
 .app-shell.soldier-shell-host {
   background: #86efac;
+}
+
+.app-shell.towers-shell-host {
+  background: #7dd3fc;
 }
 
 .mode-select {
@@ -321,6 +326,14 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(20, 83, 45, 0.35);
 }
 
+.mode-card.towers {
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.4), transparent 42%),
+    linear-gradient(180deg, #fb923c, #9a3412);
+  color: #fff;
+  box-shadow: 0 16px 32px rgba(154, 52, 18, 0.35);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -438,6 +451,15 @@ button:focus-visible {
 }
 
 .mode-card.soldier .mode-blurb {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.mode-card.towers .mode-name {
+  color: #fef9c3;
+  text-shadow: 0 2px 0 rgba(154, 52, 18, 0.35);
+}
+
+.mode-card.towers .mode-blurb {
   color: rgba(255, 255, 255, 0.92);
 }
 

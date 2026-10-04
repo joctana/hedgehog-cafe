@@ -18,6 +18,7 @@ Pick a game on the home screen:
 - **Capybara Spiderman** — Carlos starts as a normal capybara, suits up, then shoots webs at silly bad guys
 - **Capybara Cop** — dress Carlos in his uniform and hat, then patrol, write tickets, or send speeders to a short timeout
 - **Capybara Soldier** — dress Carlos in uniform and gear, pew paper targets, then night-vision goggles for more paper targets
+- **Capybara Towers** — stack blocks faster than Coco, then knock her tower down
 
 There are no fail states, timers, ads, or accounts.
 
@@ -64,7 +65,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, **Capy Fishing**, **Capybara Spiderman**, **Capybara Cop**, or **Capybara Soldier**. The newest games are shown first.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, **Capy Fishing**, **Capybara Spiderman**, **Capybara Cop**, **Capybara Soldier**, or **Capybara Towers**. The newest games are shown first.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -164,6 +165,13 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 4. After four daytime targets, the sky turns to night.
 5. Tap **Night goggles**. The range turns green, then tap four more paper targets.
 6. There is no way to lose. Nobody gets hurt.
+
+### Capybara Towers
+1. You and Coco each build a block tower.
+2. Tap **Stack a block**. Coco adds blocks on her own, then stops.
+3. When your tower is at least four blocks and taller than Coco’s, tap **Knock it down**.
+4. Her blocks tumble. Your tower stays up. You win.
+5. If she gets ahead, keep stacking. There is no way to lose.
 
 ## Tech
 
