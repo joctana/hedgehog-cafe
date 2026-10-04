@@ -18,7 +18,7 @@ Pick a game on the home screen:
 - **Capybara Spiderman** — Carlos starts as a normal capybara, suits up, then shoots webs at silly bad guys
 - **Capybara Cop** — dress Carlos in his uniform and hat, then patrol, write tickets, or send speeders to a short timeout
 - **Capybara Soldier** — dress Carlos in uniform and gear, pew paper targets, then night-vision goggles for more paper targets
-- **Capybara Towers** — stack blocks faster than Coco, then knock her tower down
+- **Capybara Towers** — stack blocks faster than Coco, then fire the cannon at her tower
 
 There are no fail states, timers, ads, or accounts.
 
@@ -169,8 +169,8 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 ### Capybara Towers
 1. You and Coco each build a block tower.
 2. Tap **Stack a block**. Coco adds blocks on her own, then stops.
-3. When your tower is at least four blocks and taller than Coco’s, tap **Knock it down**.
-4. Her blocks tumble. Your tower stays up. You win.
+3. When your tower is at least four blocks and taller than Coco’s, a cannon pops on top.
+4. Tap **Fire the cannon**. The ball knocks her blocks down. Your tower stays up. You win.
 5. If she gets ahead, keep stacking. There is no way to lose.
 
 ## Tech
