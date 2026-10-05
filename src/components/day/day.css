@@ -189,7 +189,7 @@
   background: linear-gradient(180deg, #1e1b4b 0%, #312e81 46%, #334155 46%, #1e293b 100%);
 }
 
-.window {
+.day-window {
   position: absolute;
   top: 8%;
   right: 8%;
@@ -200,13 +200,13 @@
   box-shadow: inset 0 0 0 8px #fff;
 }
 
-.bedroom.night .window {
+.bedroom.night .day-window {
   background: #0f172a;
   box-shadow: inset 0 0 0 8px #e2e8f0;
 }
 
-.sun,
-.moon {
+.day-sun,
+.day-moon {
   position: absolute;
   width: 42px;
   height: 42px;
@@ -215,12 +215,12 @@
   left: 34px;
 }
 
-.sun {
+.day-sun {
   background: #facc15;
   box-shadow: 0 0 18px rgba(250, 204, 21, 0.85);
 }
 
-.moon {
+.day-moon {
   background: #f8fafc;
   box-shadow: -8px 0 0 0 #cbd5e1 inset;
 }
@@ -229,8 +229,8 @@
   position: absolute;
   left: 8%;
   right: 8%;
-  bottom: 6%;
-  height: 62%;
+  bottom: 8%;
+  height: min(360px, 68%);
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -242,22 +242,22 @@
 .bed .day-capy {
   position: relative;
   z-index: 1;
-  margin-bottom: 8%;
+  margin-bottom: 12px;
 }
 
-.blanket {
+.day-blanket {
   position: absolute;
   left: 6%;
   right: 6%;
-  bottom: 8%;
-  height: 38%;
+  bottom: 14px;
+  height: 78px;
   border-radius: 22px;
   background: linear-gradient(180deg, #fb7185, #e11d48);
   z-index: 2;
   box-shadow: 0 8px 0 rgba(136, 19, 55, 0.25);
 }
 
-.bedroom.night .blanket {
+.bedroom.night .day-blanket {
   background: linear-gradient(180deg, #6366f1, #312e81);
 }
 
@@ -298,43 +298,65 @@
   background: linear-gradient(180deg, #7dd3fc 0%, #bae6fd 46%, #86efac 46%, #4ade80 72%, #64748b 72%);
 }
 
-.skyline {
+.day-skyline {
   position: absolute;
-  left: 4%;
-  right: 4%;
-  top: 8%;
+  left: 5%;
+  right: 5%;
+  bottom: 22%;
   height: 48%;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  z-index: 2;
+  pointer-events: none;
 }
 
-.house,
-.mart {
-  width: min(180px, 28%);
-  height: 78%;
-  border-radius: 16px 16px 6px 6px;
+.day-house,
+.day-mart {
+  position: relative;
+  width: min(200px, 26%);
+  height: 86%;
+  border-radius: 8px 8px 4px 4px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 10px;
+  padding-top: 36px;
   color: #fff;
   font-weight: 800;
+  font-size: 1.15rem;
 }
 
-.house {
+.day-house::before,
+.day-mart::before {
+  content: '';
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  top: -34px;
+  height: 42px;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.day-house {
   background:
-    linear-gradient(#fef3c7, #fef3c7) 18% 28% / 18% 16% no-repeat,
-    linear-gradient(#fef3c7, #fef3c7) 64% 28% / 18% 16% no-repeat,
-    linear-gradient(#78350f, #78350f) 50% 0 / 70% 22% no-repeat,
+    linear-gradient(#fef3c7, #fef3c7) 22% 42% / 22% 18% no-repeat,
+    linear-gradient(#fef3c7, #fef3c7) 62% 42% / 22% 18% no-repeat,
     #fb923c;
 }
 
-.mart {
+.day-house::before {
+  background: #9a3412;
+}
+
+.day-mart {
   background:
-    linear-gradient(#fef9c3, #fef9c3) 20% 42% / 22% 18% no-repeat,
-    linear-gradient(#fef9c3, #fef9c3) 58% 42% / 22% 18% no-repeat,
+    linear-gradient(#fef9c3, #fef9c3) 22% 48% / 26% 20% no-repeat,
+    linear-gradient(#fef9c3, #fef9c3) 62% 48% / 26% 20% no-repeat,
     #2563eb;
+}
+
+.day-mart::before {
+  background: #1e3a8a;
 }
 
 .street {
@@ -342,7 +364,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 28%;
+  height: 24%;
+  z-index: 1;
   background:
     repeating-linear-gradient(90deg, #f8fafc 0 28px, transparent 28px 56px) center / 100% 8px no-repeat,
     #475569;
@@ -350,8 +373,9 @@
 
 .day-car {
   position: absolute;
-  bottom: 18%;
+  bottom: 8%;
   width: min(220px, 28vw);
+  z-index: 3;
   transition: left 0.45s ease;
 }
 

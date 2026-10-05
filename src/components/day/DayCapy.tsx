@@ -16,15 +16,15 @@ export function DayCapy({ size = 180, asleep = false, shirt = false, shorts = fa
         <ellipse cx="90" cy="160" rx="46" ry="8" fill="rgba(0,0,0,0.12)" />
         <ellipse cx="58" cy="148" rx="12" ry="14" fill="#8f6540" />
         <ellipse cx="122" cy="148" rx="12" ry="14" fill="#8f6540" />
-        <g className={`shorts-kit ${shorts ? 'on' : ''}`}>
-          <ellipse cx="70" cy="146" rx="16" ry="12" fill="#fb923c" />
-          <ellipse cx="110" cy="146" rx="16" ry="12" fill="#fb923c" />
-        </g>
         <ellipse cx="90" cy="118" rx="52" ry="36" fill="#b88960" />
         <ellipse cx="90" cy="128" rx="34" ry="20" fill="#c99a70" />
         <g className={`shirt-kit ${shirt ? 'on' : ''}`}>
-          <ellipse cx="90" cy="116" rx="50" ry="32" fill="#0ea5e9" />
-          <ellipse cx="90" cy="126" rx="30" ry="16" fill="#38bdf8" />
+          <ellipse cx="90" cy="116" rx="54" ry="38" fill="#0ea5e9" />
+          <ellipse cx="90" cy="124" rx="30" ry="16" fill="#7dd3fc" />
+        </g>
+        <g className={`shorts-kit ${shorts ? 'on' : ''}`}>
+          <path d="M46 130 H134 Q130 160 108 162 H98 Q90 148 82 162 H72 Q50 160 46 130 Z" fill="#fb923c" />
+          <path d="M64 130 H116 L110 146 H70 Z" fill="#fdba74" />
         </g>
         <ellipse cx="90" cy="72" rx="42" ry="34" fill="#b88960" />
         <ellipse cx="90" cy="84" rx="24" ry="14" fill="#c99a70" />

@@ -275,12 +275,12 @@ function Bedroom({
 }) {
   return (
     <div className={`bedroom ${night ? 'night' : 'morning'}`}>
-      <div className="window" aria-hidden>
-        <span className={night ? 'moon' : 'sun'} />
+      <div className="day-window" aria-hidden>
+        <span className={night ? 'day-moon' : 'day-sun'} />
       </div>
       <div className="bed">
         <DayCapy size="clamp(180px, 34vh, 260px)" asleep={asleep} shirt={shirt} shorts={shorts} />
-        <div className="blanket" />
+        <div className="day-blanket" />
       </div>
     </div>
   )
@@ -302,11 +302,11 @@ function Road({ miles, headingHome }: { miles: number; headingHome: boolean }) {
   const left = headingHome ? 70 - miles * 20 : 8 + miles * 20
   return (
     <div className="trip">
-      <div className="skyline" aria-hidden>
-        <div className="house">
+      <div className="day-skyline" aria-hidden>
+        <div className="day-house">
           <b>Home</b>
         </div>
-        <div className="mart">
+        <div className="day-mart">
           <b>Shop</b>
         </div>
       </div>
