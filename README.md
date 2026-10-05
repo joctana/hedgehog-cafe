@@ -19,6 +19,7 @@ Pick a game on the home screen:
 - **Capybara Cop** — dress Carlos in his uniform and hat, then patrol, write tickets, or send speeders to a short timeout
 - **Capybara Soldier** — dress Carlos in uniform and gear, pew paper targets, then night-vision goggles for more paper targets
 - **Capybara Towers** — stack blocks faster than Coco, then set explosives that pop both towers
+- **Carlos's Day** — wake Carlos, dress him, shop, cook, eat, and tuck him in
 
 There are no fail states, timers, ads, or accounts.
 
@@ -65,7 +66,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, **Capy Fishing**, **Capybara Spiderman**, **Capybara Cop**, **Capybara Soldier**, or **Capybara Towers**. The newest games are shown first.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, **Capy Fishing**, **Capybara Spiderman**, **Capybara Cop**, **Capybara Soldier**, **Capybara Towers**, or **Carlos's Day**. The newest games are shown first.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -172,6 +173,16 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 3. When your tower is at least four blocks and taller than Coco’s, tap **Set explosives**. Cartoon charges appear at the bottom of both towers.
 4. Tap **Boom!** Both towers tumble. You win.
 5. If she gets ahead, keep stacking. There is no way to lose.
+
+### Carlos's Day
+1. Tap **Wake up**, then **Get dressed**.
+2. Tap **Shirt** and **Shorts** (either order).
+3. Tap **Drive** three times to reach the supermarket.
+4. Tap oranges, corn, and melon to fill the basket.
+5. Tap **Drive home** three times.
+6. Tap **Wash**, **Cook**, then **Serve**.
+7. Tap **Take a bite** three times.
+8. Tap **Tuck in**. Carlos goes to sleep. There is no way to lose.
 
 ## Tech
 

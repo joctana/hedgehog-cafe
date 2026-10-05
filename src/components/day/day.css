@@ -1,0 +1,541 @@
+.day-shell {
+  --day-ink: #3b2416;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--day-ink);
+  background: linear-gradient(180deg, #fde68a 0%, #fdba74 48%, #fb923c 100%);
+}
+
+.day-shell.step-bed,
+.day-shell.tucked {
+  background: linear-gradient(180deg, #1e1b4b 0%, #312e81 55%, #1e293b 100%);
+  color: #e0e7ff;
+}
+
+.day-shell.step-done {
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 12%, rgba(253, 224, 71, 0.55), transparent 55%),
+    linear-gradient(180deg, #fde68a 0%, #fbcfe8 100%);
+  color: var(--day-ink);
+}
+
+.day-shell .back-btn {
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--day-ink);
+  box-shadow: 0 6px 14px rgba(59, 36, 22, 0.12);
+}
+
+.day-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  padding-top: calc(0.6rem + env(safe-area-inset-top));
+  padding-right: calc(1rem + 64px);
+  flex-shrink: 0;
+}
+
+.day-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.day-title small {
+  display: block;
+  font-size: 0.68em;
+  font-weight: 650;
+}
+
+.day-chip {
+  min-width: 4.2rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--day-ink);
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.day-scene {
+  flex: 1;
+  min-height: 0;
+  margin: 0 12px 8px;
+  border-radius: 28px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 12px 24px rgba(59, 36, 22, 0.16);
+}
+
+.day-actions {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 8px 12px calc(12px + env(safe-area-inset-bottom));
+  min-height: 92px;
+  align-items: center;
+}
+
+.day-actions:has(.half) {
+  grid-template-columns: 1fr 1fr;
+}
+
+.day-action {
+  min-height: 78px;
+  border-radius: 22px;
+  font-weight: 800;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #fff7ed;
+  color: #7c2d12;
+  box-shadow: 0 8px 16px rgba(59, 36, 22, 0.14);
+}
+
+.day-action span {
+  font-size: 1.6rem;
+}
+
+.day-action.worn {
+  box-shadow: inset 0 0 0 4px #22c55e;
+}
+
+.shirt-btn {
+  background: #e0f2fe;
+  color: #0c4a6e;
+}
+
+.shorts-btn {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+.day-hint {
+  margin: 0;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.day-done {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+}
+
+.day-lead {
+  margin: 0;
+  font-weight: 750;
+  font-size: 1.15rem;
+  text-align: center;
+}
+
+.day-done-actions {
+  display: flex;
+  gap: 10px;
+  width: min(520px, 100%);
+}
+
+.day-again,
+.day-home {
+  flex: 1;
+  min-height: 72px;
+  border-radius: 22px;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.day-again {
+  background: #fff;
+  color: #9a3412;
+}
+
+.day-home {
+  background: #7c2d12;
+  color: #fff7ed;
+}
+
+.bedroom,
+.closet,
+.trip,
+.market,
+.kitchen {
+  position: absolute;
+  inset: 0;
+}
+
+.bedroom.morning {
+  background: linear-gradient(180deg, #fde68a 0%, #fed7aa 42%, #fbcfe8 42%, #f9a8d4 100%);
+}
+
+.bedroom.night {
+  background: linear-gradient(180deg, #1e1b4b 0%, #312e81 46%, #334155 46%, #1e293b 100%);
+}
+
+.day-window {
+  position: absolute;
+  top: 8%;
+  right: 8%;
+  width: 110px;
+  height: 90px;
+  border-radius: 16px;
+  background: #bae6fd;
+  box-shadow: inset 0 0 0 8px #fff;
+}
+
+.bedroom.night .day-window {
+  background: #0f172a;
+  box-shadow: inset 0 0 0 8px #e2e8f0;
+}
+
+.day-sun,
+.day-moon {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  top: 18px;
+  left: 34px;
+}
+
+.day-sun {
+  background: #facc15;
+  box-shadow: 0 0 18px rgba(250, 204, 21, 0.85);
+}
+
+.day-moon {
+  background: #f8fafc;
+  box-shadow: -8px 0 0 0 #cbd5e1 inset;
+}
+
+.bed {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 8%;
+  height: min(360px, 68%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background: #fff;
+  border-radius: 28px 28px 18px 18px;
+  box-shadow: 0 10px 0 #e5e7eb;
+}
+
+.bed .day-capy {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 12px;
+}
+
+.day-blanket {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 14px;
+  height: 78px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #fb7185, #e11d48);
+  z-index: 2;
+  box-shadow: 0 8px 0 rgba(136, 19, 55, 0.25);
+}
+
+.bedroom.night .day-blanket {
+  background: linear-gradient(180deg, #6366f1, #312e81);
+}
+
+.closet {
+  background: linear-gradient(180deg, #fef3c7 0%, #fde68a 40%, #d6d3d1 40%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4%;
+  padding: 6% 6% 4%;
+}
+
+.wardrobe {
+  width: min(180px, 28%);
+  height: min(240px, 62%);
+  align-self: center;
+  border-radius: 18px;
+  background: #92400e;
+  box-shadow: 0 10px 0 #78350f;
+  display: flex;
+  overflow: hidden;
+}
+
+.wardrobe span {
+  flex: 1;
+  margin: 10px 6px;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 70% 50%, #fde68a 0 7px, transparent 8px),
+    #b45309;
+}
+
+.closet .day-capy {
+  margin-bottom: 2%;
+}
+
+.trip {
+  background: linear-gradient(180deg, #7dd3fc 0%, #bae6fd 46%, #86efac 46%, #4ade80 72%, #64748b 72%);
+}
+
+.day-skyline {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: 22%;
+  height: 48%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.day-house,
+.day-mart {
+  position: relative;
+  width: min(200px, 26%);
+  height: 86%;
+  border-radius: 8px 8px 4px 4px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 36px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.day-house::before,
+.day-mart::before {
+  content: '';
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  top: -34px;
+  height: 42px;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.day-house {
+  background:
+    linear-gradient(#fef3c7, #fef3c7) 22% 42% / 22% 18% no-repeat,
+    linear-gradient(#fef3c7, #fef3c7) 62% 42% / 22% 18% no-repeat,
+    #fb923c;
+}
+
+.day-house::before {
+  background: #9a3412;
+}
+
+.day-mart {
+  background:
+    linear-gradient(#fef9c3, #fef9c3) 22% 48% / 26% 20% no-repeat,
+    linear-gradient(#fef9c3, #fef9c3) 62% 48% / 26% 20% no-repeat,
+    #2563eb;
+}
+
+.day-mart::before {
+  background: #1e3a8a;
+}
+
+.street {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 24%;
+  z-index: 1;
+  background:
+    repeating-linear-gradient(90deg, #f8fafc 0 28px, transparent 28px 56px) center / 100% 8px no-repeat,
+    #475569;
+}
+
+.day-car {
+  position: absolute;
+  bottom: 8%;
+  width: min(220px, 28vw);
+  z-index: 3;
+  transition: left 0.45s ease;
+}
+
+.day-car.homebound .day-svg {
+  transform: scaleX(-1);
+}
+
+.day-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.market {
+  background: linear-gradient(180deg, #e0f2fe 0%, #f8fafc 36%, #f1f5f9 36%);
+  display: flex;
+  flex-direction: column;
+  padding: 4% 4% 3%;
+  gap: 12px;
+}
+
+.shelves {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  align-content: center;
+}
+
+.shelf-item {
+  min-height: 120px;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 8px 0 #cbd5e1;
+  font-weight: 800;
+  font-size: 1.05rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #0f172a;
+}
+
+.shelf-item span {
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  line-height: 1;
+}
+
+.shelf-item.taken {
+  background: #dcfce7;
+  box-shadow: inset 0 0 0 4px #22c55e;
+}
+
+.basket {
+  flex-shrink: 0;
+  min-height: 84px;
+  border-radius: 22px;
+  background: #fed7aa;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  box-shadow: inset 0 -8px 0 #fdba74;
+}
+
+.basket-label {
+  font-weight: 800;
+}
+
+.basket-foods {
+  display: flex;
+  gap: 8px;
+  font-size: 2rem;
+  align-items: center;
+}
+
+.basket-foods em {
+  font-style: normal;
+  font-size: 1rem;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+.kitchen {
+  background: linear-gradient(180deg, #fef3c7 0%, #fde68a 38%, #e7e5e4 38%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6%;
+  padding: 6% 4% 4%;
+}
+
+.meal {
+  width: min(280px, 42%);
+  height: 46%;
+  border-radius: 24px 24px 12px 12px;
+  background: #fff;
+  box-shadow: 0 10px 0 #d6d3d1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  position: relative;
+}
+
+.orange,
+.corn,
+.bowl {
+  display: block;
+}
+
+.orange {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fdba74, #ea580c 70%);
+}
+
+.corn {
+  width: 36px;
+  height: 78px;
+  border-radius: 18px;
+  background: repeating-linear-gradient(180deg, #facc15 0 8px, #eab308 8px 12px);
+}
+
+.bowl {
+  width: 120px;
+  height: 64px;
+  border-radius: 0 0 60px 60px;
+  background: #f8fafc;
+  box-shadow: inset 0 -10px 0 #e2e8f0;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bowl i {
+  display: block;
+  width: 92px;
+  height: 40px;
+  border-radius: 0 0 46px 46px;
+  background: #fb923c;
+  transform-origin: center bottom;
+}
+
+.shirt-kit,
+.shorts-kit {
+  opacity: 0;
+}
+
+.shirt-kit.on,
+.shorts-kit.on {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .day-car {
+    transition: none;
+  }
+}
