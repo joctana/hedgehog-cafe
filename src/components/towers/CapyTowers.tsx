@@ -8,7 +8,7 @@ type Props = {
   playSound: (kind: SoundKind) => void
 }
 
-type Phase = 'race' | 'shot' | 'tumble' | 'done'
+type Phase = 'race' | 'armed' | 'tumble' | 'done'
 
 const COLORS = ['#f87171', '#fbbf24', '#34d399', '#60a5fa', '#c084fc', '#fb7185', '#38bdf8']
 const COCO_MAX = 6
@@ -32,15 +32,6 @@ export function CapyTowers({ onBack, playSound }: Props) {
   }, [phase])
 
   useEffect(() => {
-    if (phase !== 'shot') return
-    const id = window.setTimeout(() => {
-      setPhase('tumble')
-      playSound('whoosh')
-    }, 520)
-    return () => window.clearTimeout(id)
-  }, [phase, playSound])
-
-  useEffect(() => {
     if (phase !== 'tumble') return
     const id = window.setTimeout(() => {
       setPhase('done')
@@ -57,9 +48,15 @@ export function CapyTowers({ onBack, playSound }: Props) {
     playSound('happy')
   }
 
-  const fire = () => {
+  const arm = () => {
     if (phase !== 'race' || !ahead) return
-    setPhase('shot')
+    setPhase('armed')
+    playSound('happy')
+  }
+
+  const boom = () => {
+    if (phase !== 'armed') return
+    setPhase('tumble')
     playSound('blast')
   }
 
@@ -72,16 +69,16 @@ export function CapyTowers({ onBack, playSound }: Props) {
 
   const message =
     phase === 'done'
-      ? 'Your tower stayed up.'
-        : phase === 'shot'
-          ? 'Boom! The cannon fires.'
-          : phase === 'tumble'
-            ? 'Down it goes!'
-            : mine < MIN_TOWER
-              ? 'Stack a tower taller than Coco.'
-              : ahead
-                ? 'Cannon ready! Shoot Coco’s tower.'
-                : 'Coco is keeping up. Stack another block!'
+      ? 'Both towers came down.'
+      : phase === 'armed'
+        ? 'Charges are set on both towers.'
+        : phase === 'tumble'
+          ? 'Boom! Both towers fall.'
+          : mine < MIN_TOWER
+            ? 'Stack a tower taller than Coco.'
+            : ahead
+              ? 'You’re taller! Set explosives on both towers.'
+              : 'Coco is keeping up. Stack another block!'
 
   return (
     <div className={`tower-shell phase-${phase}`}>
@@ -102,17 +99,16 @@ export function CapyTowers({ onBack, playSound }: Props) {
         <div className="tower-done">
           <div className="done-sides">
             <div className="done-side">
-              <div className="done-stack" aria-hidden>
-                {Array.from({ length: mine }, (_, index) => (
-                  <i key={index} style={{ background: COLORS[index % COLORS.length] }} />
-                ))}
-                <ToyCannon />
+              <div className="rubble" aria-hidden>
+                <i />
+                <i />
+                <i />
               </div>
               <TowerCapy coat={CARLOS.coat} belly={CARLOS.belly} size={130} />
               <p>Your tower</p>
             </div>
             <div className="done-side">
-              <div className="rubble" aria-hidden>
+              <div className="rubble coco-rubble" aria-hidden>
                 <i />
                 <i />
                 <i />
@@ -121,7 +117,7 @@ export function CapyTowers({ onBack, playSound }: Props) {
               <p>Coco’s tower</p>
             </div>
           </div>
-          <p className="tower-lead">Your cannon shot Coco’s tower. She is still smiling.</p>
+          <p className="tower-lead">You built the taller tower, then the explosives popped both. Everyone is still smiling.</p>
           <div className="tower-done-actions">
             <button type="button" className="tower-again" onClick={playAgain}>
               Build again
@@ -133,15 +129,15 @@ export function CapyTowers({ onBack, playSound }: Props) {
         </div>
       ) : (
         <>
-          <div className="yard">
+          <div className={`yard ${phase === 'tumble' ? 'booming' : ''}`}>
             <TowerSide
               label="You"
               count={mine}
               coat={CARLOS.coat}
               belly={CARLOS.belly}
               leading={ahead}
-              cannon={ahead || phase === 'shot' || phase === 'tumble'}
-              firing={phase === 'shot'}
+              charges={phase === 'armed' || phase === 'tumble'}
+              falling={phase === 'tumble'}
             />
             <TowerSide
               label="Coco"
@@ -149,16 +145,22 @@ export function CapyTowers({ onBack, playSound }: Props) {
               coat={COCO.coat}
               belly={COCO.belly}
               bow
+              charges={phase === 'armed' || phase === 'tumble'}
               falling={phase === 'tumble'}
             />
           </div>
           <div className="tower-actions">
-            {phase === 'shot' || phase === 'tumble' ? (
-              <p className="tower-hint">{phase === 'shot' ? 'Boom!' : 'Down it goes!'}</p>
-            ) : ahead ? (
-              <button type="button" className="tower-action fire-btn" onClick={fire}>
+            {phase === 'tumble' ? (
+              <p className="tower-hint">Both towers down!</p>
+            ) : phase === 'armed' ? (
+              <button type="button" className="tower-action boom-btn" onClick={boom}>
                 <span aria-hidden>💥</span>
-                Fire the cannon
+                Boom!
+              </button>
+            ) : ahead ? (
+              <button type="button" className="tower-action arm-btn" onClick={arm}>
+                <span aria-hidden>🧨</span>
+                Set explosives
               </button>
             ) : (
               <button type="button" className="tower-action stack-btn" onClick={stack}>
@@ -181,8 +183,7 @@ function TowerSide({
   leading = false,
   falling = false,
   bow = false,
-  cannon = false,
-  firing = false,
+  charges = false,
 }: {
   label: string
   count: number
@@ -191,8 +192,7 @@ function TowerSide({
   leading?: boolean
   falling?: boolean
   bow?: boolean
-  cannon?: boolean
-  firing?: boolean
+  charges?: boolean
 }) {
   return (
     <section className={`tower-side ${leading ? 'leading' : ''} ${falling ? 'falling' : ''}`} aria-label={`${label}'s tower, ${count} blocks`}>
@@ -200,8 +200,8 @@ function TowerSide({
         {Array.from({ length: count }, (_, index) => (
           <span key={index} className="tower-block" style={{ background: COLORS[index % COLORS.length] }} />
         ))}
-        {cannon && <ToyCannon firing={firing} />}
       </div>
+      {charges && <BoomCharges />}
       <TowerCapy coat={coat} belly={belly} bow={bow} />
       <p className="side-name">
         {label}
@@ -211,19 +211,17 @@ function TowerSide({
   )
 }
 
-function ToyCannon({ firing = false }: { firing?: boolean }) {
+function BoomCharges() {
   return (
-    <span className={`toy-cannon ${firing ? 'firing' : ''}`} aria-hidden>
-      <svg viewBox="0 0 140 64" className="tower-svg">
-        <circle cx="36" cy="52" r="11" fill="#292524" />
-        <circle cx="74" cy="52" r="11" fill="#292524" />
-        <circle cx="36" cy="52" r="4" fill="#e7e5e4" />
-        <circle cx="74" cy="52" r="4" fill="#e7e5e4" />
-        <rect x="20" y="38" width="70" height="12" rx="4" fill="#b45309" />
-        <rect x="56" y="16" width="68" height="20" rx="10" fill="#3f6212" />
-        <rect x="116" y="13" width="16" height="26" rx="5" fill="#14532d" />
+    <span className="boom-charges" aria-hidden>
+      <svg viewBox="0 0 88 40" className="tower-svg">
+        <rect x="4" y="12" width="36" height="16" rx="8" fill="#ef4444" />
+        <rect x="10" y="12" width="6" height="16" fill="#fecaca" />
+        <rect x="44" y="12" width="36" height="16" rx="8" fill="#ef4444" />
+        <rect x="50" y="12" width="6" height="16" fill="#fecaca" />
+        <path d="M40 14 Q44 6 48 14" stroke="#facc15" strokeWidth="3" fill="none" strokeLinecap="round" />
+        <circle cx="44" cy="6" r="4" fill="#facc15" />
       </svg>
-      {firing && <span className="cannonball" />}
     </span>
   )
 }
