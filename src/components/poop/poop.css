@@ -130,8 +130,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 16px;
   padding: 12px;
+}
+
+.poop-done .poop-capy {
+  flex-shrink: 0;
 }
 
 .poop-done-actions {
@@ -179,10 +183,10 @@
 .poop-throne {
   position: absolute;
   left: 50%;
-  bottom: 8%;
+  bottom: 16px;
   transform: translateX(-50%);
-  width: min(280px, 46%);
-  height: 28%;
+  width: min(260px, 72%);
+  height: 148px;
   background: #fff;
   border-radius: 24px 24px 18px 18px;
   box-shadow: 0 12px 0 #e7e5e4;
@@ -217,7 +221,7 @@
 }
 
 .poop-potty .poop-capy {
-  margin-bottom: 16%;
+  margin-bottom: 78px;
   z-index: 1;
 }
 
@@ -279,29 +283,25 @@
 
 .poop-water {
   position: absolute;
-  top: 18%;
+  top: 12%;
+  bottom: 22%;
   left: 50%;
-  width: 80px;
-  height: 46%;
+  width: 72px;
   transform: translateX(-50%);
   z-index: 2;
   pointer-events: none;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 14px,
+    #38bdf8 14px 18px,
+    transparent 18px 24px
+  );
+  opacity: 0.9;
 }
 
 .poop-water span {
-  position: absolute;
-  top: 0;
-  width: 6px;
-  height: 28px;
-  border-radius: 6px;
-  background: #38bdf8;
-  animation: poop-fall 0.9s linear infinite;
+  display: none;
 }
-
-.poop-water span:nth-child(1) { left: 8px; }
-.poop-water span:nth-child(2) { left: 28px; animation-delay: 0.2s; }
-.poop-water span:nth-child(3) { left: 48px; animation-delay: 0.45s; }
-.poop-water span:nth-child(4) { left: 66px; animation-delay: 0.1s; }
 
 .poop-bubbles {
   position: absolute;
@@ -368,7 +368,7 @@
   opacity: 1;
 }
 
-.poop-capy.sparkle {
+.poop-capy.poop-sparkle {
   filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.85));
 }
 

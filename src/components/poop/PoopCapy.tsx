@@ -23,7 +23,7 @@ export function PoopCapy({
 }: Props) {
   const style = { width: size } as CSSProperties
   return (
-    <div className={`poop-capy pose-${pose} ${sparkle ? 'sparkle' : ''}`} style={style} aria-hidden>
+    <div className={`poop-capy pose-${pose} ${sparkle ? 'poop-sparkle' : ''}`} style={style} aria-hidden>
       <svg viewBox="0 0 180 170" className="poop-svg">
         <ellipse cx="90" cy="160" rx="46" ry="8" fill="rgba(0,0,0,0.12)" />
         {pose === 'back' ? <BackBody spots={spots} /> : <FrontBody shirt={shirt} shorts={shorts} sitting={pose === 'sit'} />}
