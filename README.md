@@ -20,6 +20,7 @@ Pick a game on the home screen:
 - **Capybara Soldier** — dress Carlos in uniform and gear, pew paper targets, then night-vision goggles for more paper targets
 - **Capybara Towers** — stack blocks faster than Coco, then set explosives that pop both towers
 - **Carlos's Day** — wake Carlos, dress him, shop, cook, eat, and tuck him in
+- **Carlos Poops** — help Carlos use the potty, wipe, shower, and get dressed
 
 There are no fail states, timers, ads, or accounts.
 
@@ -66,7 +67,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, **Capy Fishing**, **Capybara Spiderman**, **Capybara Cop**, **Capybara Soldier**, **Capybara Towers**, or **Carlos's Day**. The newest games are shown first.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, **Capy Fishing**, **Capybara Spiderman**, **Capybara Cop**, **Capybara Soldier**, **Capybara Towers**, **Carlos's Day**, or **Carlos Poops**. The newest games are shown first.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -183,6 +184,13 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 6. Tap **Wash**, **Cook**, then **Serve**.
 7. Tap **Take a bite** three times.
 8. Tap **Tuck in**. Carlos goes to sleep. There is no way to lose.
+
+### Carlos Poops
+1. Tap **Go potty**. A little cartoon poop lands in the potty.
+2. Tap **Time to wipe**, then tap **Wipe** three times until his butt is clean.
+3. Tap **Turn on water**, **Bubbles**, then **Rinse**.
+4. Tap **Shirt** and **Shorts** (either order).
+5. There is no way to lose.
 
 ## Tech
 

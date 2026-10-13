@@ -1,0 +1,397 @@
+.poop-shell {
+  --poop-ink: #134e4a;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--poop-ink);
+  background: linear-gradient(180deg, #99f6e4 0%, #5eead4 48%, #fde68a 100%);
+}
+
+.poop-shell.step-done {
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 12%, rgba(253, 224, 71, 0.55), transparent 55%),
+    linear-gradient(180deg, #ccfbf1 0%, #fef9c3 100%);
+}
+
+.poop-shell .back-btn {
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--poop-ink);
+  box-shadow: 0 6px 14px rgba(19, 78, 74, 0.12);
+}
+
+.poop-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  padding-top: calc(0.6rem + env(safe-area-inset-top));
+  padding-right: calc(1rem + 64px);
+  flex-shrink: 0;
+}
+
+.poop-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.poop-title small {
+  display: block;
+  font-size: 0.68em;
+  font-weight: 650;
+}
+
+.poop-chip {
+  min-width: 4.2rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--poop-ink);
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.poop-scene {
+  flex: 1;
+  min-height: 0;
+  margin: 0 12px 8px;
+  border-radius: 28px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 12px 24px rgba(19, 78, 74, 0.16);
+}
+
+.poop-actions {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 8px 12px calc(12px + env(safe-area-inset-bottom));
+  min-height: 92px;
+  align-items: center;
+}
+
+.poop-actions:has(.half) {
+  grid-template-columns: 1fr 1fr;
+}
+
+.poop-action {
+  min-height: 78px;
+  border-radius: 22px;
+  font-weight: 800;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #fff;
+  color: #115e59;
+  box-shadow: 0 8px 16px rgba(19, 78, 74, 0.14);
+}
+
+.poop-action span {
+  font-size: 1.6rem;
+}
+
+.poop-action.worn {
+  box-shadow: inset 0 0 0 4px #22c55e;
+}
+
+.poop-action.shirt-btn {
+  background: #ccfbf1;
+  color: #115e59;
+}
+
+.poop-action.shorts-btn {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+.poop-hint,
+.poop-lead {
+  margin: 0;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.poop-done {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 12px;
+}
+
+.poop-done .poop-capy {
+  flex-shrink: 0;
+}
+
+.poop-done-actions {
+  display: flex;
+  gap: 10px;
+  width: min(520px, 100%);
+}
+
+.poop-again,
+.poop-home {
+  flex: 1;
+  min-height: 72px;
+  border-radius: 22px;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.poop-again {
+  background: #fff;
+  color: #115e59;
+}
+
+.poop-home {
+  background: #0f766e;
+  color: #f0fdfa;
+}
+
+.poop-potty,
+.poop-wipe,
+.poop-shower,
+.poop-dress {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.poop-potty {
+  background:
+    linear-gradient(#e7e5e4, #e7e5e4) 0 62% / 100% 8px no-repeat,
+    linear-gradient(180deg, #ecfeff 0%, #a5f3fc 46%, #f5f5f4 46%);
+}
+
+.poop-throne {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  width: min(260px, 72%);
+  height: 148px;
+  background: #fff;
+  border-radius: 24px 24px 18px 18px;
+  box-shadow: 0 12px 0 #e7e5e4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.poop-bowl {
+  width: 62%;
+  height: 58%;
+  border-radius: 50%;
+  background: #e0f2fe;
+  box-shadow: inset 0 8px 0 #bae6fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poop-hole {
+  width: 46%;
+  height: 46%;
+  border-radius: 50%;
+  background: #7dd3fc;
+}
+
+.poop-plop {
+  width: 72%;
+  height: auto;
+  animation: poop-plop 0.35s ease;
+}
+
+.poop-potty .poop-capy {
+  margin-bottom: 78px;
+  z-index: 1;
+}
+
+.poop-wipe {
+  background: linear-gradient(180deg, #fef3c7 0%, #fde68a 42%, #e7e5e4 42%);
+}
+
+.poop-wipe .poop-capy {
+  margin-bottom: 6%;
+}
+
+.poop-paper {
+  position: absolute;
+  right: 18%;
+  bottom: 28%;
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  animation: poop-swipe 0.45s ease;
+  z-index: 3;
+}
+
+.poop-spot {
+  opacity: 0;
+}
+
+.poop-spot.show {
+  opacity: 1;
+}
+
+.poop-shower {
+  background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 38%, #f8fafc 38%);
+}
+
+.poop-shower .poop-capy {
+  margin-bottom: 8%;
+  z-index: 1;
+}
+
+.poop-head {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 74px;
+  height: 28px;
+  border-radius: 14px;
+  background: #64748b;
+}
+
+.poop-head i {
+  position: absolute;
+  left: 50%;
+  top: 22px;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border-radius: 50%;
+  background: #94a3b8;
+}
+
+.poop-water {
+  position: absolute;
+  top: 12%;
+  bottom: 22%;
+  left: 50%;
+  width: 72px;
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 14px,
+    #38bdf8 14px 18px,
+    transparent 18px 24px
+  );
+  opacity: 0.9;
+}
+
+.poop-water span {
+  display: none;
+}
+
+.poop-bubbles {
+  position: absolute;
+  left: 50%;
+  bottom: 22%;
+  width: 180px;
+  height: 120px;
+  transform: translateX(-50%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.poop-bubbles span {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 0 0 3px #bae6fd;
+}
+
+.poop-bubbles span:nth-child(1) { width: 36px; height: 36px; left: 20px; bottom: 10px; }
+.poop-bubbles span:nth-child(2) { width: 24px; height: 24px; left: 70px; bottom: 40px; }
+.poop-bubbles span:nth-child(3) { width: 30px; height: 30px; left: 110px; bottom: 8px; }
+
+.poop-dress {
+  background: linear-gradient(180deg, #fef3c7 0%, #fde68a 40%, #e7e5e4 40%);
+  gap: 4%;
+}
+
+.poop-towel {
+  width: min(150px, 24%);
+  height: min(180px, 42%);
+  align-self: center;
+  border-radius: 16px;
+  background: #fb7185;
+  box-shadow: 0 8px 0 #e11d48;
+  display: flex;
+  overflow: hidden;
+}
+
+.poop-towel span {
+  flex: 1;
+  margin: 10px 6px;
+  border-radius: 8px;
+  background: #fda4af;
+}
+
+.poop-dress .poop-capy {
+  margin-bottom: 4%;
+}
+
+.poop-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.poop-shirt,
+.poop-shorts {
+  opacity: 0;
+}
+
+.poop-shirt.on,
+.poop-shorts.on {
+  opacity: 1;
+}
+
+.poop-capy.poop-sparkle {
+  filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.85));
+}
+
+@keyframes poop-plop {
+  from { transform: translateY(-16px) scale(0.6); }
+  to { transform: translateY(0) scale(1); }
+}
+
+@keyframes poop-swipe {
+  from { transform: translateX(-24px); opacity: 0.3; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes poop-fall {
+  from { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  to { transform: translateY(180px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poop-plop,
+  .poop-paper,
+  .poop-water span {
+    animation: none;
+  }
+}

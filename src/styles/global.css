@@ -111,7 +111,8 @@ button:focus-visible {
 .app-shell.cop-shell-host::before,
 .app-shell.soldier-shell-host::before,
 .app-shell.towers-shell-host::before,
-.app-shell.day-shell-host::before {
+.app-shell.day-shell-host::before,
+.app-shell.poop-shell-host::before {
   opacity: 0;
 }
 
@@ -169,6 +170,10 @@ button:focus-visible {
 
 .app-shell.day-shell-host {
   background: #fdba74;
+}
+
+.app-shell.poop-shell-host {
+  background: #5eead4;
 }
 
 .mode-select {
@@ -347,6 +352,14 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(194, 65, 12, 0.35);
 }
 
+.mode-card.poop {
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.45), transparent 42%),
+    linear-gradient(180deg, #5eead4, #0f766e);
+  color: #fff;
+  box-shadow: 0 16px 32px rgba(15, 118, 110, 0.35);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -482,6 +495,15 @@ button:focus-visible {
 }
 
 .mode-card.day .mode-blurb {
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.mode-card.poop .mode-name {
+  color: #f0fdfa;
+  text-shadow: 0 2px 0 rgba(15, 118, 110, 0.35);
+}
+
+.mode-card.poop .mode-blurb {
   color: rgba(255, 255, 255, 0.94);
 }
 
