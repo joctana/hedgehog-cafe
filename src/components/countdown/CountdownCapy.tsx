@@ -5,7 +5,7 @@ type Props = {
   excited?: boolean
 }
 
-/** Carlos waiting to see Lachlan. */
+/** Carlos waiting with Lachlan until he sees Daddy. */
 export function CountdownCapy({ size = 220, excited = false }: Props) {
   const style = { width: size } as CSSProperties
   return (

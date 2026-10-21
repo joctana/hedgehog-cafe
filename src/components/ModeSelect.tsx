@@ -136,7 +136,7 @@ export function ModeSelect({
       className: 'countdown',
       emoji: '⏳',
       name: 'Capy Countdown',
-      blurb: 'Count down to seeing Lachlan',
+      blurb: 'Count down to seeing Daddy',
       onPick: onPickCountdown,
     },
   ]
