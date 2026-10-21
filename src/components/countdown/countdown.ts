@@ -1,7 +1,7 @@
-/** Noon on Monday 26 October 2026, using the device clock. */
-export const LACHLAN_VISIT = new Date(2026, 9, 26, 12, 0, 0, 0)
+/** Noon on Monday 26 October 2026, using the device clock. Lachlan is counting down to Daddy. */
+export const DADDY_VISIT = new Date(2026, 9, 26, 12, 0, 0, 0)
 
-export const LACHLAN_VISIT_LABEL = 'Monday 26 October 2026 · 12:00 pm'
+export const DADDY_VISIT_LABEL = 'Monday 26 October 2026 · 12:00 pm'
 
 export type CountdownParts = {
   days: number

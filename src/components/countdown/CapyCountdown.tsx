@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { SoundKind } from '../../hooks/useSounds'
 import { CountdownCapy } from './CountdownCapy'
-import { LACHLAN_VISIT, LACHLAN_VISIT_LABEL, padCount, splitCountdown, type CountdownParts } from './countdown'
+import { DADDY_VISIT, DADDY_VISIT_LABEL, padCount, splitCountdown, type CountdownParts } from './countdown'
 import './countdown.css'
 
 type Props = {
@@ -19,12 +19,12 @@ const UNITS = [
 export function CapyCountdown({ onBack, playSound }: Props) {
   const celebrated = useRef(false)
   const cheerTimer = useRef<number | null>(null)
-  const [parts, setParts] = useState<CountdownParts>(() => splitCountdown(LACHLAN_VISIT.getTime(), Date.now()))
+  const [parts, setParts] = useState<CountdownParts>(() => splitCountdown(DADDY_VISIT.getTime(), Date.now()))
   const [cheer, setCheer] = useState(false)
 
   useEffect(() => {
     const tick = () => {
-      const next = splitCountdown(LACHLAN_VISIT.getTime(), Date.now())
+      const next = splitCountdown(DADDY_VISIT.getTime(), Date.now())
       setParts(next)
       if (next.done && !celebrated.current) {
         celebrated.current = true
@@ -56,8 +56,8 @@ export function CapyCountdown({ onBack, playSound }: Props) {
           ← Games
         </button>
         <h1 className="count-title">
-          {parts.done ? 'Lachlan time!' : 'Capy Countdown'}
-          <small>{parts.done ? "It's time to see Lachlan." : 'Until you see Lachlan'}</small>
+          {parts.done ? 'Daddy time!' : 'Capy Countdown'}
+          <small>{parts.done ? "It's time to see Daddy." : 'Until you see Daddy'}</small>
         </h1>
         <span className="count-chip">💛</span>
       </header>
@@ -66,11 +66,11 @@ export function CapyCountdown({ onBack, playSound }: Props) {
         <button type="button" className="count-buddy" onClick={cheerOn}>
           <CountdownCapy size="clamp(150px, 28vh, 230px)" excited={cheer || parts.done} />
           <span className={`count-bubble ${cheer || parts.done ? 'show' : ''}`}>
-            {parts.done ? 'Lachlan!' : 'See you soon!'}
+            {parts.done ? 'Daddy!' : 'See you soon, Daddy!'}
           </span>
         </button>
 
-        <p className="count-when">{LACHLAN_VISIT_LABEL}</p>
+        <p className="count-when">{DADDY_VISIT_LABEL}</p>
 
         <div className="count-board" role="timer" aria-live="polite" aria-atomic="true">
           {UNITS.map((unit) => (

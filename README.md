@@ -21,9 +21,9 @@ Pick a game on the home screen:
 - **Capybara Towers** — stack blocks faster than Coco, then set explosives that pop both towers
 - **Carlos's Day** — wake Carlos, dress him, shop, cook, eat, and tuck him in
 - **Carlos Poops** — help Carlos use the potty, wipe, shower, and get dressed
-- **Capy Countdown** — Carlos counts the days, hours, minutes, and seconds until you see Lachlan
+- **Capy Countdown** — Carlos counts the days, hours, minutes, and seconds until you see Daddy
 
-There are no fail states, ads, or accounts. Capy Countdown counts the time until you see Lachlan.
+There are no fail states, ads, or accounts. Capy Countdown counts the time until you see Daddy.
 
 ## Play on iPad
 
@@ -194,11 +194,11 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 5. There is no way to lose.
 
 ### Capy Countdown
-1. Open **Capy Countdown**. Carlos is waiting to see Lachlan.
-2. The board shows days, hours, minutes, and seconds until **12:00 pm on Monday 26 October 2026**.
+1. Open **Capy Countdown**. Lachlan is the player, and Carlos waits with him.
+2. The board shows days, hours, minutes, and seconds until **12:00 pm on Monday 26 October 2026**, under the words **Until you see Daddy**.
 3. The time follows the iPad clock.
 4. Tap Carlos for a cheer.
-5. When the countdown reaches zero, it is time to see Lachlan. There is no way to lose.
+5. When the countdown reaches zero, it is time to see Daddy. There is no way to lose.
 
 ## Tech
 
