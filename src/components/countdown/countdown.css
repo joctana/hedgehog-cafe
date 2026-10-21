@@ -79,7 +79,7 @@
   flex-direction: column;
   align-items: center;
   min-height: 78px;
-  padding-top: 46px;
+  padding-top: 52px;
   background: none;
 }
 
@@ -88,7 +88,8 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  padding: 6px 12px;
+  padding: 6px 14px;
+  white-space: nowrap;
   border-radius: 999px;
   background: #fff;
   font-weight: 800;
