@@ -67,7 +67,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 16px;
   padding: 12px 16px 16px;
   background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 55%, #fecdd3 100%);
   box-shadow: 0 12px 24px rgba(131, 24, 67, 0.16);
@@ -151,7 +151,7 @@
 }
 
 .sleep-pillow.slept .sleep-crease {
-  background: rgba(254, 249, 195, 0.28);
+  display: none;
 }
 
 .sleep-night {
