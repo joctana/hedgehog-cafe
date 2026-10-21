@@ -112,7 +112,8 @@ button:focus-visible {
 .app-shell.soldier-shell-host::before,
 .app-shell.towers-shell-host::before,
 .app-shell.day-shell-host::before,
-.app-shell.poop-shell-host::before {
+.app-shell.poop-shell-host::before,
+.app-shell.countdown-shell-host::before {
   opacity: 0;
 }
 
@@ -174,6 +175,10 @@ button:focus-visible {
 
 .app-shell.poop-shell-host {
   background: #5eead4;
+}
+
+.app-shell.countdown-shell-host {
+  background: #fda4af;
 }
 
 .mode-select {
@@ -360,6 +365,14 @@ button:focus-visible {
   box-shadow: 0 16px 32px rgba(15, 118, 110, 0.35);
 }
 
+.mode-card.countdown {
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.45), transparent 42%),
+    linear-gradient(180deg, #fb7185, #9f1239);
+  color: #fff;
+  box-shadow: 0 16px 32px rgba(159, 18, 57, 0.35);
+}
+
 .mode-emoji {
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 1;
@@ -504,6 +517,15 @@ button:focus-visible {
 }
 
 .mode-card.poop .mode-blurb {
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.mode-card.countdown .mode-name {
+  color: #fff1f2;
+  text-shadow: 0 2px 0 rgba(159, 18, 57, 0.35);
+}
+
+.mode-card.countdown .mode-blurb {
   color: rgba(255, 255, 255, 0.94);
 }
 

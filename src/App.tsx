@@ -12,6 +12,7 @@ import { CapySoldier } from './components/soldier/CapySoldier'
 import { CapyTowers } from './components/towers/CapyTowers'
 import { CarlosDay } from './components/day/CarlosDay'
 import { CarlosPoops } from './components/poop/CarlosPoops'
+import { CapyCountdown } from './components/countdown/CapyCountdown'
 import { CapyFishing } from './components/fishing/CapyFishing'
 import { CapySpider } from './components/spider/CapySpider'
 import { CapybaraGym } from './components/gym/CapybaraGym'
@@ -42,6 +43,7 @@ type AppMode =
   | 'towers'
   | 'day'
   | 'poop'
+  | 'countdown'
 
 export default function App() {
   const care = useHedgehogCare()
@@ -67,7 +69,7 @@ export default function App() {
 
   return (
     <div
-      className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''} ${mode === 'flight' ? 'flight-shell' : ''} ${mode === 'f1' ? 'f1-shell-host' : ''} ${mode === 'bluey' ? 'bluey-shell-host' : ''} ${mode === 'capy' ? 'capy-shell-host' : ''} ${mode === 'diver' ? 'diver-shell-host' : ''} ${mode === 'chess' ? 'chess-shell-host' : ''} ${mode === 'gym' ? 'gym-shell-host' : ''} ${mode === 'capycafe' ? 'capycafe-shell-host' : ''} ${mode === 'fishing' ? 'fishing-shell-host' : ''} ${mode === 'spider' ? 'spider-shell-host' : ''} ${mode === 'cop' ? 'cop-shell-host' : ''} ${mode === 'soldier' ? 'soldier-shell-host' : ''} ${mode === 'towers' ? 'towers-shell-host' : ''} ${mode === 'day' ? 'day-shell-host' : ''} ${mode === 'poop' ? 'poop-shell-host' : ''}`}
+      className={`app-shell ${mode === 'transformers' ? 'tf-shell' : ''} ${mode === 'flight' ? 'flight-shell' : ''} ${mode === 'f1' ? 'f1-shell-host' : ''} ${mode === 'bluey' ? 'bluey-shell-host' : ''} ${mode === 'capy' ? 'capy-shell-host' : ''} ${mode === 'diver' ? 'diver-shell-host' : ''} ${mode === 'chess' ? 'chess-shell-host' : ''} ${mode === 'gym' ? 'gym-shell-host' : ''} ${mode === 'capycafe' ? 'capycafe-shell-host' : ''} ${mode === 'fishing' ? 'fishing-shell-host' : ''} ${mode === 'spider' ? 'spider-shell-host' : ''} ${mode === 'cop' ? 'cop-shell-host' : ''} ${mode === 'soldier' ? 'soldier-shell-host' : ''} ${mode === 'towers' ? 'towers-shell-host' : ''} ${mode === 'day' ? 'day-shell-host' : ''} ${mode === 'poop' ? 'poop-shell-host' : ''} ${mode === 'countdown' ? 'countdown-shell-host' : ''}`}
     >
       <div className="top-bar">
         <button
@@ -149,6 +151,10 @@ export default function App() {
           onPickPoop={() => {
             play('bubble')
             setMode('poop')
+          }}
+          onPickCountdown={() => {
+            play('happy')
+            setMode('countdown')
           }}
         />
       )}
@@ -347,6 +353,16 @@ export default function App() {
 
       {mode === 'poop' && (
         <CarlosPoops
+          onBack={() => {
+            play('tap')
+            goHome()
+          }}
+          playSound={play}
+        />
+      )}
+
+      {mode === 'countdown' && (
+        <CapyCountdown
           onBack={() => {
             play('tap')
             goHome()

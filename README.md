@@ -21,8 +21,9 @@ Pick a game on the home screen:
 - **Capybara Towers** — stack blocks faster than Coco, then set explosives that pop both towers
 - **Carlos's Day** — wake Carlos, dress him, shop, cook, eat, and tuck him in
 - **Carlos Poops** — help Carlos use the potty, wipe, shower, and get dressed
+- **Capy Countdown** — Carlos counts the days, hours, minutes, and seconds until you see Lachlan
 
-There are no fail states, timers, ads, or accounts.
+There are no fail states, ads, or accounts. Capy Countdown counts the time until you see Lachlan.
 
 ## Play on iPad
 
@@ -67,7 +68,7 @@ Merging a PR into `main` triggers [`.github/workflows/deploy.yml`](.github/workf
 ## How to play
 
 ### Home
-Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, **Capy Fishing**, **Capybara Spiderman**, **Capybara Cop**, **Capybara Soldier**, **Capybara Towers**, **Carlos's Day**, or **Carlos Poops**. The newest games are shown first.
+Choose **Hedgehog Café**, **Transformers**, **Sky Trip**, **F1 Race**, **Bluey Barber**, **Capy Construction**, **Carlos: Deep Sea Diver**, **Chess with Carlos**, **Capybara Gym**, **Capybara Cafe**, **Capy Fishing**, **Capybara Spiderman**, **Capybara Cop**, **Capybara Soldier**, **Capybara Towers**, **Carlos's Day**, **Carlos Poops**, or **Capy Countdown**. The newest games are shown first.
 
 ### Hedgehog Café
 1. Tap **Momo**, **Sora**, **Yuzu**, or **Kiko**.
@@ -191,6 +192,13 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 3. Tap **Turn on water**, **Bubbles**, then **Rinse**.
 4. Tap **Shirt** and **Shorts** (either order).
 5. There is no way to lose.
+
+### Capy Countdown
+1. Open **Capy Countdown**. Carlos is waiting to see Lachlan.
+2. The board shows days, hours, minutes, and seconds until **12:00 pm on Monday 26 October 2026**.
+3. The time follows the iPad clock.
+4. Tap Carlos for a cheer.
+5. When the countdown reaches zero, it is time to see Lachlan. There is no way to lose.
 
 ## Tech
 
