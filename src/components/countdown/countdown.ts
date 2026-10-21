@@ -31,3 +31,13 @@ export function splitCountdown(targetMs: number, nowMs: number): CountdownParts 
 export function padCount(value: number) {
   return String(value).padStart(2, '0')
 }
+
+/** Five sleeps run up to noon on the 26th. Earlier days add extra plain pillows. */
+export const SLEEP_ROW = 5
+
+/** True means that sleep is already over and shows a moon and a star. */
+export function sleepPillowStates(daysLeft: number): boolean[] {
+  const total = Math.max(SLEEP_ROW, daysLeft)
+  const slept = total - daysLeft
+  return Array.from({ length: total }, (_, index) => index < slept)
+}

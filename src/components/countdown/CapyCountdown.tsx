@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { SoundKind } from '../../hooks/useSounds'
 import { CountdownCapy } from './CountdownCapy'
-import { DADDY_VISIT, DADDY_VISIT_LABEL, padCount, splitCountdown, type CountdownParts } from './countdown'
+import { DADDY_VISIT, DADDY_VISIT_LABEL, padCount, sleepPillowStates, splitCountdown, type CountdownParts } from './countdown'
 import './countdown.css'
 
 type Props = {
@@ -9,8 +9,7 @@ type Props = {
   playSound: (kind: SoundKind) => void
 }
 
-const UNITS = [
-  { key: 'days', label: 'Days' },
+const SMALL_UNITS = [
   { key: 'hours', label: 'Hours' },
   { key: 'minutes', label: 'Minutes' },
   { key: 'seconds', label: 'Seconds' },
@@ -64,23 +63,50 @@ export function CapyCountdown({ onBack, playSound }: Props) {
 
       <div className="count-scene">
         <button type="button" className="count-buddy" onClick={cheerOn}>
-          <CountdownCapy size="clamp(150px, 28vh, 230px)" excited={cheer || parts.done} />
+          <CountdownCapy size="clamp(110px, 20vh, 170px)" excited={cheer || parts.done} />
           <span className={`count-bubble ${cheer || parts.done ? 'show' : ''}`}>
             {parts.done ? 'Daddy!' : 'See you soon, Daddy!'}
           </span>
         </button>
 
-        <p className="count-when">{DADDY_VISIT_LABEL}</p>
+        <SleepRow daysLeft={parts.days} />
 
         <div className="count-board" role="timer" aria-live="polite" aria-atomic="true">
-          {UNITS.map((unit) => (
-            <div className="count-unit" key={unit.key}>
-              <strong key={unit.key === 'seconds' ? parts.seconds : unit.key}>{padCount(parts[unit.key])}</strong>
-              <span>{unit.label}</span>
-            </div>
-          ))}
+          <div className="count-unit sleeps">
+            <strong>{padCount(parts.days)}</strong>
+            <span>Sleeps</span>
+          </div>
+          <div className="count-rest">
+            {SMALL_UNITS.map((unit) => (
+              <div className="count-unit small" key={unit.key}>
+                <strong key={unit.key === 'seconds' ? parts.seconds : unit.key}>{padCount(parts[unit.key])}</strong>
+                <span>{unit.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
+
+        <p className="count-when">{DADDY_VISIT_LABEL}</p>
       </div>
+    </div>
+  )
+}
+
+function SleepRow({ daysLeft }: { daysLeft: number }) {
+  const pillows = sleepPillowStates(daysLeft)
+  return (
+    <div className="sleep-row">
+      {pillows.map((slept, index) => (
+        <div
+          key={index}
+          className={`sleep-pillow ${slept ? 'slept' : ''}`}
+          role="img"
+          aria-label={slept ? 'Sleep finished' : 'Sleep still to come'}
+        >
+          <span className="sleep-crease" />
+          {slept ? <span className="sleep-night">🌙⭐</span> : null}
+        </div>
+      ))}
     </div>
   )
 }
