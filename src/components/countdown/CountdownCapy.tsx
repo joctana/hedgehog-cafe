@@ -31,9 +31,8 @@ export function CountdownCapy({ size = 220, excited = false }: Props) {
         <ellipse cx="86" cy="85" rx="2.2" ry="1.5" fill="#2a1c12" />
         <ellipse cx="94" cy="85" rx="2.2" ry="1.5" fill="#2a1c12" />
         <path d="M78 96 Q90 106 102 96" stroke="#6b4428" strokeWidth="2.4" fill="none" strokeLinecap="round" />
-        <path d="M90 112 L96 122 H84 Z" fill="#fff" transform="translate(0 8)" />
         <path
-          d="M90 118 C90 118 82 110 82 104 C82 100 86 98 90 102 C94 98 98 100 98 104 C98 110 90 118 90 118 Z"
+          d="M90 124 C90 124 80 114 80 108 C80 103 85 101 90 106 C95 101 100 103 100 108 C100 114 90 124 90 124 Z"
           fill="#e11d48"
         />
       </svg>
