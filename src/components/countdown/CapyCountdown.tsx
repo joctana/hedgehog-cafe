@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { SoundKind } from '../../hooks/useSounds'
 import { useSpeech } from '../../hooks/useSpeech'
 import { CountdownCapy } from './CountdownCapy'
-import { DADDY_VISIT, DADDY_VISIT_LABEL, padCount, sleepLine, sleepPillowStates, splitCountdown, type CountdownParts } from './countdown'
+import { DADDY_VISIT, DADDY_VISIT_LABEL, padCount, sleepLine, sleepPillowStates, sleepsRemaining, splitCountdown, type CountdownParts } from './countdown'
 import './countdown.css'
 
 type Props = {
@@ -17,17 +17,26 @@ const SMALL_UNITS = [
   { key: 'seconds', label: 'Seconds' },
 ] as const
 
+type Clock = CountdownParts & { sleeps: number }
+
+function readClock(now = new Date()): Clock {
+  return {
+    ...splitCountdown(DADDY_VISIT.getTime(), now.getTime()),
+    sleeps: sleepsRemaining(now, DADDY_VISIT),
+  }
+}
+
 export function CapyCountdown({ onBack, playSound, muted }: Props) {
   const celebrated = useRef(false)
   const cheerTimer = useRef<number | null>(null)
   const { speak, stop } = useSpeech(muted)
-  const [parts, setParts] = useState<CountdownParts>(() => splitCountdown(DADDY_VISIT.getTime(), Date.now()))
+  const [parts, setParts] = useState<Clock>(() => readClock())
   const [cheer, setCheer] = useState(false)
-  const line = sleepLine(parts.days, parts.done)
+  const line = sleepLine(parts.sleeps, parts.done)
 
   useEffect(() => {
     const tick = () => {
-      const next = splitCountdown(DADDY_VISIT.getTime(), Date.now())
+      const next = readClock()
       setParts(next)
       if (next.done && !celebrated.current) {
         celebrated.current = true
@@ -73,11 +82,11 @@ export function CapyCountdown({ onBack, playSound, muted }: Props) {
           <span className={`count-bubble ${cheer || parts.done ? 'show' : ''}`}>{line}</span>
         </button>
 
-        <SleepRow daysLeft={parts.days} />
+        <SleepRow daysLeft={parts.sleeps} />
 
         <div className="count-board" role="timer" aria-live="polite" aria-atomic="true">
           <div className="count-unit sleeps">
-            <strong>{padCount(parts.days)}</strong>
+            <strong>{padCount(parts.sleeps)}</strong>
             <span>Sleeps</span>
           </div>
           <div className="count-rest">

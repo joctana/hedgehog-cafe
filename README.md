@@ -195,8 +195,8 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 
 ### Capy Countdown
 1. Open **Capy Countdown**. Lachlan is the player, and Carlos waits with him.
-2. Each pillow is one sleep until **12:00 pm on Monday 26 October 2026**. A pillow with a moon and a star is a sleep that is already done.
-3. The big number says **Sleeps**. Hours, minutes, and seconds stay in the smaller tiles.
+2. Each pillow is one night before Monday, including tonight. A pillow with a moon and a star is a night that is already over.
+3. The big number says **Sleeps**. On Thursday that is Thursday, Friday, Saturday, and Sunday night. Hours, minutes, and seconds still count down to **12:00 pm**.
 4. The time follows the iPad clock. The title says **Until you see Daddy**.
 5. Tap Carlos. He says how many sleeps are left, like "2 more sleeps".
 6. When the countdown reaches zero, it is time to see Daddy. There is no way to lose.
