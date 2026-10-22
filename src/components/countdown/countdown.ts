@@ -35,6 +35,14 @@ export function padCount(value: number) {
 /** Five sleeps run up to noon on the 26th. Earlier days add extra plain pillows. */
 export const SLEEP_ROW = 5
 
+/** What Carlos says when Lachlan taps him. */
+export function sleepLine(daysLeft: number, done: boolean) {
+  if (done) return "It's time to see Daddy!"
+  if (daysLeft <= 0) return 'No more sleeps'
+  if (daysLeft === 1) return '1 more sleep'
+  return `${daysLeft} more sleeps`
+}
+
 /** True means that sleep is already over and shows a moon and a star. */
 export function sleepPillowStates(daysLeft: number): boolean[] {
   const total = Math.max(SLEEP_ROW, daysLeft)

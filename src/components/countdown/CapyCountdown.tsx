@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import type { SoundKind } from '../../hooks/useSounds'
+import { useSpeech } from '../../hooks/useSpeech'
 import { CountdownCapy } from './CountdownCapy'
-import { DADDY_VISIT, DADDY_VISIT_LABEL, padCount, sleepPillowStates, splitCountdown, type CountdownParts } from './countdown'
+import { DADDY_VISIT, DADDY_VISIT_LABEL, padCount, sleepLine, sleepPillowStates, splitCountdown, type CountdownParts } from './countdown'
 import './countdown.css'
 
 type Props = {
   onBack: () => void
   playSound: (kind: SoundKind) => void
+  muted: boolean
 }
 
 const SMALL_UNITS = [
@@ -15,11 +17,13 @@ const SMALL_UNITS = [
   { key: 'seconds', label: 'Seconds' },
 ] as const
 
-export function CapyCountdown({ onBack, playSound }: Props) {
+export function CapyCountdown({ onBack, playSound, muted }: Props) {
   const celebrated = useRef(false)
   const cheerTimer = useRef<number | null>(null)
+  const { speak, stop } = useSpeech(muted)
   const [parts, setParts] = useState<CountdownParts>(() => splitCountdown(DADDY_VISIT.getTime(), Date.now()))
   const [cheer, setCheer] = useState(false)
+  const line = sleepLine(parts.days, parts.done)
 
   useEffect(() => {
     const tick = () => {
@@ -38,14 +42,16 @@ export function CapyCountdown({ onBack, playSound }: Props) {
   useEffect(() => {
     return () => {
       if (cheerTimer.current) window.clearTimeout(cheerTimer.current)
+      stop()
     }
-  }, [])
+  }, [stop])
 
   const cheerOn = () => {
     setCheer(true)
     playSound(parts.done ? 'celebrate' : 'happy')
+    speak(line, { rate: 0.92, pitch: 1.15 })
     if (cheerTimer.current) window.clearTimeout(cheerTimer.current)
-    cheerTimer.current = window.setTimeout(() => setCheer(false), 1400)
+    cheerTimer.current = window.setTimeout(() => setCheer(false), 1800)
   }
 
   return (
@@ -64,9 +70,7 @@ export function CapyCountdown({ onBack, playSound }: Props) {
       <div className="count-scene">
         <button type="button" className="count-buddy" onClick={cheerOn}>
           <CountdownCapy size="clamp(110px, 20vh, 170px)" excited={cheer || parts.done} />
-          <span className={`count-bubble ${cheer || parts.done ? 'show' : ''}`}>
-            {parts.done ? 'Daddy!' : 'See you soon, Daddy!'}
-          </span>
+          <span className={`count-bubble ${cheer || parts.done ? 'show' : ''}`}>{line}</span>
         </button>
 
         <SleepRow daysLeft={parts.days} />
