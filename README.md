@@ -21,7 +21,7 @@ Pick a game on the home screen:
 - **Capybara Towers** — stack blocks faster than Coco, then set explosives that pop both towers
 - **Carlos's Day** — wake Carlos, dress him, shop, cook, eat, and tuck him in
 - **Carlos Poops** — help Carlos use the potty, wipe, shower, and get dressed
-- **Capy Countdown** — Carlos counts the days, hours, minutes, and seconds until you see Daddy
+- **Capy Countdown** — pillows show each sleep until you see Daddy, with hours, minutes, and seconds still counting
 
 There are no fail states, ads, or accounts. Capy Countdown counts the time until you see Daddy.
 
@@ -195,10 +195,11 @@ Tilt steer uses the iPad motion sensors (Safari will ask for permission once). I
 
 ### Capy Countdown
 1. Open **Capy Countdown**. Lachlan is the player, and Carlos waits with him.
-2. The board shows days, hours, minutes, and seconds until **12:00 pm on Monday 26 October 2026**, under the words **Until you see Daddy**.
-3. The time follows the iPad clock.
-4. Tap Carlos for a cheer.
-5. When the countdown reaches zero, it is time to see Daddy. There is no way to lose.
+2. Each pillow is one sleep until **12:00 pm on Monday 26 October 2026**. A pillow with a moon and a star is a sleep that is already done.
+3. The big number says **Sleeps**. Hours, minutes, and seconds stay in the smaller tiles.
+4. The time follows the iPad clock. The title says **Until you see Daddy**.
+5. Tap Carlos. He says how many sleeps are left, like "2 more sleeps".
+6. When the countdown reaches zero, it is time to see Daddy. There is no way to lose.
 
 ## Tech
 

@@ -363,6 +363,7 @@ export default function App() {
 
       {mode === 'countdown' && (
         <CapyCountdown
+          muted={muted}
           onBack={() => {
             play('tap')
             goHome()
