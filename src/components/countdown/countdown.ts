@@ -1,7 +1,9 @@
-/** Noon on Monday 26 October 2026, using the device clock. Lachlan is counting down to Daddy. */
-export const DADDY_VISIT = new Date(2026, 9, 26, 12, 0, 0, 0)
+/** 5:00 pm on Sunday 8 November 2026, New Zealand daylight time (UTC+13). */
+export const DADDY_VISIT = new Date('2026-11-08T17:00:00+13:00')
 
-export const DADDY_VISIT_LABEL = 'Monday 26 October 2026 · 12:00 pm'
+export const DADDY_VISIT_LABEL = 'Sunday 8 November 2026 · 5:00 pm'
+
+const NZ_TIME_ZONE = 'Pacific/Auckland'
 
 export type CountdownParts = {
   days: number
@@ -32,18 +34,28 @@ export function padCount(value: number) {
   return String(value).padStart(2, '0')
 }
 
-/** Five nights, Wednesday through Sunday, lead up to Monday. Earlier nights add extra plain pillows. */
-export const SLEEP_ROW = 5
+/** Seven nights, Sunday 1 November through Saturday 7 November. Earlier nights add extra plain pillows. */
+export const SLEEP_ROW = 7
+
+/** Calendar day in New Zealand, as a UTC day number so daylight saving cannot skew the count. */
+function nzDayNumber(date: Date) {
+  const parts = new Intl.DateTimeFormat('en-NZ', {
+    timeZone: NZ_TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date)
+  const value = (type: Intl.DateTimeFormatPartTypes) => Number(parts.find((part) => part.type === type)?.value)
+  return Date.UTC(value('year'), value('month') - 1, value('day'))
+}
 
 /**
- * Nights still to come before the visit morning.
- * Thursday includes Thursday night, Friday night, Saturday night, and Sunday night.
- * The count drops at local midnight, once that night is over.
+ * Nights still to come before Sunday in New Zealand.
+ * Sunday 1 November includes Sunday night through Saturday night.
+ * The count drops at New Zealand midnight, once that night is over.
  */
 export function sleepsRemaining(now: Date, visit: Date) {
-  const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
-  const visitDay = Date.UTC(visit.getFullYear(), visit.getMonth(), visit.getDate())
-  const nights = Math.round((visitDay - today) / 86400000)
+  const nights = Math.round((nzDayNumber(visit) - nzDayNumber(now)) / 86400000)
   return Math.max(0, nights)
 }
 

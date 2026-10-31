@@ -114,14 +114,17 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 8px;
+  flex-wrap: nowrap;
 }
 
 .sleep-pillow {
   position: relative;
-  width: clamp(78px, 14vw, 124px);
-  height: clamp(62px, 11vw, 92px);
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+  max-width: 124px;
+  height: clamp(52px, 9vw, 92px);
   border-radius: 46% 46% 42% 42%;
   background:
     radial-gradient(circle at 50% 30%, #fff 0 28%, transparent 30%),
