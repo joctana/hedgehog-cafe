@@ -1,7 +1,7 @@
-/** 5:00 pm on Sunday 8 November 2026, New Zealand daylight time (UTC+13). */
-export const DADDY_VISIT = new Date('2026-11-08T17:00:00+13:00')
+/** 6:00 pm on Monday 30 November 2026, New Zealand daylight time (UTC+13). */
+export const DADDY_VISIT = new Date('2026-11-30T18:00:00+13:00')
 
-export const DADDY_VISIT_LABEL = 'Sunday 8 November 2026 · 5:00 pm'
+export const DADDY_VISIT_LABEL = 'Monday 30 November 2026 · 6:00 pm'
 
 const NZ_TIME_ZONE = 'Pacific/Auckland'
 
@@ -34,8 +34,8 @@ export function padCount(value: number) {
   return String(value).padStart(2, '0')
 }
 
-/** Seven nights, Sunday 1 November through Saturday 7 November. Earlier nights add extra plain pillows. */
-export const SLEEP_ROW = 7
+/** Fifteen nights, Sunday 15 November through Sunday 29 November. Earlier nights add extra plain pillows. */
+export const SLEEP_ROW = 15
 
 /** Calendar day in New Zealand, as a UTC day number so daylight saving cannot skew the count. */
 function nzDayNumber(date: Date) {
@@ -50,8 +50,8 @@ function nzDayNumber(date: Date) {
 }
 
 /**
- * Nights still to come before Sunday in New Zealand.
- * Sunday 1 November includes Sunday night through Saturday night.
+ * Nights still to come before Monday 30 November in New Zealand.
+ * Sunday 15 November includes tonight through Sunday 29 November.
  * The count drops at New Zealand midnight, once that night is over.
  */
 export function sleepsRemaining(now: Date, visit: Date) {
